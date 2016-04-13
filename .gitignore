@@ -95,6 +95,5 @@ ENV/
 
 #---------------------- End of copied .gitignore --------------------------#
 
-# NagiFront specific ignore lists
-
-
+# NagiFront project specific ignore lists
+NagiFront/db_settings.cnf
