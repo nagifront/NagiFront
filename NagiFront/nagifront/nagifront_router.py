@@ -32,3 +32,11 @@ class NagifrontRouter(object):
         if db == 'nagios':
             return False
         return True
+
+    def allow_syncdb(self, db, model):
+        """
+        Sync is not necessary for nagios database
+        """
+        if db == 'nagios':
+            return False
+        return True
