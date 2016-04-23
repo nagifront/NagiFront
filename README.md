@@ -11,8 +11,8 @@ See https://github.com/PyMySQL/mysqlclient-python for mysqlclient
 
 ## DB Setting
 
-Make two copy of `db\_settings.cnf.example`.
-Rename one to `db\_settings.cnf`, the other to `ndoutils\_db\_settings.cnf`.
+Make two copy of `db_settings.cnf.example`.
+Rename one to `db_settings.cnf`, the other to `ndoutils_db_settings.cnf`.
 
     cp db_settings.cnf.example db_settings.cnf
     cp db_settings.cnf.example ndoutils_db_settings.cnf
