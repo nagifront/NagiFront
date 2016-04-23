@@ -81,8 +81,19 @@ DATABASES = {
         'OPTIONS': {
             'read_default_file': './db_settings.cnf'
         }
+    },
+    'nagios': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'read_default_file': './ndoutils_db_settings.cnf'
+        }
     }
 }
+
+# Database routers
+# https://docs.djangoproject.com/en/1.9/topics/db/multi-db/#database-routers
+
+DATABASE_ROUTERS = ['nagifront.nagifront_router.NagifrontRouter']
 
 
 # Password validation
