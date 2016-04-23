@@ -6,7 +6,6 @@ class NagifrontRouter(object):
         The model which has prefix 'nagios', read from nagios database
         """
         if re.match('^nagios.*', model._meta.model_name) is not None:
-        # nagios로 시작하는 테이블이면 nagios db에서
             return 'nagios'
         return 'default'
 
