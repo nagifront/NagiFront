@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from django.contrib.auth.models import User
@@ -16,7 +16,7 @@ def login(request):
         return redirect('index')
 
     if request.method == "POST":
-        username = request.POST['username']
+        username = request.POST['id']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user is not None:
