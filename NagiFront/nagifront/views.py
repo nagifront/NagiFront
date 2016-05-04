@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 
@@ -20,8 +22,9 @@ def login(request):
 
     # With POST request, this view works like API
     if request.method == "POST":
-        username = request.POST['id']
-        password = request.POST['password']
+        data = json.loads(request.body.decode())
+        username = data.get('id', '')
+        password = data.get('password', '')
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:

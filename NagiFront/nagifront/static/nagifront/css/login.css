@@ -1,3 +1,7 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 body {
   margin: 0px;
   height: calc(100vh - 150px);
@@ -71,12 +75,13 @@ body {
   color: #0e0e0e;
 }
 
-.form-element button {
+.form-element button, .form-element input[type=button] {
   margin-left: 100px;
   border: 2px solid #517057;
   width: 288px;
   height: 46px;
   box-sizing: border-box;
+  padding: 0px;
   
   background-color: #63886a;
   font-family: "Arial";
@@ -92,4 +97,18 @@ footer {
   bottom: 0px;
   background-color: white;
   border-top: 2px solid #d1dac6;
+}
+
+.modal-backboard {
+  position: fixed;
+  top: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  background-color: #ffffff;
+  border: 2px solid #e7ede3;
+  margin: 25px;
 }
