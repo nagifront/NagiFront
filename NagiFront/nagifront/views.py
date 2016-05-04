@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JSONResponse
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as django_login
@@ -13,8 +13,9 @@ def index(request):
 def login(request):
     message = None
     if request.user.is_authenticated():
-        return redirect('index')
+        return JSONResponse({'result': True, 'message': message})
 
+    # With POST request, this view works like API
     if request.method == "POST":
         username = request.POST['id']
         password = request.POST['password']
@@ -22,11 +23,12 @@ def login(request):
         if user is not None:
             if user.is_active:
                 django_login(request, user)
-                return redirect('index')
+                return JSONResponse({'result': True, 'message': message})
             else:
                 message = "This user is disabled!"
         else:
             message = "Username or password is invalid."
+        return JSONResponse({'result': False, 'message': message})
 
     return render(request, 'nagifront/login.html', {
         'message' : message
