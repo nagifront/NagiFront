@@ -26,6 +26,11 @@ body {
   color: #6f9777;
 }
 
+#logo h1 img {
+  position: absolute;
+  top: 0px;
+}
+
 #logo h2 {
   margin: 0px;
   position: relative;
