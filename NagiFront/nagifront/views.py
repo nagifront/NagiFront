@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login as django_login
 
 from django.core.exceptions import ObjectDoesNotExist
 
+from django.db.models import Count
 from .models import UserProfile
 from .nagios_models import *
 
@@ -100,5 +101,32 @@ def hosts_groups(request):
                     result[str(group_obj_id)] = host_group_helper(group_obj_id)
 
             return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+
+@login_required
+def hosts_groups_service_number_by_state(request):
+    # Get alias and service statistics about group_obj_id
+    def host_group_services_helper(group_obj_id):
+        hostgroup = NagiosHostgroups.objects.get(hostgroup_object_id=group_obj_id)
+        alias = hostgroup.alias
+        members = NagiosHostgroupMembers.objects.filter(hostgroup_id=hostgroup.hostgroup_id).values_list('host_object_id', flat=True)
+        services = NagiosServices.objects.filter(host_object_id__in=members).values_list('service_object_id', flat=True)
+        
+        # From NagiosServicestatus, get services belong to selected hostgroup, group by current state, 
+        # count it, sort it, list-ify count results and fill trailing zeros.
+        services_state_count = list(NagiosServicestatus.objects.filter(service_object_id__in=services).values('current_state').annotate(Count('current_state')).order_by('current_state').values_list('current_state__count', flat=True)) + [0, 0, 0, 0]
+        
+        return {'alias':alias, 'Ok':services_state_count[0], 'Warning':services_state_count[1], 'Critical':services_state_count[2], 'Unknown':services_state_count[3]}
+
+    if request.method == 'GET':
+        try:
+            result = dict()
+            group_obj_id_list = NagiosHostgroups.objects.all().values_list('hostgroup_object_id', flat=True)
+            for group_obj_id in group_obj_id_list:
+                result[str(group_obj_id)] = host_group_services_helper(group_obj_id)
+
+            return JsonResponse(result)
+        
         except ObjectDoesNotExist:
             return JsonResponse(dict())
