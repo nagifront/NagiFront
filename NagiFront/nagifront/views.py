@@ -9,6 +9,8 @@ from django.contrib.auth import authenticate, login as django_login
 
 from django.core.exceptions import ObjectDoesNotExist
 
+from .customfields import CustomJSONEncoder
+
 from django.db.models import Count
 from .models import UserProfile
 from .nagios_models import *
@@ -145,4 +147,25 @@ def hosts_id_trend(request, host_id):
     
     except ObjectDoesNotExist:
         return JsonResponse(dict())
+
+@login_required
+def hosts_status(request):
+    try:
+        if request.method == 'GET':
+            result = dict()
+            host_id = request.GET.get('host_id')
+            if host_id is not None:
+                host_status = NagiosHoststatus.objects.get(host_object_id=host_id)
+                result['hosts'] = [ host_status ]
+                return JsonResponse(result, encoder=CustomJSONEncoder)
+            else:
+                host_statuses = list(NagiosHoststatus.objects.all())
+                result['hosts'] = host_statuses
+                return JsonResponse(result, encoder=CustomJSONEncoder)
+   
+    except ObjectDoesNotExist:
+       return JsonResponse(dict())
+
+
+
 
