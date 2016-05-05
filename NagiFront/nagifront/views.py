@@ -166,6 +166,23 @@ def hosts_status(request):
     except ObjectDoesNotExist:
        return JsonResponse(dict())
 
+@login_required
+def hosts_groups_hosts_state(request):
+    if request.method == 'GET':
+        try:
+            result = dict()
+            group_obj_id = request.GET.get('host_group_id')
+
+            if group_obj_id is not None:            
+                group = NagiosHostgroups.objects.get(hostgroup_object_id=group_obj_id)
+                alias = group.alias
+                host_list = NagiosHostgroupMembers.objects.filter(hostgroup_id=group.hostgroup_id).values_list('host_object_id', flat=True)
+                status_list = list(NagiosHoststatus.objects.filter(host_object_id__in=host_list).values('current_state').annotate(Count('current_state')).order_by('current_state').values_list('current_state__count', flat=True)) + [0, 0, 0]
+                result[str(group_obj_id)] = {'alias':alias, 'Up':status_list[0], 'Down':status_list[1], 'Unreachable':status_list[2]}
 
 
+            return JsonResponse(result)
+        
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
 
