@@ -7,6 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as django_login
 
+from django.core.exceptions import ObjectDoesNotExist
+
 from .models import UserProfile
 from .nagios_models import *
 
@@ -76,3 +78,27 @@ def hosts_overall(request):
         warning_host_set = warning_host_set - critical_host_set
 
         return JsonResponse({'all':hosts_num, 'up':up_hosts_num, 'warning':len(warning_host_set), 'critical':len(critical_host_set)})
+
+@login_required
+def hosts_groups(request):
+    # Get member and alias data about group_obj_id
+    def host_group_helper(group_obj_id):
+        hostgroup = NagiosHostgroups.objects.get(hostgroup_object_id=group_obj_id)
+        alias = hostgroup.alias
+        members = NagiosHostgroupMembers.objects.filter(hostgroup_id=hostgroup.hostgroup_id).values_list('host_object_id', flat=True)
+        return dict(members=list(members), alias=alias)
+
+    if request.method == 'GET':
+        try:
+            result = dict()
+            group_obj_id = request.GET.get('host_group_id')
+            if group_obj_id is not None:
+                result[str(group_obj_id)] = host_group_helper(group_obj_id)
+            else:
+                group_obj_id_list = NagiosHostgroups.objects.all().values_list('hostgroup_object_id', flat=True)
+                for group_obj_id in group_obj_id_list:
+                    result[str(group_obj_id)] = host_group_helper(group_obj_id)
+
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
