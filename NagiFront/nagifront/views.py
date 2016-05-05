@@ -71,4 +71,8 @@ def hosts_overall(request):
             else:
                 unknown_host_set.add(service_to_host[s_id])
 
+        # Introduce priority between warning and critical
+        # Now, in warning_host_set, only exist hosts (having 'warning' services && !having 'critical' services)
+        warning_host_set = warning_host_set - critical_host_set
+
         return JsonResponse({'all':hosts_num, 'up':up_hosts_num, 'warning':len(warning_host_set), 'critical':len(critical_host_set)})
