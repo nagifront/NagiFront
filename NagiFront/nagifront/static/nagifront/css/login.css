@@ -35,7 +35,7 @@ body {
   margin: 0px;
   position: relative;
   top: 10px;
-  font-family: "맑은 고딕 Bold";
+  font-family: "맑은 고딕";
   font-size: 14px;
   text-shadow: none;
   color: #759584;
@@ -62,7 +62,7 @@ body {
   padding: 5px 15px;
   
   line-height: 32px;
-  font-family: "Arial Regular";
+  font-family: "Arial";
   font-size: 16px;
   text-align: right;
   color: #5e6753;
@@ -75,7 +75,7 @@ body {
   padding: 12px;
 
   border: 2px solid #c7c7c7;
-  font-family: "맑은 고딕 Regular"
+  font-family: "맑은 고딕"
   font-size: 14px;
   color: #0e0e0e;
 }
@@ -115,5 +115,43 @@ footer {
 .modal {
   background-color: #ffffff;
   border: 2px solid #e7ede3;
-  margin: 25px;
+  margin: 0px auto;
+  max-width: 400px;
+  box-sizing: border-box;
+  padding: 20px;
+  text-align: center;
+
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.modal h1 {
+  margin: 0px;
+  font-family: "맑은 고딕";
+  font-size: 16px;
+}
+
+.modal p {
+  margin: 5px 0px;
+  border-top: 2px solid #aebba1;
+  background-color: #e7ede3;
+  padding: 15px;
+  padding-bottom: 28px;
+
+  font-family: "맑은 고딕";
+}
+
+.modal button {
+  margin-top: 10px;
+  width: 100px;
+  height: 30px;
+  box-sizing: border-box;
+  padding: 0px;
+  border: 2px solid #517057;
+  
+  background-color: #63886a;
+  font-family: "Arial";
+  font-weight: bold;
+  color: #ffffff;
 }

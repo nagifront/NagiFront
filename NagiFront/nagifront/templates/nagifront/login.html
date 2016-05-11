@@ -29,12 +29,15 @@
   </div>
   <footer>
   </footer>
+
   <div class="modal-backboard" ng-show="show_modal" ng-cloak>
     <div class="modal">
-      <p ng-model="message"></p>
+      <h1>Login Fail!</h1>
+      <p ng-bind="message"></p>
       <button ng-click="close_modal()">OK</button>
     </div>
   </div>
+
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="{% static 'djng/js/django-angular.js' %}"></script>
   <script src="{% static 'nagifront/js/login.js' %}"></script>
