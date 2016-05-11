@@ -1,0 +1,44 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <title>로그인</title>
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'nagifront/css/login.css' %}">
+</head>
+<body ng-app="nagifront" ng-controller="login">
+  <div id="login-wrapper">
+    <header id="logo">
+      <h2> 서버 모니터링 대쉬보드</h2>
+      <h1>
+        NagiFront
+        <img src="{% static 'nagifront/img/icon.png' %}">
+      </h1>
+    </header>
+    <form id="login-box" method="POST" action="{% url 'login' %}">
+      <div class="form-element">
+        <label for="id">Id</label><input ng-model="id" id="id" name="id">
+      </div>
+      <div class="form-element">
+        <label for="password">Password</label><input ng-model="password" id="password" name="password" type="password">
+      </div>
+      <div class="form-element">
+        <input ng-click="login()" type=button value="log in">
+      </div>
+      {% csrf_token %}
+    </form>
+  </div>
+  <footer>
+  </footer>
+
+  <div class="modal-backboard" ng-show="show_modal" ng-cloak>
+    <div class="modal">
+      <h1>Login Fail!</h1>
+      <p ng-bind="message"></p>
+      <button ng-click="close_modal()">OK</button>
+    </div>
+  </div>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="{% static 'djng/js/django-angular.js' %}"></script>
+  <script src="{% static 'nagifront/js/login.js' %}"></script>
+</body>
