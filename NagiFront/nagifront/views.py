@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login as django_login
+from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 from .models import UserProfile
 
 # Create your views here.
@@ -39,3 +39,7 @@ def login(request):
     return render(request, 'nagifront/login.html', {
         'message' : message
     })
+
+def logout(request):
+    django_logout(request)
+    return redirect('login')
