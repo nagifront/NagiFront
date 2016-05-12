@@ -10,7 +10,8 @@ from .models import UserProfile
 # Create your views here.
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the nagifront index.")
+    return render(request, 'nagifront/layout.html', {
+    })
 
 def login(request):
     message = None

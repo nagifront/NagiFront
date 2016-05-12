@@ -1,0 +1,40 @@
+{% extends 'nagifront/basic-layout.html' %}
+
+{% block title %}
+  <title>Nagifront</title>
+{% endblock %}
+
+{% block head %}
+  {% load staticfiles %}
+  <link rel="stylesheet" text="text/css" href="{% static "nagifront/css/layout.css"%}">
+  {% block stylesheets %}
+  {% endblock %}
+{% endblock %}
+
+{% block body %}
+<body>
+  <header id="header">
+    <h1>NagiFront</h1>
+    <div>
+      <span><a><img src="http://placehold.it/24x24" alt="Notification"></a></span>
+      <span><a><img src="http://placehold.it/24x24" alt="Personal Settings"></a></span>
+      <span><a href="/logout"><img src="http://placehold.it/24x24" alt="Logout"></a></span>
+    </div>
+  </header>
+  <aside id="menubar">
+    <nav>
+      <a href="/" class="{% if selected_menu == 'dashboard' %}selected{% endif %}">대쉬보드</a>
+      <a href="/hosts" class="{% if selected_menu == 'showhost' %}selected{% endif %}">호스트보기</a>
+      <a href="/statistics" class="{% if selected_menu == 'statistics' %}selected{% endif %}">통계보기</a>
+      <a href="/system" class="{% if selected_menu == 'system' %}selected{% endif %}">시스템</a>
+    </nav>
+  </aside>
+  <main>
+    {% block main %}
+    {% endblock %}
+  </main>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  {% block scripts %}
+  {% endblock %}
+</body>
+{% endblock %}
