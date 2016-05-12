@@ -1,11 +1,5 @@
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
-}
-
 body {
-  margin: 0px;
   height: calc(100vh - 150px);
-  background-color: #e7efde;
 }
 
 #login-wrapper {
@@ -102,56 +96,4 @@ footer {
   bottom: 0px;
   background-color: white;
   border-top: 2px solid #d1dac6;
-}
-
-.modal-backboard {
-  position: fixed;
-  top: 0px;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal {
-  background-color: #ffffff;
-  border: 2px solid #e7ede3;
-  margin: 0px auto;
-  max-width: 400px;
-  box-sizing: border-box;
-  padding: 20px;
-  text-align: center;
-
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.modal h1 {
-  margin: 0px;
-  font-family: "맑은 고딕";
-  font-size: 16px;
-}
-
-.modal p {
-  margin: 5px 0px;
-  border-top: 2px solid #aebba1;
-  background-color: #e7ede3;
-  padding: 15px;
-  padding-bottom: 28px;
-
-  font-family: "맑은 고딕";
-}
-
-.modal button {
-  margin-top: 10px;
-  width: 100px;
-  height: 30px;
-  box-sizing: border-box;
-  padding: 0px;
-  border: 2px solid #517057;
-  
-  background-color: #63886a;
-  font-family: "Arial";
-  font-weight: bold;
-  color: #ffffff;
 }
