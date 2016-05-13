@@ -1,0 +1,20 @@
+{% extends 'nagifront/layout.html' %}
+
+{% block stylesheets %}
+{% load staticfiles %}
+<link rel="stylesheet" text="text/css" href="{% static "nagifront/css/dashboard.css"%}">
+{% endblock %}
+
+{% block main %}
+<section id="search-widget">
+  <span>상세 검색</span>
+  <select>
+    <option>Host</option>
+    <option>Host Group</option>
+  </select>
+  <input><!--
+  --><button></button>
+</section>
+<section id="dashboard">
+</section>
+{% endblock %}

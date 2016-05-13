@@ -1,0 +1,57 @@
+#search-widget {
+  width: 100%;
+  height: 71px;
+  box-sizing: border-box;
+  padding: 10px 36px;
+
+  font-size: 14px;
+  line-height: 40px;
+  background-color: #d1dac6;
+  border: 2px solid #c1ceb0;
+}
+
+#search-widget span {
+  vertical-align: middle;
+}
+
+#search-widget select {
+  height: 40px;
+  box-sizing: border-box;
+
+  border: 1px solid #c1ceb0;
+  vertical-align: middle;
+}
+
+#search-widget input {
+  height: 40px;
+  box-sizing: border-box;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  border: 1px solid #c1ceb0;
+  border-right: none;
+  vertical-align: middle;
+}
+
+#search-widget button {
+  width: 70px;
+  height: 40px;
+  box-sizing: border-box;
+
+  border: 1px solid #c1ceb0;
+  border-left: none;
+  vertical-align: middle;
+  background-color: white;
+  background-image: url(http://placehold.it/30x30);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#dashboard {
+  margin: 34px;
+  margin-top: 46px;
+  padding: 36px;
+
+  background-color: #ffffff;
+  border: 2px solid #c1ceb0;
+}
