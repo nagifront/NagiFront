@@ -131,10 +131,10 @@ def hosts_groups_service_number_by_state(request):
         
         return {
             'alias':alias, 
-            'Ok':services_state_count[0][1], 
-            'Warning':services_state_count[1][1], 
-            'Critical':services_state_count[2][1], 
-            'Unknown':services_state_count[3][1]
+            'ok':services_state_count[0][1], 
+            'warning':services_state_count[1][1], 
+            'critical':services_state_count[2][1], 
+            'unknown':services_state_count[3][1]
         }
 
     if request.method == 'GET':
@@ -206,7 +206,7 @@ def hosts_groups_hosts_state(request):
                     if status_list[i][0] != i:
                         status_list.insert(i, (0,0))
 
-                result[str(group_obj_id)] = {'alias':alias, 'Up':status_list[0][1], 'Down':status_list[1][1], 'Unreachable':status_list[2][1]}
+                result[str(group_obj_id)] = {'alias':alias, 'up':status_list[0][1], 'down':status_list[1][1], 'unreachable':status_list[2][1]}
 
             return JsonResponse(result)      
         
