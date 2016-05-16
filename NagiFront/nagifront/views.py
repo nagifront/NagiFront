@@ -117,9 +117,25 @@ def hosts_groups_service_number_by_state(request):
         
         # From NagiosServicestatus, get services belong to selected hostgroup, group by current state, 
         # count it, sort it, list-ify count results and fill trailing zeros.
-        services_state_count = list(NagiosServicestatus.objects.filter(service_object_id__in=services).values('current_state').annotate(Count('current_state')).order_by('current_state').values_list('current_state__count', flat=True)) + [0, 0, 0, 0]
+        services_state_count = list(NagiosServicestatus.objects.filter(service_object_id__in=services)  \
+                                                               .values('current_state')                 \
+                                                               .annotate(Count('current_state'))        \
+                                                               .order_by('current_state')               \
+                                                               .values_list('current_state', 'current_state__count'))
+        # Handling cases which certain state is not existed
+        # ex) 'Ok':4, 'Warning':0, 'Critical':3, 'Unknown':1 -> before this loop, services_state_count = [(0,4), (2,3), (3,1)]
+        services_state_count += [(5,0), (6,0), (7,0), (8,0)]
+        for i in range(4):
+            if status_list[i][0] != i:
+                status_list.insert(i, (0,0))
         
-        return {'alias':alias, 'Ok':services_state_count[0], 'Warning':services_state_count[1], 'Critical':services_state_count[2], 'Unknown':services_state_count[3]}
+        return {
+            'alias':alias, 
+            'Ok':services_state_count[0][1], 
+            'Warning':services_state_count[1][1], 
+            'Critical':services_state_count[2][1], 
+            'Unknown':services_state_count[3][1]
+        }
 
     if request.method == 'GET':
         try:
@@ -177,11 +193,22 @@ def hosts_groups_hosts_state(request):
                 group = NagiosHostgroups.objects.get(hostgroup_object_id=group_obj_id)
                 alias = group.alias
                 host_list = NagiosHostgroupMembers.objects.filter(hostgroup_id=group.hostgroup_id).values_list('host_object_id', flat=True)
-                status_list = list(NagiosHoststatus.objects.filter(host_object_id__in=host_list).values('current_state').annotate(Count('current_state')).order_by('current_state').values_list('current_state__count', flat=True)) + [0, 0, 0]
-                result[str(group_obj_id)] = {'alias':alias, 'Up':status_list[0], 'Down':status_list[1], 'Unreachable':status_list[2]}
+                status_list = list(NagiosHoststatus.objects.filter(host_object_id__in=host_list)        \
+                                                           .values('current_state')                     \
+                                                           .annotate(Count('current_state'))            \
+                                                           .order_by('current_state')                   \
+                                                           .values_list('current_state', 'current_state__count'))
+                
+                # Handling cases which certain state is not existed
+                # ex) 'Up':3, 'Down':0, 'Unreachable':1 -> before this loop, status_list = [(0,3), (2,1)]
+                status_list += [(5,0), (6,0), (7,0)]
+                for i in range(3):
+                    if status_list[i][0] != i:
+                        status_list.insert(i, (0,0))
 
+                result[str(group_obj_id)] = {'alias':alias, 'Up':status_list[0][1], 'Down':status_list[1][1], 'Unreachable':status_list[2][1]}
 
-            return JsonResponse(result)
+            return JsonResponse(result)      
         
         except ObjectDoesNotExist:
             return JsonResponse(dict())
