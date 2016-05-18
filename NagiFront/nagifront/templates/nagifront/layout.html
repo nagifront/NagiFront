@@ -16,9 +16,9 @@
   <header id="header">
     <h1>NagiFront</h1>
     <div>
-      <span><a><img src="http://placehold.it/24x24" alt="Notification"></a></span>
-      <span><a><img src="http://placehold.it/24x24" alt="Personal Settings"></a></span>
-      <span><a href="/logout"><img src="http://placehold.it/24x24" alt="Logout"></a></span>
+      <span><a><img src="{% static "nagifront/img/notifications-button.jpg" %}" height="30px" alt="Notification"></a></span>
+      <span><a><img src="{% static "nagifront/img/msn-user-profile.jpg" %}" height="30px" alt="Personal Settings"></a></span>
+      <span><a href="/logout"><img src="{% static "nagifront/img/log-out.jpg" %}" height="30px" alt="Logout"></a></span>
     </div>
   </header>
   <aside id="menubar">
@@ -36,5 +36,9 @@
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   {% block scripts %}
   {% endblock %}
+  <footer>
+    <div id="footer-left"></div>
+    <div id="footer-right"><small>Icons made by <a href="http://www.flaticon.com/authors/elegant-themes" title="Elegant Themes">Elegant Themes</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></small></div>
+  </footer>
 </body>
 {% endblock %}
