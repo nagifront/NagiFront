@@ -1,10 +1,15 @@
-<!doctype html>
-<head>
-  <meta charset="utf-8">
+{% extends 'nagifront/basic-layout.html' %}
+
+{% block title %}
   <title>로그인</title>
+{% endblock %}
+
+{% block head %}
   {% load staticfiles %}
   <link rel="stylesheet" type="text/css" href="{% static 'nagifront/css/login.css' %}">
-</head>
+{% endblock %}
+
+{% block body %}
 <body ng-app="nagifront" ng-controller="login">
   <div id="login-wrapper">
     <header id="logo">
@@ -39,6 +44,7 @@
   </div>
 
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-  <script src="{% static 'djng/js/django-angular.js' %}"></script>
+  <script src="{% static 'djng/js/django-angular.min.js' %}"></script>
   <script src="{% static 'nagifront/js/login.js' %}"></script>
 </body>
+{% endblock %}
