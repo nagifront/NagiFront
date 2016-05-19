@@ -34,7 +34,7 @@
 }
 
 #search-widget button {
-  width: 70px;
+  width: 60px;
   height: 40px;
   box-sizing: border-box;
 
@@ -42,9 +42,10 @@
   border-left: none;
   vertical-align: middle;
   background-color: white;
-  background-image: url(http://placehold.it/30x30);
+  background-image: url(/static/nagifront/img/musica-searcher.png);
   background-repeat: no-repeat;
   background-position: center center;
+  background-size: 30px;
 }
 
 #dashboard {
