@@ -4,15 +4,15 @@
   <title>Nagifront</title>
 {% endblock %}
 
+{% load staticfiles %}
 {% block head %}
-  {% load staticfiles %}
   <link rel="stylesheet" text="text/css" href="{% static "nagifront/css/layout.css"%}">
   {% block stylesheets %}
   {% endblock %}
 {% endblock %}
 
 {% block body %}
-<body>
+<body ng-app="nagifront">
   <header id="header">
     <h1>NagiFront</h1>
     <div>
@@ -29,11 +29,13 @@
       <a href="/system" class="{% if selected_menu == 'system' %}selected{% endif %}">시스템</a>
     </nav>
   </aside>
-  <main>
-    {% block main %}
-    {% endblock %}
-  </main>
+  {% block main %}
+  {% endblock %}
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="{% static 'djng/js/django-angular.min.js' %}"></script>
+  <script src="{% static 'library/d3.js' %}"></script>
+  <script src="{% static 'nagifront/js/layout.js' %}"></script>
+  {% include 'nagifront/widgets.html' %}
   {% block scripts %}
   {% endblock %}
   <footer>

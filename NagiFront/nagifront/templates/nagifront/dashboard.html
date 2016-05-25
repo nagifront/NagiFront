@@ -1,0 +1,26 @@
+{% extends 'nagifront/layout.html' %}
+
+{% load staticfiles %}
+{% block stylesheets %}
+<link rel="stylesheet" text="text/css" href="{% static "nagifront/css/dashboard.css"%}">
+{% endblock %}
+
+{% block main %}
+<main ng-controller="dashboard">
+  <section id="search-widget">
+    <span>상세 검색</span>
+    <select>
+      <option>Host</option>
+      <option>Host Group</option>
+    </select>
+    <input><!--
+    --><button></button>
+  </section>
+  <section id="dashboard">
+  </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'nagifront/js/dashboard.js' %}"></script>
+{% endblock %}
