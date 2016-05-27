@@ -37,7 +37,8 @@
 }
 
 #menubar {
-  float: left;
+  position: absolute;
+  height: 100%;
   width: 122px;
   min-height: calc(100vh - 70px);
 

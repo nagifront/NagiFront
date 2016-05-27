@@ -3,6 +3,7 @@
 }
 
 body {
+  position: relative;
   margin: 0px;
   background-color: #e7efde;
 }

@@ -12,11 +12,17 @@
 
 #search-widget span {
   vertical-align: middle;
+ 
+  font-weight: bold;
+  color: #687559;
 }
 
 #search-widget select {
   height: 40px;
   box-sizing: border-box;
+  margin-left: 10px;
+  padding-left: 15px;
+  font-weight: bold;
 
   border: 1px solid #c1ceb0;
   vertical-align: middle;
@@ -24,7 +30,9 @@
 
 #search-widget input {
   height: 40px;
+  width: 76%;
   box-sizing: border-box;
+  margin-left: 10px;
   padding-left: 10px;
   padding-right: 10px;
 
@@ -50,6 +58,7 @@
 
 #dashboard {
   margin: 34px;
+  width: 85%;
   margin-top: 46px;
   padding: 36px;
 
