@@ -7,7 +7,7 @@ from django.utils import timezone;
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login as django_login
+from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 
 from django.core.exceptions import ObjectDoesNotExist
 
