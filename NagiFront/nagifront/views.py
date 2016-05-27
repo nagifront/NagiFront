@@ -132,8 +132,8 @@ def hosts_groups_service_number_by_state(request):
         # ex) 'Ok':4, 'Warning':0, 'Critical':3, 'Unknown':1 -> before this loop, services_state_count = [(0,4), (2,3), (3,1)]
         services_state_count += [(5,0), (6,0), (7,0), (8,0)]
         for i in range(4):
-            if status_list[i][0] != i:
-                status_list.insert(i, (0,0))
+            if services_state_count[i][0] != i:
+                services_state_count.insert(i, (0,0))
         
         return {
             'alias':alias, 
