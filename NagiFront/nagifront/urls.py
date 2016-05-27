@@ -16,6 +16,7 @@ urlpatterns = [
         url(r'^hosts/groups/service-number-by-state$', views.hosts_groups_service_number_by_state, name='host-groups-service-number-by-state'),
         url(r'^hosts/groups/trouble-trend$', views.hosts_groups_trouble_trend, name='host-groups-trouble-trend'),
         url(r'^hosts/groups/trouble-hosts$', views.hosts_groups_trouble_hosts, name='host-groups-trouble-hosts'),
+        url(r'^hosts/groups/check-schedules$', views.hosts_groups_check_schedules, name='host-groups-check-schedules'),
         
         url(r'^hosts/(?P<host_id>[0-9]+)/trend$', views.hosts_id_trend, name='hosts-id-trend'),
 
