@@ -300,11 +300,11 @@ def hosts_state_change(request):
             hosts_statuses = NagiosHoststatus.objects.all().values('host_object_id', 'current_state', 'last_state_change')  \
                                                            .order_by('host_object_id')
             hosts = NagiosHosts.objects.all().values('host_object_id', 'alias')
-            result = {'trends':[]}
+            result = {'hosts':[]}
 
             for host in hosts:
                 host_status = hosts_statuses.get(host_object_id=host['host_object_id'])
-                result['trends'].append({
+                result['hosts'].append({
                                 'alias':host['alias'],
                                 'state': host_status['current_state'],
                                 'last_state_change':host_status['last_state_change']
