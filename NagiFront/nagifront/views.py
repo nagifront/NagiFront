@@ -160,13 +160,14 @@ def hosts_groups_service_number_by_state(request):
 def hosts_id_trend(request, host_id):
     try:
         if request.method == 'GET':
+            host = NagiosHosts.objects.get(host_object_id = host_id)
             history = list(NagiosHostchecks.objects.filter(host_object_id=host_id).values('state', 'is_raw_check', 'end_time').order_by('-end_time'))
 
             for i in range(len(history) - 2, -1, -1):
                 if history[i]['state'] == history[i+1]['state']:
                     del history[i];
 
-            return JsonResponse({'trends':history}, safe=False)
+            return JsonResponse({'trends':history, 'host':host}, encoder=CustomJSONEncoder)
     
     except ObjectDoesNotExist:
         return JsonResponse(dict())
