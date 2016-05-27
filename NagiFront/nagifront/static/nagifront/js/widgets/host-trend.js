@@ -138,7 +138,7 @@ angular.module('nagifront')
               .attr('class', 'x-ticks')
               .text(function(d) { return d.n })
               .attr('x', -10)
-              .style("text-anchor", "end")
+              .style('text-anchor', 'end')
               .attr('y', function(d) { return y(d.s) + margin.top })
 
           var interval = (now - limit) / 3;
