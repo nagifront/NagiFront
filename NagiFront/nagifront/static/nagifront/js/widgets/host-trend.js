@@ -55,23 +55,22 @@ angular.module('nagifront')
             .remove();
           // erase all element
 
-          var data = [];
+          var data_processed = [];
           var now = Date.now()
           var prev = now
           var limit = prev - scope.time.value;
           var last_state = null;
-          angular.forEach(scope.data.trends, function(trend){
+          angular.forEach(data.trends, function(trend){
             var end_time = new Date(trend.end_time).getTime()
             if (end_time < limit){
               if (last_state == null)
                 last_state = trend.state;
               return;
             }
-            data.push({state: 4 - trend.state, interval: prev - end_time, time: new Date(end_time)});
+            data_processed.push({state: 4 - trend.state, interval: prev - end_time, time: new Date(end_time)});
             prev = end_time
           });
-          data.push({state: 4 - last_state, interval: prev - limit, time: new Date(limit)});
-          scope.mon = data
+          data_processed.push({state: 4 - last_state, interval: prev - limit, time: new Date(limit)});
           // data process
 
           var margin = {top: 10, right: 60, bottom: 60, left: 110},
@@ -116,7 +115,7 @@ angular.module('nagifront')
             .call(yAxis)
 
           svg.selectAll('.bar')
-            .data(data)
+            .data(data_processed)
             .enter().append('rect')
               .attr('class', 'bar')
               .attr('x', function(d) { return x(d.time); })
@@ -185,7 +184,9 @@ angular.module('nagifront')
         type: '=',
       },
       template: '<h3>호스트 트렌드<small> - {{ group_name }}</small></h3>'
-        + '<div class="charts"><div ng-repeat="member in members" host-trend host_id="{{ member }}"></div>',
+        + '<div class="charts">'
+        + '<div ng-repeat="member in members" host-trend host_id="{{ member }}">'
+        + '</div>',
       link: function(scope, element, attrs){
         $http.get(djangoUrl.reverse('hosts-groups') + '&host_group_id' + attrs.hostGroupId).then(function(response){
           scope.members = response.data[attrs.hostGroupId].members

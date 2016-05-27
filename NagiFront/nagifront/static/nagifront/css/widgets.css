@@ -1,0 +1,7 @@
+/* start of host-trend-group css */
+div[host-trend-group] .axis path {
+  stroke: black;
+  stroke-width: 1;
+  fill: none;
+}
+/* end of host-trend-group css */

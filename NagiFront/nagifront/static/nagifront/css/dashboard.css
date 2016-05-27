@@ -56,9 +56,3 @@
   background-color: #ffffff;
   border: 2px solid #c1ceb0;
 }
-
-.axis path {
-  stroke: black;
-  stroke-width: 1;
-  fill: none;
-}
