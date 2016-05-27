@@ -1,7 +1,9 @@
 import json
+from datetime import datetime, timedelta, time
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
+from django.utils import timezone;
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -131,8 +133,8 @@ def hosts_groups_service_number_by_state(request):
         # ex) 'Ok':4, 'Warning':0, 'Critical':3, 'Unknown':1 -> before this loop, services_state_count = [(0,4), (2,3), (3,1)]
         services_state_count += [(5,0), (6,0), (7,0), (8,0)]
         for i in range(4):
-            if status_list[i][0] != i:
-                status_list.insert(i, (0,0))
+            if services_state_count[i][0] != i:
+                services_state_count.insert(i, (0,0))
         
         return {
             'alias':alias, 
@@ -218,3 +220,75 @@ def hosts_groups_hosts_state(request):
         except ObjectDoesNotExist:
             return JsonResponse(dict())
 
+
+@login_required
+def hosts_groups_trouble_trend(request):
+    if request.method == 'GET':
+        group_id = request.GET.get('host_group_id')
+        time_scale = request.GET.get('time-scale')
+
+        if group_id is not None and time_scale is not None:
+            group_host_list = NagiosHostgroupMembers.objects\
+                                                    .filter(hostgroup_id=(NagiosHostgroups.objects.get(hostgroup_object_id=group_id).hostgroup_id))\
+                                                    .values_list('host_object_id', flat=True)
+            group_service_list = NagiosServices.objects.filter(host_object_id__in=group_host_list).values_list('service_object_id', flat=True)
+            if time_scale == 'day':
+                # Get the history of recent 24 hours
+                history = list(NagiosServicechecks.objects.filter(service_object_id__in=group_service_list,             \
+                                                                  end_time__gte=timezone.localtime(timezone.now())-timedelta(hours=24))     \
+                                                          .values('state', 'end_time')  \
+                                                          .order_by('-end_time'))
+                # Takes the datetime object as an argument, and returns a tuple of year,month,date,hour
+                dt_tuple = lambda t: (t.year, t.month, t.day, t.hour)
+                timeslot_list = [dt_tuple(timezone.localtime(timezone.now())-timedelta(hours=x)) for x in range(23, -1, -1)] # Timeslot tuple list
+
+                grouped_history = [[sc['state'] for sc in history if (dt_tuple(sc['end_time']) == timeslot)] for timeslot in timeslot_list]
+                state_history = [[l.count(0), l.count(1), l.count(2), l.count(3)] for l in grouped_history]
+
+                result = {'time-scale': time_scale, 'time': {}}
+                for i in range(len(timeslot_list)):
+                    key = str(timeslot_list[i][0]) + '-'    \
+                        + str(timeslot_list[i][1]) + '-'    \
+                        + str(timeslot_list[i][2]) + '-'    \
+                        + str(timeslot_list[i][3])          # ex) '2016-05-17-04' = 16/05/17 04:00
+                    result['time'][key] = { 
+                                    'ok': state_history[i][0],
+                                    'warning': state_history[i][1],
+                                    'critical': state_history[i][2],
+                                    'unknown': state_history[i][3]
+                                    }
+
+                return JsonResponse(result)
+
+            elif time_scale == 'week':
+                # Get the history of recent 7 days
+                history = NagiosServicechecks.objects.filter(service_object_id__in=group_service_list,          \
+                                                             end_time__gte=timezone.localtime(timezone.now())-timedelta(days=7))    \
+                                                     .values('state', 'end_time')   \
+                                                     .order_by('-end_time')
+                # Takes the datetime object as an argument, and returns a tuple of year,month,date
+                dt_tuple = lambda t: (t.year, t.month, t.day)
+                timeslot_list = [dt_tuple(timezone.localtime(timezone.now())-timedelta(days=x)) for x in range(6, -1, -1)] # Timeslot tuple list
+
+                grouped_history = [[sc['state'] for sc in history if (dt_tuple(sc['end_time']) == timeslot)] for timeslot in timeslot_list]
+                state_history = [[l.count(0), l.count(1), l.count(2), l.count(3)] for l in grouped_history]
+
+                result = {'time-scale': time_scale, 'time': {}}
+                for i in range(len(timeslot_list)):
+                    key = str(timeslot_list[i][0]) + '-'    \
+                        + str(timeslot_list[i][1]) + '-'    \
+                        + str(timeslot_list[i][2])
+                    result['time'][key] = { 
+                                    'ok': state_history[i][0],
+                                    'warning': state_history[i][1],
+                                    'critical': state_history[i][2],
+                                    'unknown': state_history[i][3]
+                                    }
+
+                return JsonResponse(result)
+            else:
+                return JsonResponse(dict())
+        else:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
