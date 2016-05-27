@@ -292,3 +292,28 @@ def hosts_groups_trouble_trend(request):
             return JsonResponse(dict())
     else:
         return JsonResponse(dict())
+
+
+@login_required
+def hosts_state_change(request):
+    if request.method == 'GET':
+        try:
+            hosts_statuses = NagiosHoststatus.objects.all().values('host_object_id', 'current_state', 'last_state_change')  \
+                                                           .order_by('host_object_id')
+            hosts = NagiosHosts.objects.all().values('host_object_id', 'alias')
+            result = {'hosts':[]}
+
+            for host in hosts:
+                host_status = hosts_statuses.get(host_object_id=host['host_object_id'])
+                result['hosts'].append({
+                                'alias':host['alias'],
+                                'state': host_status['current_state'],
+                                'last_state_change':host_status['last_state_change']
+                                })
+
+            return JsonResponse(result, json_dumps_params={'ensure_ascii':False} )
+
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
