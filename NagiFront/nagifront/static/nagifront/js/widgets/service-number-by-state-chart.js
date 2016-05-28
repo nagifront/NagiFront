@@ -18,12 +18,9 @@ angular.module('nagifront')
           $http.get(djangoUrl.reverse('host-groups-service-number-by-state')).then(function(response) {
             scope.data = response.data;
             scope.groups = [];
-            var i = 0;
 
             angular.forEach(scope.data, function(value, key) {
-              if(i%2===0) scope.groups.push({state: 'even', alias: value.alias, Ok: value.ok, Warning: value.warning, Critical: value.critical});
-              else scope.groups.push({state: 'odd', alias: value.alias, Ok: value.ok, Warning: value.warning, Critical: value.critical});
-              i++;
+              scope.groups.push({alias: value.alias, Ok: value.ok, Warning: value.warning, Critical: value.critical});
             });
         });
         }
