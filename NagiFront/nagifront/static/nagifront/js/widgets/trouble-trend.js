@@ -37,7 +37,7 @@ angular.module('nagifront')
 					var time_scale = data['time-scale'];
           var data_processed = [];
           angular.forEach(data.time, function(value, key) {
-            data_processed.push({time: key, Warning: value.Warning, Critical: value.Critical});
+            data_processed.push({time: key, warning: value.warning, critical: value.critical});
           });
 
           var color = d3.scale.ordinal()
@@ -71,7 +71,7 @@ angular.module('nagifront')
             .attr('height', height + margin.top + margin.bottom)
             .append('g')
             .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-          var stateName = ['Warning', 'Critical'];
+          var stateName = ['warning', 'critical'];
           data_processed.forEach(function(d) {
             d.state = stateName.map(function(name) {return {name: name, value: +d[name]}; });
           });
