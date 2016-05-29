@@ -5,3 +5,63 @@ div[host-trend-group] .axis path {
   fill: none;
 }
 /* end of host-trend-group css */
+
+/* start of service-number-by-state-chart css */
+div[service-number-by-state-chart] .charts {
+  box-sizing: border-box;
+	width: 550px;
+  padding: 10px;
+  padding-top: 30px;
+  border-top: 1px solid #ccc;
+}
+div[service-number-by-state-chart] .groups {
+  padding: 10px;
+	width: 100%;
+  height: 45px;
+  box-sizing: border-box;
+  border: 2px solid #e6ece0;
+}
+div[service-number-by-state-chart] .groups:nth-child(even){
+  background-color: #e6ece0;
+}
+div[service-number-by-state-chart] .groups .group-name {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 130px;
+  font-weight: bold;
+}
+div[service-number-by-state-chart] .groups .state {
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 10px;
+  width: 90px;
+  height: 25px;
+  vertical-align: top;
+  text-align: center;
+  font-size: 0.95 em;
+  color: white;
+}
+div[service-number-by-state-chart] .groups .Ok {
+  background-color: #8dd775;
+  border: 1px #6ca65a solid;
+}
+div[service-number-by-state-chart] .groups .Ok span {
+	font-weight: bold;
+}
+div[service-number-by-state-chart] .groups .Warning {
+  background-color: #e1e26a;
+  border: 1px #cbcf30 solid;
+}
+div[service-number-by-state-chart] .groups .Warning span {
+	font-weight: bold;
+}
+div[service-number-by-state-chart] .groups .Critical {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[service-number-by-state-chart] .groups .Critical span {
+	font-weight: bold;
+}
+/* end of service-number-by-state-chart css */
