@@ -34,11 +34,29 @@ angular.module('nagifront')
             .select('.charts')
             .selectAll('*')
             .remove();
+
 					var time_scale = data['time-scale'];
+				
+					function parseTime(time) {
+						var strArray;
+						if(time_scale==='week') {
+							strArray=time.split('-');
+							return strArray[1]+'-'+strArray[2];
+						}
+						else {
+							strArray=time.split('-');
+							return strArray[3];
+						}
+					}
+
           var data_processed = [];
           angular.forEach(data.time, function(value, key) {
-            data_processed.push({time: key, warning: value.warning, critical: value.critical});
+            data_processed.push({time: parseTime(key), warning: value.warning, critical: value.critical});
           });
+
+					data_processed.sort(function(a, b) { 
+						return a.time < b.time? -1 : a.time > b.time? 1: 0;	
+					});
 
           var color = d3.scale.ordinal()
             .range([
