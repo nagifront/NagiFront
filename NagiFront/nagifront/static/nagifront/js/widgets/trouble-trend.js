@@ -35,28 +35,43 @@ angular.module('nagifront')
             .selectAll('*')
             .remove();
 
-					var time_scale = data['time-scale'];
-				
-					function parseTime(time) {
-						var strArray;
-						if(time_scale==='week') {
-							strArray=time.split('-');
-							return strArray[1]+'-'+strArray[2];
-						}
-						else {
-							strArray=time.split('-');
-							return strArray[3];
-						}
-					}
+          var time_scale = data['time-scale'];
+        
+          function parseTime(time) {
+            var strArray;
+            if(time_scale==='week') {
+              strArray=time.split('-');
+              if(strArray[1] * 1 < 10) strArray[1] ='0'+strArray[1];
+              if(strArray[2] * 1 < 10) strArray[2] = '0'+strArray[2];
+              return strArray[1]+'-'+strArray[2];
+            }
+            else {
+              strArray=time.split('-');
+              if(strArray[3] * 1 < 10) strArray[3] = '0'+strArray[3];
+              return strArray[3];
+            }
+          }
+          function formatTime(time) {
+            var strArray;
+            if(time_scale==='week') {
+              return time;
+            }
+            else {
+              strArray=time.split('-');
+              return strArray[0]+'-'+strArray[1]+'-'+strArray[2];
+            }
+          }
 
           var data_processed = [];
+          
           angular.forEach(data.time, function(value, key) {
-            data_processed.push({time: parseTime(key), warning: value.warning, critical: value.critical});
+            if(time_scale=='day') data_processed.push({sort: new Date(formatTime(key)).getTime()+parseTime(key)*1, time: parseTime(key), warning: value.warning, critical: value.critical});
+            else data_processed.push({sort: new Date(formatTime(key)).getTime()+parseTime(key), time: parseTime(key), warning: value.warning, critical: value.critical});
           });
 
-					data_processed.sort(function(a, b) { 
-						return a.time < b.time? -1 : a.time > b.time? 1: 0;	
-					});
+          data_processed.sort(function(a, b) { 
+            return a.sort < b.sort? -1 : a.sort > b.sort? 1: 0;  
+          });
 
           var color = d3.scale.ordinal()
             .range([
@@ -65,7 +80,7 @@ angular.module('nagifront')
           ]);
 
           var margin = {top: 20, right: 20, bottom: 20, left: 40},
-            width = 500 - margin.left - margin.right,
+            width = 600 - margin.left - margin.right,
             height = 300 - margin.top - margin.bottom;
 
           var x0 = d3.scale.ordinal()
@@ -82,7 +97,7 @@ angular.module('nagifront')
           var yAxis = d3.svg.axis()
             .scale(y)
             .orient('left')
-            .tickFormat(d3.format('.2s'));
+            .tickFormat(d3.format('s'));
 
           var svg = d3.select(element[0]).select('.charts').append('svg')
             .attr('width', width + margin.left + margin.right)
@@ -95,7 +110,7 @@ angular.module('nagifront')
           });
           x0.domain(data_processed.map(function(d) {return d.time;}));  
           x1.domain(stateName).rangeRoundBands([0, x0.rangeBand()]);
-          y.domain([0, d3.max(data_processed, function(d) {return d3.max(d.state, function(d) {return d.value; }); })+2]);
+          y.domain([0, d3.max(data_processed, function(d) {return d3.max(d.state, function(d) {return d.value; }); })+ 2]);
 
           svg.append('g')
             .attr('class', 'x axis')
@@ -104,13 +119,7 @@ angular.module('nagifront')
 
           svg.append('g')
             .attr('class', 'y axis')
-            .call(yAxis)
-            .append('text')
-            .attr('transform', 'rotate(-90)')
-            .attr('y', 2)
-            .attr('dy', '.51em')
-            .style('text-anchor', 'end')
-            .text('state number');
+            .call(yAxis);
 
           var group = svg.selectAll('.time')
             .data(data_processed)
