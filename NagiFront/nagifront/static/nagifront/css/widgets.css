@@ -5,3 +5,13 @@ div[host-trend-group] .axis path {
   fill: none;
 }
 /* end of host-trend-group css */
+
+/* start of troule-trend css*/
+div[trouble-trend] .charts {
+  box-sizing: border-box;
+  width: 600px;
+  padding: 10px;
+  padding-top: 30px;
+  border-top: 1px solid #ccc;
+}
+/* send of troule-trend css*/
