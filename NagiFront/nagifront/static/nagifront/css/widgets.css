@@ -147,15 +147,6 @@ div[host-state-change] .state-change-item .output span {
   background-color: white;
   border: 1.5px solid #8d9a7b;
 }
-div[host-state-change] .state-change-item .output span::after {
-  content: "";
-  position: absolute;
-  top: calc(100% - 1px);
-  left: 20px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: white transparent transparent transparent;
-}
 div[host-state-change] .state-change-item .output:hover {
   opacity: 1;
 }
@@ -250,9 +241,6 @@ div[trouble-host] .trouble-item .output span {
   white-space: nowrap;
   background-color: white;
   border: 1.5px solid #8d9a7b;
-}
-div[trouble-host] .trouble-item .output span::after {
-  content: "";
 }
 div[trouble-host] .trouble-item .output:hover {
   opacity: 1;
