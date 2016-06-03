@@ -91,12 +91,15 @@ div[host-state-change] .charts {
   border-top: 1px solid #ccc;
 }
 div[host-state-change] .state-change-item {
-  margin: 10px;
+  margin-bottom: 10px;
   width: 100%;
   height: 45px;
   box-sizing: border-box;
   padding: 10px;
   background-color: #e6ece0;
+}
+div[host-state-change] .state-change-item:last-child {
+  margin: 0px;
 }
 div[host-state-change] .state-change-item .state {
   display: inline-block;
