@@ -495,6 +495,35 @@ def configuration_scheduled_downtime(request):
         return JsonResponse(dict())
 
 
+def configuration_comments(request):
+    if request.method == 'GET':
+        try:
+            comments_list = NagiosComments.objects.filter(comment_type=1)   \
+                                                  .values('object_id',             
+                                                          'comment_time',            
+                                                          'comment_data',          
+                                                          'author_name')    \
+                                                  .order_by('-comment_time')
+            host_alias_map = {}
+            host_data_list = NagiosHosts.objects.values('host_object_id','alias')
+            for host in host_data_list:
+                host_alias_map[host['host_object_id']] = host['alias']
+
+            result = {'comments':[]}
+            for comment_entry in comments_list:
+                entry_data = {}
+                entry_data['time'] = comment_entry['comment_time']
+                entry_data['contents'] = comment_entry['comment_data']
+                entry_data['author'] = comment_entry['author_name']
+                entry_data['host_name'] = host_alias_map[comment_entry['object_id']]
+                result['comments'].append(entry_data)
+
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
 """ GET API Template
 def some_api_name(request):
     if request.method == 'GET':

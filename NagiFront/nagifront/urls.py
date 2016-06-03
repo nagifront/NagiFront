@@ -22,4 +22,5 @@ urlpatterns = [
         url(r'^hosts/(?P<host_id>[0-9]+)/trend$', views.hosts_id_trend, name='hosts-id-trend'),
         
         url(r'^configuration/scheduled-downtime$', views.configuration_scheduled_downtime, name='configuration-scheduled-downtime'),
+        url(r'^configuration/comments$', views.configuration_comments, name='configuration-comments'),
         ]
