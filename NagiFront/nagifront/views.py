@@ -463,6 +463,7 @@ def hosts_parent_information(request):
     else:
         return JsonResponse(dict())
 
+@login_required
 def configuration_scheduled_downtime(request):
     if request.method == 'GET':
         try:
@@ -494,7 +495,7 @@ def configuration_scheduled_downtime(request):
     else:
         return JsonResponse(dict())
 
-
+@login_required
 def configuration_comments(request):
     if request.method == 'GET':
         try:
