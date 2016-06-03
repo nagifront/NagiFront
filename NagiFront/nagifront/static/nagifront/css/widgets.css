@@ -262,3 +262,20 @@ div[trouble-host] .trouble-item .unknown {
   border: 1px #666666 solid;
 }
 /* end of trouble-host widget */
+
+/* start of map widget */
+div[map] h3 {
+  margin: 0px;
+}
+div[map] .charts {
+  width: 400px;
+  box-sizing: border-box;
+  padding: 10px;
+  padding-top: 40px;
+  border-top: 1px solid #ccc;
+}
+div[map] .map-wrapper {
+  height: 400px;
+  overflow: scroll;
+}
+/* end of map widget */
