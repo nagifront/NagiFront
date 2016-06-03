@@ -20,5 +20,7 @@ urlpatterns = [
         url(r'^hosts/groups/check-schedules$', views.hosts_groups_check_schedules, name='host-groups-check-schedules'),
         
         url(r'^hosts/(?P<host_id>[0-9]+)/trend$', views.hosts_id_trend, name='hosts-id-trend'),
-
+        
+        url(r'^configuration/scheduled-downtime$', views.configuration_scheduled_downtime, name='configuration-scheduled-downtime'),
+        url(r'^configuration/comments$', views.configuration_comments, name='configuration-comments'),
         ]

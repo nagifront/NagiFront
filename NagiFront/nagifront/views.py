@@ -480,3 +480,77 @@ def hosts_parent_information(request):
     else:
         return JsonResponse(dict())
 
+@login_required
+def configuration_scheduled_downtime(request):
+    if request.method == 'GET':
+        try:
+            downtime_list = NagiosScheduleddowntime.objects.filter(downtime_type=2)         \
+                                                           .values('object_id',             
+                                                                   'entry_time',            
+                                                                   'comment_data',          
+                                                                   'scheduled_start_time', 
+                                                                   'scheduled_end_time')    \
+                                                           .order_by('scheduled_start_time')
+            host_alias_map = {}
+            host_data_list = NagiosHosts.objects.values('host_object_id','alias')
+            for host in host_data_list:
+                host_alias_map[host['host_object_id']] = host['alias']
+
+            result = {'scheduled_downtime':[]}
+            for downtime_entry in downtime_list:
+                entry_data = {}
+                entry_data['entry_time'] = downtime_entry['entry_time']
+                entry_data['comment_data'] = downtime_entry['comment_data']
+                entry_data['scheduled_start_time'] = downtime_entry['scheduled_start_time']
+                entry_data['scheduled_end_time'] = downtime_entry['scheduled_end_time']
+                entry_data['host_name'] = host_alias_map[downtime_entry['object_id']]
+                result['scheduled_downtime'].append(entry_data)
+
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
+@login_required
+def configuration_comments(request):
+    if request.method == 'GET':
+        try:
+            comments_list = NagiosComments.objects.filter(comment_type=1)   \
+                                                  .values('object_id',             
+                                                          'comment_time',            
+                                                          'comment_data',          
+                                                          'author_name')    \
+                                                  .order_by('-comment_time')
+            host_alias_map = {}
+            host_data_list = NagiosHosts.objects.values('host_object_id','alias')
+            for host in host_data_list:
+                host_alias_map[host['host_object_id']] = host['alias']
+
+            result = {'comments':[]}
+            for comment_entry in comments_list:
+                entry_data = {}
+                entry_data['time'] = comment_entry['comment_time']
+                entry_data['contents'] = comment_entry['comment_data']
+                entry_data['author'] = comment_entry['author_name']
+                entry_data['host_name'] = host_alias_map[comment_entry['object_id']]
+                result['comments'].append(entry_data)
+
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
+""" GET API Template
+def some_api_name(request):
+    if request.method == 'GET':
+        try:
+            # DO
+            # SOMTHING
+            # NEEDED
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+"""
