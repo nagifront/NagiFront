@@ -9,6 +9,7 @@ angular.module('nagifront')
             + '<span class="state {{ state[host.state] }}">{{ state[host.state] }}</span>'
             + '<span class="host-name"><span>{{ host.alias }}</span></span>'
             + '<time>{{ host.last_state_change | date : "yyyy/MM/dd HH:mm:ss" }}</time>'
+            + '<div class="output" ng-if="host.output!=\'\'"><span>{{ host.output }}</span></div>'
           + '</div>'
         + '</div>',
       link: function(scope, element, attrs){
