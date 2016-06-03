@@ -19,6 +19,7 @@ from .nagios_models import *
 
 # Create your views here.
 
+@login_required
 def index(request):
     return render(request, 'nagifront/dashboard.html', {
     })
