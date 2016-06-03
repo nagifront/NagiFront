@@ -97,6 +97,7 @@ div[host-state-change] .state-change-item {
   box-sizing: border-box;
   padding: 10px;
   background-color: #e6ece0;
+  border: 1px solid #c7d3bd;
 }
 div[host-state-change] .state-change-item:last-child {
   margin: 0px;
@@ -117,11 +118,16 @@ div[host-state-change] .state-change-item .host-name {
   white-space: nowrap;
   text-overflow: ellipsis;
   font-weight: bold;
+  vertical-align: middle;
 }
 div[host-state-change] .state-change-item time {
   float: right;
+  display: inline-block;
   margin-right: 10px;
   font-size: 0.75em;
+  line-height: 25px;
+  color: #626d4f;
+  vertical-align: middle;
 }
 div[host-state-change] .state-change-item .up {
   background-color: #8dd775;
