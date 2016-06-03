@@ -13,13 +13,9 @@ angular.module('nagifront')
         + '</div>',
       link: function(scope, element, attrs){
         getData = function(){
-          /*
-          $http.get(djangoUrl.reverse('hosts-state-change')).then(function(response){
-            scope.hosts = response.data.hosts;
+          $http.get(djangoUrl.reverse('host-groups-trouble-hosts')).then(function(response){
+            scope.troubles = response.data.trouble_hosts;
           });
-          */
-          data = {"trouble_hosts": [{"host_name": "uriel", "service_name": "Current Users", "state": 1, "time": "2016-06-01T12:55:03Z"}, {"host_name": "WaffleStudio Linode", "service_name": "Mem Load", "state": 1, "time": "2016-06-01T11:04:27Z"}, {"host_name": "uriel", "service_name": "Total Processes", "state": 1, "time": "2016-06-01T10:01:55Z"}, {"host_name": "localhost", "service_name": "Total Processes", "state": 1, "time": "2016-05-04T08:52:21Z"}]};
-          scope.troubles = data.trouble_hosts;
         }
         $interval(getData, 30000);
         getData();
