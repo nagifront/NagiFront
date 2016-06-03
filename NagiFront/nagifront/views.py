@@ -300,7 +300,7 @@ def hosts_groups_trouble_trend(request):
 def hosts_state_change(request):
     if request.method == 'GET':
         try:
-            hosts_statuses = NagiosHoststatus.objects.all().values('host_object_id', 'current_state', 'last_state_change')  \
+            hosts_statuses = NagiosHoststatus.objects.all().values('host_object_id', 'current_state', 'last_state_change', 'output', 'is_flapping')  \
                                                            .order_by('host_object_id')
             hosts = NagiosHosts.objects.all().values('host_object_id', 'alias')
             result = {'hosts':[]}
@@ -308,9 +308,11 @@ def hosts_state_change(request):
             for host in hosts:
                 host_status = hosts_statuses.get(host_object_id=host['host_object_id'])
                 result['hosts'].append({
-                                'alias':host['alias'],
+                                'alias': host['alias'],
+                                'output': host_status['output'],
+                                'is_flapping': host_status['is_flapping'],
                                 'state': host_status['current_state'],
-                                'last_state_change':host_status['last_state_change']
+                                'last_state_change': host_status['last_state_change']
                                 })
 
             return JsonResponse(result, json_dumps_params={'ensure_ascii':False} )
@@ -332,9 +334,13 @@ def hosts_groups_trouble_hosts(request):
                                                               .values_list('host_object_id', flat=True)
                 group_services = NagiosServices.objects.filter(host_object_id__in=group_members)                        \
                                                        .values('service_object_id', 'host_object_id', 'display_name')
-                group_service_states = NagiosServicestatus.objects.filter(service_object_id__in=group_services.values_list('service_object_id'))    \
-                                                                  .exclude(current_state=0)                                                         \
-                                                                  .values('service_object_id', 'current_state', 'last_state_change')                \
+                group_service_states = NagiosServicestatus.objects.filter(service_object_id__in=group_services.values_list('service_object_id')) \
+                                                                  .exclude(current_state=0)                                                      \
+                                                                  .values('service_object_id',
+                                                                          'current_state',
+                                                                          'last_state_change',
+                                                                          'output',
+                                                                          'is_flapping')          \
                                                                   .order_by('-last_state_change')
                 
                 host_alias_map = NagiosHosts.objects.filter(host_object_id__in=group_members)   \
@@ -345,6 +351,8 @@ def hosts_groups_trouble_hosts(request):
                     service_data = {}
                     service_data['state'] = service['current_state']
                     service_data['time'] = service['last_state_change']
+                    service_data['output'] = service['output']
+                    service_data['is_flapping'] = service['is_flapping']
                         
                     service_map = group_services.get(service_object_id=service['service_object_id'])
 
@@ -358,8 +366,12 @@ def hosts_groups_trouble_hosts(request):
                 hosts = NagiosHosts.objects.values('host_object_id', 'alias')
                 services = NagiosServices.objects.values('service_object_id', 'host_object_id', 'display_name')
 
-                trouble_services = NagiosServicestatus.objects.exclude(current_state=0)                                             \
-                                                              .values('service_object_id', 'current_state', 'last_state_change')    \
+                trouble_services = NagiosServicestatus.objects.exclude(current_state=0)                                                                     \
+                                                              .values('service_object_id',
+                                                                      'current_state',
+                                                                      'last_state_change',
+                                                                      'output',
+                                                                      'is_flapping')          \
                                                               .order_by('-last_state_change')
                 
                 result = {"trouble_hosts":[]}
@@ -367,6 +379,8 @@ def hosts_groups_trouble_hosts(request):
                     service_data = {}
                     service_data['state'] = service['current_state']
                     service_data['time'] = service['last_state_change']
+                    service_data['output'] = service['output']
+                    service_data['is_flapping'] = service['is_flapping']
                         
                     service_map = services.get(service_object_id=service['service_object_id'])
 

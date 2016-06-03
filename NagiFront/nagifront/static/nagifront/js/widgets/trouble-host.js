@@ -9,6 +9,7 @@ angular.module('nagifront')
             + '<span class="state {{ state[trouble.state] }}"></span>'
             + '<span class="trouble-name"><span>[{{ trouble.host_name }}] {{ trouble.service_name }}</span></span>'
             + '<time>{{ trouble.time | date : "yyyy/MM/dd HH:mm:ss" }}</time>'
+            + '<div class="output" ng-if="trouble.output!=\'\'"><span>{{ trouble.output }}</span></div>'
           + '</div>'
         + '</div>',
       link: function(scope, element, attrs){
