@@ -40,7 +40,7 @@ div[service-number-by-state-chart] .groups .state {
   height: 25px;
   vertical-align: top;
   text-align: center;
-  font-size: 0.95 em;
+  font-size: 0.95em;
   color: white;
 }
 div[service-number-by-state-chart] .groups .Ok {
@@ -75,3 +75,53 @@ div[trouble-trend] .charts {
   border-top: 1px solid #ccc;
 }
 /* end of troule-trend css*/
+
+/* start of check-schdules css*/
+div[check-schedules] .charts {
+  box-sizing: border-box;
+  width: 650px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+}
+div[check-schedules] .schedule {
+  background-color: #e6ece0;
+  border: 1px #c7d3bd solid;
+  padding: 10px;
+  margin: 10px;
+  width: 100%;
+  height: 45px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  font-size : 0.9em;
+}
+div[check-schedules] .nextCheck {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 150px;
+  border-right: 2.5px #a1ae92 solid;
+  padding-right: 15px;
+  font-weight: bold;
+}
+div[check-schedules] .host {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 240px;
+}
+div[check-schedules] .host span{
+  font-weight: bold;
+}
+div[check-schedules] .lastCheck {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+  color: #626d4f;
+  font-size: 0.8em;
+}
+/* end of check-schdules css*/
