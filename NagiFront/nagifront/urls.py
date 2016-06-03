@@ -10,6 +10,7 @@ urlpatterns = [
         url(r'^hosts/overall$', views.hosts_overall, name='hosts-overall'),
         url(r'^hosts/status$', views.hosts_status, name='hosts-status'),
         url(r'^hosts/state-change$', views.hosts_state_change, name='hosts-state-change'),
+        url(r'^hosts/parent-information$', views.hosts_parent_information, name='hosts-parent-information'),
 
         url(r'^hosts/groups$', views.hosts_groups, name='hosts-groups'),
         url(r'^hosts/groups/hosts-state$', views.hosts_groups_hosts_state, name='hosts-groups-hosts-state'),

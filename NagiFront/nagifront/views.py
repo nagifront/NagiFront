@@ -434,3 +434,32 @@ def hosts_groups_check_schedules(request):
             return JsonResponse(dict())
     else:
         return JsonResponse(dict())
+
+@login_required
+def hosts_parent_information(request):
+    if request.method == 'GET':
+        try:
+            hosts = NagiosHosts.objects.values('host_id', 'host_object_id', 'alias')
+            host_parent_data = NagiosHostParenthosts.objects.values('host_id', 'parent_host_object_id')
+
+            result = {'host_dependency':[]}
+            for host in hosts:
+                host_data = {}
+                host_data['alias'] = host['alias']
+                host_data['host_object_id'] = host['host_object_id']
+                
+                try:
+                    host_parent = host_parent_data.get(host_id=host['host_id'])['parent_host_object_id']
+                except NagiosHostParenthosts.DoesNotExist:
+                    host_parent = None
+                finally:
+                    host_data['parent_host_object_id'] = host_parent
+
+                result['host_dependency'].append(host_data)
+
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
