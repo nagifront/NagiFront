@@ -146,6 +146,16 @@ angular.module('nagifront')
           function hide_information(){
             tooltip.style.display = 'none';
           }
+          var wrap = function (word){
+            if (word.length < 16)
+              return word;
+            else {
+              word = word.substring(0, 15);
+              word += '...';
+              return word;
+            }
+          }
+          // set functions
 
           delete dependency_processed[null];
           var path = svg.selectAll('path')
@@ -177,9 +187,10 @@ angular.module('nagifront')
             .data(Object.values(dependency_processed))
             .enter()
             .append('text')
-            .text(function(d){ return d.alias })
+            .text(function(d){ return wrap(d.alias) })
             .attr('text-anchor', 'middle')
             .attr('font-size', '0.75em')
+            .attr('font-weight', 'bold')
             .attr('x', function(d){
               return Math.cos((d.startw + d.startw + d.weight) * (Math.PI / total_weight) - 1.570796) * ((d.level - 1) * radius)
             })
