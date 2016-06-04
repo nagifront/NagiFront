@@ -8,6 +8,7 @@ urlpatterns = [
         url(r'^logout$', views.logout, name='logout'),
         
         url(r'^hosts/overall$', views.hosts_overall, name='hosts-overall'),
+        url(r'^hosts/services$', views.hosts_services, name='hosts-services'),
         url(r'^hosts/status$', views.hosts_status, name='hosts-status'),
         url(r'^hosts/state-change$', views.hosts_state_change, name='hosts-state-change'),
         url(r'^hosts/parent-information$', views.hosts_parent_information, name='hosts-parent-information'),
