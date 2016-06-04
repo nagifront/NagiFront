@@ -137,6 +137,7 @@ div[comments] .comments .output {
   left: 135px;
   box-sizing: border-box;
   opacity: 0;
+  padding-left: 10px;
   border: 1.5px solid #8d9a7b;
   background-color: white;
 }
