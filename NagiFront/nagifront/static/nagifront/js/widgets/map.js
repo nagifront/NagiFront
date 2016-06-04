@@ -167,19 +167,20 @@ angular.module('nagifront')
                 return color[d.data.host.current_state];
               })
             .attr('stroke', '#e6e6e6')
-          svg.selectAll('circle')
+          svg.selectAll('image')
             .data(Object.values(dependency_processed))
             .enter()
-            .append('circle')
-            .attr('r', 20)
+            .append('image')
             .attr('fill', 'transparent')
-            .attr('stroke', 'blue')
-            .attr('cx', function(d){
-              return Math.cos((d.startw + d.startw + d.weight) * (Math.PI / total_weight) - 1.570796) * ((d.level - 1) * radius)
+            .attr('x', function(d){
+              return Math.cos((d.startw + d.startw + d.weight) * (Math.PI / total_weight) - 1.570796) * ((d.level - 1) * radius) - 20
             })
-            .attr('cy', function(d){
-              return Math.sin((d.startw + d.startw + d.weight) * (Math.PI / total_weight) - 1.570796) * ((d.level - 1) * radius)
+            .attr('y', function(d){
+              return Math.sin((d.startw + d.startw + d.weight) * (Math.PI / total_weight) - 1.570796) * ((d.level - 1) * radius) - 20
             })
+            .attr('xlink:href', host_image_url)
+            .attr('width', '40px')
+            .attr('height', '40px')
             .style('cursor', 'pointer')
             .on('mouseenter', function(d){ show_information(d.alias, d.host); })
             .on('mouseleave', function(d){ hide_information(); })
