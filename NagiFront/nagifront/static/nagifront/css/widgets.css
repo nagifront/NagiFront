@@ -82,23 +82,23 @@ div[scheduled-downtime] .charts {
   width: 750px;
   padding: 10px;
   padding-top: 30px;
-	font-size: 0.9em;
+  font-size: 0.9em;
   border-top: 1px solid #ccc;
-	border-spacing: 4px 1px;
+  border-spacing: 4px 1px;
 }
 div[scheduled-downtime] .downtimes:nth-child(odd){
   background-color: #e6ece0;
 }
 div[scheduled-downtime] th {
-	font-weight: bold;
-	border-bottom: 3px #9cab8e solid;
+  font-weight: bold;
+  border-bottom: 3px #9cab8e solid;
 }
 div[scheduled-downtime] span{
-	font-weight: bold;
+  font-weight: bold;
 }
 div[scheduled-downtime] tr{
-	text-align: center;
-	padding: 10px;
+  text-align: center;
+  padding: 10px;
 }
 /* end of troule-trend css*/
 
