@@ -90,8 +90,8 @@ angular.module('nagifront')
           // data process
 
           var radius = 75,
-              width = (max_level + 1) * radius * 2,
-              height = (max_level + 1) * radius * 2;
+              width = max_level * radius * 2,
+              height = max_level * radius * 2;
           var color = {
             null: 'white', // root
             0: '#8DD775', // up
@@ -188,8 +188,8 @@ angular.module('nagifront')
             })
 
           if (is_first){
-            map_wrapper.scrollTop = width / 2 - 200;
-            map_wrapper.scrollLeft = height / 2 - 200;
+            map_wrapper.scrollTop = width / 2 - (element[0].children[1].children[0].offsetWidth / 2)
+            map_wrapper.scrollLeft = height / 2 - (element[0].children[1].children[0].offsetHeight /2 )
             is_first = false;
           }
         }

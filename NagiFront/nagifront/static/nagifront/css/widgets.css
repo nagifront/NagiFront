@@ -271,14 +271,14 @@ div[map] h3 {
   margin: 0px;
 }
 div[map] .charts {
-  width: 400px;
+  width: 500px;
   box-sizing: border-box;
   padding: 10px;
   padding-top: 40px;
   border-top: 1px solid #ccc;
 }
 div[map] .map-wrapper {
-  height: 400px;
+  height: 500px;
   overflow: scroll;
 }
 div[map] .tooltip {
