@@ -9,15 +9,14 @@ angular.module('nagifront')
           +'<span class="host">[{{comment.host_name}}]</span>'
           +'<span class="contents">{{comment.contents}}</span>'
           +'<span class="detail">{{comment.time | date: "yyyy/MM/dd HH:mm:ss"}} by <span>{{comment.author}}</span></span>'
+          +'<div class="output" ng-if="comment.contents.length > 143"><span>{{comment.contents}}</span></div>'
         +'</div>'
       +'</div>',
       link: function(scope, element, attrs) {
         getData = function() {
-        //  $http.get(djangoUrl.reverse('host-groups-service-number-by-state')).then(function(response) {
-        //    scope.data = response.data;
-       // });
-			 		scope.comments = [{"host_name": "Waffle Choco", "contents":"Notifications for this host are being suppressed because it was detected as having been flapping between different states", "time":"2016-05-03T22:57:39Z", "author":"Seyoung"},
-			 											{"host_name": "Uriel", "contents":"Notifications for this host are being suppressed because it was detected as having been flapping between different states. When the host state stabilizes and the flapping stops, notifications will be re-enabled", "time":"2016-05-03T22:57:39Z", "author":"Seyoung"}];
+          $http.get(djangoUrl.reverse('configuration-comments')).then(function(response) {
+            scope.comments = response.data.comments;
+          });
         }
         $interval(getData, 30000);
         getData();
