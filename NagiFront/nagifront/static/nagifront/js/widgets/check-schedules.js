@@ -9,14 +9,17 @@ angular.module('nagifront')
           +'<span class="nextCheck">{{schedule.next_check_time | date: "yyyy/MM/dd HH:mm:ss"}}</span>'
           +'<span class="host"><span>[{{schedule.host_name}}]</span>: {{schedule.service_name}}</span>'
           +'<span class="lastCheck">last check: {{schedule.last_check_time | date: "yyyy/MM/dd HH:mm:ss" }}</span>'
+				+'<div class="output" ng-if="(schedule.host_name+schedule.service_name).length>30"><span>[{{schedule.host_name}}]: {{schedule.service_name}}</span></div>'
         +'</div>'
       +'</div>',
       link: function(scope, element, attrs) {
         getData = function() {
-          //$http.get(djangoUrl.reverse('host-groups-check-schedules') + '&host_group_id=' + attrs.hostGroupId).then(function(response) {
-          //  scope.schedules = response.data[check_schedules];
-        //  });
-          scope.schedules =   [{"host_name": "WaffleStudio Choco", "service_name": "Current Users", "next_check_time": "2016-06-03T13:40:03Z", "last_check_time": "2016-06-03T13:38:03Z"}, {"host_name": "WaffleStudio Choco", "service_name": "Mem Load", "next_check_time": "2016-06-03T13:40:03Z", "last_check_time": "2016-06-03T13:38:03Z"}, {"host_name": "WaffleStudio Choco", "service_name": "Total Process", "next_check_time": "2016-06-03T13:40:03Z", "last_check_time": "2016-06-03T13:38:03Z"}, {"host_name": "WaffleStudio Dev.", "service_name": "Current Users", "next_check_time": "2016-06-03T13:40:03Z", "last_check_time": "2016-06-03T13:38:03Z"}, {"host_name": "WaffleStudio Dev.", "service_name": "CPU Load", "next_check_time": "2016-06-03T13:40:03Z", "last_check_time": "2016-06-03T13:38:03Z"}, {"host_name": "WaffleStudio Dev.", "service_name": "Mem Load", "next_check_time": "2016-06-03T13:40:03Z", "last_check_time": "2016-06-03T13:38:03Z"}, {"host_name": "WaffleStudio Choco", "service_name": "CPU Load", "next_check_time": "2016-06-03T13:40:03Z", "last_check_time": "2016-06-03T13:38:03Z"}, {"host_name": "WaffleStudio Dev.", "service_name": "Total Process", "next_check_time": "2016-06-03T13:40:03Z", "last_check_time": "2016-06-03T13:38:03Z"}, {"host_name": "WaffleStudio Linode", "service_name": "IO rate", "next_check_time": "2016-06-03T13:40:05Z", "last_check_time": "2016-06-03T13:35:05Z"}, {"host_name": "WaffleStudio Linode", "service_name": "Disk Space", "next_check_time": "2016-06-03T13:41:01Z", "last_check_time": "2016-06-03T13:36:01Z"}, {"host_name": "WaffleStudio Linode", "service_name": "Current Users", "next_check_time": "2016-06-03T13:41:05Z", "last_check_time": "2016-06-03T13:36:05Z"}, {"host_name": "uriel", "service_name": "Disk Space", "next_check_time": "2016-06-03T13:41:05Z", "last_check_time": "2016-06-03T13:36:05Z"}, {"host_name": "uriel", "service_name": "CPU Load", "next_check_time": "2016-06-03T13:41:05Z", "last_check_time": "2016-06-03T13:36:05Z"}, {"host_name": "WaffleStudio Linode", "service_name": "Total Processes", "next_check_time": "2016-06-03T13:41:22Z", "last_check_time": "2016-06-03T13:36:22Z"}, {"host_name": "localhost", "service_name": "Disk Space", "next_check_time": "2016-06-03T13:41:57Z", "last_check_time": "2016-06-03T13:36:57Z"}, {"host_name": "localhost", "service_name": "Total Processes", "next_check_time": "2016-06-03T13:41:57Z", "last_check_time": "2016-06-03T13:36:57Z"}, {"host_name": "localhost", "service_name": "SSH", "next_check_time": "2016-06-03T13:41:57Z", "last_check_time": "2016-06-03T13:36:57Z"}, {"host_name": "localhost", "service_name": "Current Load", "next_check_time": "2016-06-03T13:41:57Z", "last_check_time": "2016-06-03T13:36:57Z"}];
+          if(attrs.hasOwnProperty('hostGroupId')) $http.get(djangoUrl.reverse('host-groups-check-schedules') + '&host_group_id=' + attrs.hostGroupId).then(function(response) {
+          scope.schedules = response.data.check_schedules;
+          });
+          else $http.get(djangoUrl.reverse('host-groups-check-schedules')).then(function(response) {
+          scope.schedules = response.data.check_schedules;
+          });
         }
         $interval(getData, 30000);
         getData();
