@@ -19,6 +19,7 @@ from .nagios_models import *
 
 # Create your views here.
 
+@login_required
 def index(request):
     return render(request, 'nagifront/dashboard.html', {
     })
@@ -299,7 +300,7 @@ def hosts_groups_trouble_trend(request):
 def hosts_state_change(request):
     if request.method == 'GET':
         try:
-            hosts_statuses = NagiosHoststatus.objects.all().values('host_object_id', 'current_state', 'last_state_change')  \
+            hosts_statuses = NagiosHoststatus.objects.all().values('host_object_id', 'current_state', 'last_state_change', 'output', 'is_flapping')  \
                                                            .order_by('host_object_id')
             hosts = NagiosHosts.objects.all().values('host_object_id', 'alias')
             result = {'hosts':[]}
@@ -307,9 +308,11 @@ def hosts_state_change(request):
             for host in hosts:
                 host_status = hosts_statuses.get(host_object_id=host['host_object_id'])
                 result['hosts'].append({
-                                'alias':host['alias'],
+                                'alias': host['alias'],
+                                'output': host_status['output'],
+                                'is_flapping': host_status['is_flapping'],
                                 'state': host_status['current_state'],
-                                'last_state_change':host_status['last_state_change']
+                                'last_state_change': host_status['last_state_change']
                                 })
 
             return JsonResponse(result, json_dumps_params={'ensure_ascii':False} )
@@ -318,3 +321,236 @@ def hosts_state_change(request):
             return JsonResponse(dict())
     else:
         return JsonResponse(dict())
+
+@login_required
+def hosts_groups_trouble_hosts(request):
+    if request.method == 'GET':
+        try:
+            group_obj_id = request.GET.get('host_group_id')
+
+            if group_obj_id is not None:
+                group_id = NagiosHostgroups.objects.get(hostgroup_object_id=group_obj_id).hostgroup_id
+                group_members = NagiosHostgroupMembers.objects.filter(hostgroup_id=group_id)                    \
+                                                              .values_list('host_object_id', flat=True)
+                group_services = NagiosServices.objects.filter(host_object_id__in=group_members)                        \
+                                                       .values('service_object_id', 'host_object_id', 'display_name')
+                group_service_states = NagiosServicestatus.objects.filter(service_object_id__in=group_services.values_list('service_object_id')) \
+                                                                  .exclude(current_state=0)                                                      \
+                                                                  .values('service_object_id',
+                                                                          'current_state',
+                                                                          'last_state_change',
+                                                                          'output',
+                                                                          'is_flapping')          \
+                                                                  .order_by('-last_state_change')
+                
+                host_alias_map = NagiosHosts.objects.filter(host_object_id__in=group_members)   \
+                                                    .values('host_object_id', 'alias')
+
+                result = {"trouble_hosts":[]}
+                for service in group_service_states:
+                    service_data = {}
+                    service_data['state'] = service['current_state']
+                    service_data['time'] = service['last_state_change']
+                    service_data['output'] = service['output']
+                    service_data['is_flapping'] = service['is_flapping']
+                        
+                    service_map = group_services.get(service_object_id=service['service_object_id'])
+
+                    service_data['service_name'] = service_map['display_name']
+                    service_data['host_name'] = host_alias_map.get(host_object_id=service_map['host_object_id'])['alias']
+                    result['trouble_hosts'].append(service_data)
+
+                return JsonResponse(result, json_dumps_params={'ensure_ascii':False})
+
+            else:
+                hosts = NagiosHosts.objects.values('host_object_id', 'alias')
+                services = NagiosServices.objects.values('service_object_id', 'host_object_id', 'display_name')
+
+                trouble_services = NagiosServicestatus.objects.exclude(current_state=0)                                                                     \
+                                                              .values('service_object_id',
+                                                                      'current_state',
+                                                                      'last_state_change',
+                                                                      'output',
+                                                                      'is_flapping')          \
+                                                              .order_by('-last_state_change')
+                
+                result = {"trouble_hosts":[]}
+                for service in trouble_services:
+                    service_data = {}
+                    service_data['state'] = service['current_state']
+                    service_data['time'] = service['last_state_change']
+                    service_data['output'] = service['output']
+                    service_data['is_flapping'] = service['is_flapping']
+                        
+                    service_map = services.get(service_object_id=service['service_object_id'])
+
+                    service_data['service_name'] = service_map['display_name']
+                    service_data['host_name'] = hosts.get(host_object_id=service_map['host_object_id'])['alias']
+                    result['trouble_hosts'].append(service_data)
+                
+                return JsonResponse(result, json_dumps_params={'ensure_ascii':False})
+
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
+@login_required
+def hosts_groups_check_schedules(request):
+    if request.method == 'GET':
+        try:
+            group_obj_id = request.GET.get('host_group_id')
+
+            if group_obj_id is not None:
+                group_id = NagiosHostgroups.objects.get(hostgroup_object_id=group_obj_id).hostgroup_id
+                group_members = NagiosHostgroupMembers.objects.filter(hostgroup_id=group_id)                    \
+                                                              .values_list('host_object_id', flat=True)
+                group_services = NagiosServices.objects.filter(host_object_id__in=group_members)                        \
+                                                       .values('service_object_id', 'host_object_id', 'display_name')
+                group_service_schedules = NagiosServicestatus.objects.filter(service_object_id__in=group_services.values_list('service_object_id'))    \
+                                                                  .values('service_object_id', 'last_check', 'next_check')                             \
+                                                                  .order_by('next_check')
+                host_alias_map = NagiosHosts.objects.filter(host_object_id__in=group_members)   \
+                                                    .values('host_object_id', 'alias')
+
+                result = {'check_schedules':[]}
+                for service in group_service_schedules:
+                    service_schedule = {}
+                    service_schedule['next_check_time'] = service['next_check']
+                    service_schedule['last_check_time'] = service['last_check']
+
+                    service_map = group_services.get(service_object_id=service['service_object_id'])
+
+                    service_schedule['service_name'] = service_map['display_name']
+                    service_schedule['host_name'] = host_alias_map.get(host_object_id=service_map['host_object_id'])['alias']
+
+                    result['check_schedules'].append(service_schedule)
+
+                return JsonResponse(result, json_dumps_params={'ensure_ascii':False})
+            else:
+                hosts = NagiosHosts.objects.values('host_object_id', 'alias')
+                services = NagiosServices.objects.values('service_object_id', 'host_object_id', 'display_name')
+
+                service_schedules = NagiosServicestatus.objects.values('service_object_id', 'last_check', 'next_check')    \
+                                                               .order_by('next_check')
+                result = {"check_schedules":[]}
+                for service in service_schedules:
+                    service_schedule = {}
+                    service_schedule['next_check_time'] = service['next_check']
+                    service_schedule['last_check_time'] = service['last_check']
+
+                    service_map = services.get(service_object_id=service['service_object_id'])
+
+                    service_schedule['service_name'] = service_map['display_name']
+                    service_schedule['host_name'] = hosts.get(host_object_id=service_map['host_object_id'])['alias']
+
+                    result['check_schedules'].append(service_schedule)
+
+                return JsonResponse(result, json_dumps_params={'ensure_ascii':False})
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
+@login_required
+def hosts_parent_information(request):
+    if request.method == 'GET':
+        try:
+            hosts = NagiosHosts.objects.values('host_id', 'host_object_id', 'alias')
+            host_parent_data = NagiosHostParenthosts.objects.values('host_id', 'parent_host_object_id')
+
+            result = {'host_dependency':[]}
+            for host in hosts:
+                host_data = {}
+                host_data['alias'] = host['alias']
+                host_data['host_object_id'] = host['host_object_id']
+                
+                try:
+                    host_parent = host_parent_data.get(host_id=host['host_id'])['parent_host_object_id']
+                except NagiosHostParenthosts.DoesNotExist:
+                    host_parent = None
+                finally:
+                    host_data['parent_host_object_id'] = host_parent
+
+                result['host_dependency'].append(host_data)
+
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
+@login_required
+def configuration_scheduled_downtime(request):
+    if request.method == 'GET':
+        try:
+            downtime_list = NagiosScheduleddowntime.objects.filter(downtime_type=2)         \
+                                                           .values('object_id',             
+                                                                   'entry_time',            
+                                                                   'comment_data',          
+                                                                   'scheduled_start_time', 
+                                                                   'scheduled_end_time')    \
+                                                           .order_by('scheduled_start_time')
+            host_alias_map = {}
+            host_data_list = NagiosHosts.objects.values('host_object_id','alias')
+            for host in host_data_list:
+                host_alias_map[host['host_object_id']] = host['alias']
+
+            result = {'scheduled_downtime':[]}
+            for downtime_entry in downtime_list:
+                entry_data = {}
+                entry_data['entry_time'] = downtime_entry['entry_time']
+                entry_data['comment_data'] = downtime_entry['comment_data']
+                entry_data['scheduled_start_time'] = downtime_entry['scheduled_start_time']
+                entry_data['scheduled_end_time'] = downtime_entry['scheduled_end_time']
+                entry_data['host_name'] = host_alias_map[downtime_entry['object_id']]
+                result['scheduled_downtime'].append(entry_data)
+
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
+@login_required
+def configuration_comments(request):
+    if request.method == 'GET':
+        try:
+            comments_list = NagiosComments.objects.filter(comment_type=1)   \
+                                                  .values('object_id',             
+                                                          'comment_time',            
+                                                          'comment_data',          
+                                                          'author_name')    \
+                                                  .order_by('-comment_time')
+            host_alias_map = {}
+            host_data_list = NagiosHosts.objects.values('host_object_id','alias')
+            for host in host_data_list:
+                host_alias_map[host['host_object_id']] = host['alias']
+
+            result = {'comments':[]}
+            for comment_entry in comments_list:
+                entry_data = {}
+                entry_data['time'] = comment_entry['comment_time']
+                entry_data['contents'] = comment_entry['comment_data']
+                entry_data['author'] = comment_entry['author_name']
+                entry_data['host_name'] = host_alias_map[comment_entry['object_id']]
+                result['comments'].append(entry_data)
+
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
+""" GET API Template
+def some_api_name(request):
+    if request.method == 'GET':
+        try:
+            # DO
+            # SOMTHING
+            # NEEDED
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+"""
