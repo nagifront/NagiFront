@@ -527,8 +527,8 @@ def configuration_scheduled_downtime(request):
 def configuration_comments(request):
     if request.method == 'GET':
         try:
-            comments_list = NagiosComments.objects.filter(comment_type=1)   \
-                                                  .values('object_id',             
+            comments_list = NagiosComments.objects.values('object_id',
+                                                          'comment_type',
                                                           'comment_time',            
                                                           'comment_data',          
                                                           'author_name')    \
@@ -538,13 +538,29 @@ def configuration_comments(request):
             for host in host_data_list:
                 host_alias_map[host['host_object_id']] = host['alias']
 
+            service_alias_map = {}
+            service_data_list = NagiosServices.objects.values('service_object_id', 'host_object_id', 'display_name')
+            for service in service_data_list:
+                service_alias_map[service['service_object_id']] = {
+                                                                    'host_object_id': service['host_object_id'],
+                                                                    'host_alias': host_alias_map[service['host_object_id']],
+                                                                    'display_name': service['display_name']
+                                                                  }
+
             result = {'comments':[]}
             for comment_entry in comments_list:
                 entry_data = {}
                 entry_data['time'] = comment_entry['comment_time']
                 entry_data['contents'] = comment_entry['comment_data']
                 entry_data['author'] = comment_entry['author_name']
-                entry_data['host_name'] = host_alias_map[comment_entry['object_id']]
+                if comment_entry['comment_type'] == 1:
+                    entry_data['comment_type'] = 'host'
+                    entry_data['host_name'] = host_alias_map[comment_entry['object_id']]
+                    entry_data['service_name'] = None
+                else:
+                    entry_data['comment_type'] = 'service'
+                    entry_data['host_name'] = (service_alias_map[comment_entry['object_id']])['host_alias']
+                    entry_data['service_name'] = (service_alias_map[comment_entry['object_id']])['display_name']
                 result['comments'].append(entry_data)
 
             return JsonResponse(result)
