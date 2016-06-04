@@ -76,6 +76,32 @@ div[trouble-trend] .charts {
 }
 /* end of troule-trend css*/
 
+/* start of troule-trend css*/
+div[scheduled-downtime] .charts {
+  box-sizing: border-box;
+  width: 750px;
+  padding: 10px;
+  padding-top: 30px;
+  font-size: 0.9em;
+  border-top: 1px solid #ccc;
+  border-spacing: 4px 1px;
+}
+div[scheduled-downtime] .downtimes:nth-child(odd){
+  background-color: #e6ece0;
+}
+div[scheduled-downtime] th {
+  font-weight: bold;
+  border-bottom: 3px #9cab8e solid;
+}
+div[scheduled-downtime] span{
+  font-weight: bold;
+}
+div[scheduled-downtime] tr{
+  text-align: center;
+  padding: 10px;
+}
+/* end of troule-trend css*/
+
 /* start host-state-change widget */
 div[host-state-change] {
   width: 450px;
