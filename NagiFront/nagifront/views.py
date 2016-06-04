@@ -181,10 +181,21 @@ def hosts_status(request):
             host_id = request.GET.get('host_id')
             if host_id is not None:
                 host_status = NagiosHoststatus.objects.get(host_object_id=host_id)
+                host_alias = NagiosHosts.objects.get(host_object_id=host_id).alias
+                host_status.alias = host_alias
                 result['hosts'] = [ host_status ]
                 return JsonResponse(result, encoder=CustomJSONEncoder)
             else:
                 host_statuses = list(NagiosHoststatus.objects.all())
+                host_alias_data = NagiosHosts.objects.values('host_object_id', 'alias')
+                
+                host_alias_map = {}
+                for host_alias in host_alias_data:
+                    host_alias_map[host_alias['host_object_id']] = host_alias['alias']
+
+                for status in host_statuses:
+                    status.alias = host_alias_map[status.host_object_id]
+
                 result['hosts'] = host_statuses
                 return JsonResponse(result, encoder=CustomJSONEncoder)
    
