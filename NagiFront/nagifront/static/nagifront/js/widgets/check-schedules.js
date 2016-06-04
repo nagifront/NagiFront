@@ -9,7 +9,7 @@ angular.module('nagifront')
           +'<span class="nextCheck">{{schedule.next_check_time | date: "yyyy/MM/dd HH:mm:ss"}}</span>'
           +'<span class="host"><span>[{{schedule.host_name}}]</span>: {{schedule.service_name}}</span>'
           +'<span class="lastCheck">last check: {{schedule.last_check_time | date: "yyyy/MM/dd HH:mm:ss" }}</span>'
-				+'<div class="output" ng-if="(schedule.host_name+schedule.service_name).length>30"><span>[{{schedule.host_name}}]: {{schedule.service_name}}</span></div>'
+	  +'<div class="output" ng-if="(schedule.host_name+schedule.service_name).length>30"><span>[{{schedule.host_name}}]: {{schedule.service_name}}</span></div>'
         +'</div>'
       +'</div>',
       link: function(scope, element, attrs) {
