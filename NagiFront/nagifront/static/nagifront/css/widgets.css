@@ -264,6 +264,9 @@ div[trouble-host] .trouble-item .unknown {
 /* end of trouble-host widget */
 
 /* start of map widget */
+div[map] {
+  position: relative;
+}
 div[map] h3 {
   margin: 0px;
 }
@@ -277,5 +280,32 @@ div[map] .charts {
 div[map] .map-wrapper {
   height: 400px;
   overflow: scroll;
+}
+div[map] .tooltip {
+  display: none;
+  position: absolute;
+  top: 90px;
+  left: 20px;
+  padding: 10px;
+  background-color: #e6ece0;
+  border: 1px solid #c7d3bd;
+}
+div[map] .tooltip h4 {
+  margin: 0px;
+}
+div[map] .tooltip table {
+  font-size: 0.75em;
+}
+div[map] .tooltip th {
+  text-align: left;
+}
+div[map] .tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 40px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #e6ece0 transparent transparent transparent;
 }
 /* end of map widget */

@@ -4,7 +4,7 @@ angular.module('nagifront')
       restrict: 'EA',
       scope: {
       },
-      template: '<h3>맵</h3><div class="charts"><div class="map-wrapper"></div></div>',
+      template: '<h3>맵</h3><div class="charts"><div class="map-wrapper"></div></div><div class="tooltip"></div>',
       link: function(scope, element, attrs){
         getData = function(){
           $http.get(djangoUrl.reverse('hosts-parent-information')).then(function(response){
@@ -28,6 +28,9 @@ angular.module('nagifront')
         }, function() {
           scope.render();
         });
+
+        var map_wrapper = element[0].children[1].children[0];
+        var tooltip = element[0].children[2];
 
         var is_first = true;
         scope.render = function() {
@@ -100,11 +103,12 @@ angular.module('nagifront')
           var arc = d3.svg.arc()
             .startAngle(function(d) { return d.data.startw * 2 * Math.PI / total_weight; })
             .endAngle(function(d) { return (d.data.startw + d.data.weight) * 2 * Math.PI / total_weight; })
-            .innerRadius(function(d) { return radius * (d.data.level - 1) })
-            .outerRadius(function(d) { return radius * d.data.level });
+            .innerRadius(function(d) { return radius * (d.data.level - 1.5) })
+            .outerRadius(function(d) { return radius * (d.data.level - 0.5) });
           var pie = d3.layout.pie()
             .value(function(d){ return d.weight })
             .sort(null)
+          // arc, pie
 
           var svg = d3.select(element[0]).select('.charts')
             .select('.map-wrapper').append('svg')
@@ -113,6 +117,7 @@ angular.module('nagifront')
             .append('g')
             .attr('transform', 'translate(' + (width / 2) + 
               ',' + (height / 2) + ')');
+
           Object.values = function(data){
             var arr = [];
             angular.forEach(data, function(v, k){
@@ -120,6 +125,28 @@ angular.module('nagifront')
             });
             return arr;
           }
+          function show_information(alias, host){
+            tooltip.innerHTML = '<h4>Host Information</h4>'
+                + '<table>'
+                  + '<tr><th>'+ 'Alias' +'</th>'
+                  + '<td>'+ alias +'</td></tr>'
+                  + '<tr><th>'+ 'Stat Info' +'</th>'
+                  + '<td>'+ host.output +'</td></tr>'
+                  + '<tr><th>'+ 'Last Check' +'</th>'
+                  + '<td>'+ host.last_check +'</td></tr>'
+                  + '<tr><th>'+ 'Last Change' +'</th>'
+                  + '<td>'+ host.last_state_change +'</td></tr>'
+                  + '<tr><th>'+ 'Immediate Child Host' +'</th>'
+                  + '<td>'+ dependency_processed[host.host_object_id].children.length +'</td></tr>'
+                + '</table>'
+            tooltip.style.display = 'block';
+            tooltip.style.top = (window.scrollY + event.clientY - element[0].offsetTop - 170) + 'px';
+            tooltip.style.left = (window.scrollX + event.clientX - element[0].offsetLeft - 40) + 'px';
+          }
+          function hide_information(){
+            tooltip.style.display = 'none';
+          }
+
           delete dependency_processed[null];
           var path = svg.selectAll('path')
             .data(pie(Object.values(dependency_processed)))
@@ -129,7 +156,7 @@ angular.module('nagifront')
             .attr('fill', function(d){
                 return color[d.data.host.current_state];
               })
-            .attr('stroke', 'red')
+            .attr('stroke', '#e6e6e6')
           svg.selectAll('circle')
             .data(Object.values(dependency_processed))
             .enter()
@@ -138,11 +165,14 @@ angular.module('nagifront')
             .attr('fill', 'transparent')
             .attr('stroke', 'blue')
             .attr('cx', function(d){
-              return Math.cos((d.startw + d.startw + d.weight) * (Math.PI / total_weight) - 1.570796) * ((d.level - 0.5) * radius)
+              return Math.cos((d.startw + d.startw + d.weight) * (Math.PI / total_weight) - 1.570796) * ((d.level - 1) * radius)
             })
             .attr('cy', function(d){
-              return Math.sin((d.startw + d.startw + d.weight) * (Math.PI / total_weight) - 1.570796) * ((d.level - 0.5) * radius)
+              return Math.sin((d.startw + d.startw + d.weight) * (Math.PI / total_weight) - 1.570796) * ((d.level - 1) * radius)
             })
+            .style('cursor', 'pointer')
+            .on('mouseenter', function(d){ show_information(d.alias, d.host); })
+            .on('mouseleave', function(d){ hide_information(); })
           svg.selectAll('text')
             .data(Object.values(dependency_processed))
             .enter()
@@ -151,14 +181,13 @@ angular.module('nagifront')
             .attr('text-anchor', 'middle')
             .attr('font-size', '0.75em')
             .attr('x', function(d){
-              return Math.cos((d.startw + d.startw + d.weight) * (Math.PI / total_weight) - 1.570796) * ((d.level - 0.5) * radius)
+              return Math.cos((d.startw + d.startw + d.weight) * (Math.PI / total_weight) - 1.570796) * ((d.level - 1) * radius)
             })
             .attr('y', function(d){
-              return Math.sin((d.startw + d.startw + d.weight) * (Math.PI / total_weight) - 1.570796) * ((d.level - 0.5) * radius) + 33
+              return Math.sin((d.startw + d.startw + d.weight) * (Math.PI / total_weight) - 1.570796) * ((d.level - 1) * radius) + 33
             })
 
           if (is_first){
-            var map_wrapper = element[0].children[1].children[0];
             map_wrapper.scrollTop = width / 2 - 200;
             map_wrapper.scrollLeft = height / 2 - 200;
             is_first = false;
