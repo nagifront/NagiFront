@@ -181,10 +181,21 @@ def hosts_status(request):
             host_id = request.GET.get('host_id')
             if host_id is not None:
                 host_status = NagiosHoststatus.objects.get(host_object_id=host_id)
+                host_alias = NagiosHosts.objects.get(host_object_id=host_id).alias
+                host_status.alias = host_alias
                 result['hosts'] = [ host_status ]
                 return JsonResponse(result, encoder=CustomJSONEncoder)
             else:
                 host_statuses = list(NagiosHoststatus.objects.all())
+                host_alias_data = NagiosHosts.objects.values('host_object_id', 'alias')
+                
+                host_alias_map = {}
+                for host_alias in host_alias_data:
+                    host_alias_map[host_alias['host_object_id']] = host_alias['alias']
+
+                for status in host_statuses:
+                    status.alias = host_alias_map[status.host_object_id]
+
                 result['hosts'] = host_statuses
                 return JsonResponse(result, encoder=CustomJSONEncoder)
    
@@ -516,8 +527,8 @@ def configuration_scheduled_downtime(request):
 def configuration_comments(request):
     if request.method == 'GET':
         try:
-            comments_list = NagiosComments.objects.filter(comment_type=1)   \
-                                                  .values('object_id',             
+            comments_list = NagiosComments.objects.values('object_id',
+                                                          'comment_type',
                                                           'comment_time',            
                                                           'comment_data',          
                                                           'author_name')    \
@@ -527,13 +538,29 @@ def configuration_comments(request):
             for host in host_data_list:
                 host_alias_map[host['host_object_id']] = host['alias']
 
+            service_alias_map = {}
+            service_data_list = NagiosServices.objects.values('service_object_id', 'host_object_id', 'display_name')
+            for service in service_data_list:
+                service_alias_map[service['service_object_id']] = {
+                                                                    'host_object_id': service['host_object_id'],
+                                                                    'host_alias': host_alias_map[service['host_object_id']],
+                                                                    'display_name': service['display_name']
+                                                                  }
+
             result = {'comments':[]}
             for comment_entry in comments_list:
                 entry_data = {}
                 entry_data['time'] = comment_entry['comment_time']
                 entry_data['contents'] = comment_entry['comment_data']
                 entry_data['author'] = comment_entry['author_name']
-                entry_data['host_name'] = host_alias_map[comment_entry['object_id']]
+                if comment_entry['comment_type'] == 1:
+                    entry_data['comment_type'] = 'host'
+                    entry_data['host_name'] = host_alias_map[comment_entry['object_id']]
+                    entry_data['service_name'] = None
+                else:
+                    entry_data['comment_type'] = 'service'
+                    entry_data['host_name'] = (service_alias_map[comment_entry['object_id']])['host_alias']
+                    entry_data['service_name'] = (service_alias_map[comment_entry['object_id']])['display_name']
                 result['comments'].append(entry_data)
 
             return JsonResponse(result)
@@ -541,6 +568,44 @@ def configuration_comments(request):
             return JsonResponse(dict())
     else:
         return JsonResponse(dict())
+
+def hosts_services(request):
+    if request.method == 'GET':
+        try:
+            host_obj_id = request.GET.get('host_id')
+
+            if host_obj_id is not None:
+                service_data_list = NagiosServices.objects.filter(host_object_id=host_obj_id)           \
+                                                          .values('display_name', 'service_object_id')
+                
+                service_name_map = {}
+                service_id_list = []
+                for service_data in service_data_list:
+                    service_obj_id = service_data['service_object_id']
+                    service_name_map[service_obj_id] = service_data['display_name']
+                    service_id_list.append(service_obj_id)
+                
+                service_status_list = NagiosServicestatus.objects.filter(service_object_id__in=service_id_list)
+
+                result = {'services':[]}
+                state_num = [0, 0, 0, 0]
+                for service_entry in service_status_list:
+                    service_entry.display_name = service_name_map[service_entry.service_object_id]
+                    state_num[service_entry.current_state] += 1
+                    result['services'].append(service_entry)
+                
+                result['state_number']={'Ok':state_num[0], 'Warning':state_num[1], 'Critical':state_num[2], 'Unknown':state_num[3]}
+                return JsonResponse(result, encoder=CustomJSONEncoder)
+                                                                           
+            else: # For now, NagiFront doesn't provide a service status API for all services. This API should be host-specific.
+                return JsonResponse(dict()) 
+
+
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
 
 """ GET API Template
 def some_api_name(request):

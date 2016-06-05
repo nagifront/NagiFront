@@ -40,7 +40,7 @@ div[service-number-by-state-chart] .groups .state {
   height: 25px;
   vertical-align: top;
   text-align: center;
-  font-size: 0.95 em;
+  font-size: 0.95em;
   color: white;
 }
 div[service-number-by-state-chart] .groups .Ok {
@@ -75,6 +75,179 @@ div[trouble-trend] .charts {
   border-top: 1px solid #ccc;
 }
 /* end of troule-trend css*/
+
+/* start of troule-trend css*/
+div[scheduled-downtime] .charts {
+  box-sizing: border-box;
+  width: 750px;
+  padding: 10px;
+  padding-top: 30px;
+  font-size: 0.9em;
+  border-top: 1px solid #ccc;
+  border-spacing: 4px 1px;
+}
+div[scheduled-downtime] .downtimes:nth-child(odd){
+  background-color: #e6ece0;
+}
+div[scheduled-downtime] th {
+  font-weight: bold;
+  border-bottom: 3px #9cab8e solid;
+}
+div[scheduled-downtime] span{
+  font-weight: bold;
+}
+div[scheduled-downtime] tr{
+  text-align: center;
+  padding: 10px;
+}
+/* end of troule-trend css*/
+
+/* start of check-schdules css*/
+div[check-schedules] .charts {
+  box-sizing: border-box;
+  width: 650px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+}
+div[check-schedules] .schedule {
+  background-color: #e6ece0;
+  position: relative;
+  border: 1px #c7d3bd solid;
+  padding: 10px;
+  margin: 10px;
+  width: 100%;
+  height: 45px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  font-size : 0.9em;
+}
+div[check-schedules] .nextCheck {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 150px;
+  border-right: 2.5px #a1ae92 solid;
+  padding-right: 15px;
+  font-weight: bold;
+}
+div[check-schedules] .host {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 240px;
+}
+div[check-schedules] .host span{
+  font-weight: bold;
+}
+div[check-schedules] .lastCheck {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+  color: #626d4f;
+  font-size: 0.8em;
+}
+div[check-schedules] .schedule .output {
+  position: absolute;
+  top: -15px;
+  left: 200px;
+  height: calc(15px + 45px);
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 100px;
+  opacity: 0;
+}
+div[check-schedules] .schedule .output span {
+  position: relative;
+  padding: 5px;
+  font-size: 0.75em;
+  white-space: nowrap;
+  background-color: white;
+  border: 1.5px solid #8d9a7b;
+}
+div[check-schedules] .schedule .output:hover {
+  opacity: 1;
+}
+/* end of check-schdules css*/
+
+/* start of comment css*/
+div[comments] .charts {
+  box-sizing: border-box;
+  width: 780px;
+  padding: 10px;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+}
+div[comments] .comments {
+  box-sizing: border-box;
+  position: relative;
+  background-color: #e6ece0;
+  width: 100%;
+  height: 45px;
+  border: 1px solid #c7d3bd;
+  margin-bottom: 10px;
+}
+div[comments] .host {
+  display: inline-block;
+  font-weight: bold;
+  margin:10px;
+  float: left;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 120px;
+}
+div[comments] .contents {
+  width: 480px;
+  float: left;
+  padding-right: 5px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.9em;
+}
+div[comments] .detail {
+  width: 120px;
+  padding: 5px;
+  vertical-align: middle;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  float: left;
+  color: #626d4f;
+  font-size: 0.75em;
+}
+div[comments] .detail span{
+  font-weight: bold;
+}
+div[comments] .comments .output {
+  position: absolute;
+  top: 40px;
+  left: 135px;
+  box-sizing: border-box;
+  opacity: 0;
+  padding-left: 10px;
+  border: 1.5px solid #8d9a7b;
+  background-color: white;
+}
+div[comments] .comments .output span {
+  position: relative;
+  padding: 5px;
+  font-size: 0.75em;
+}
+div[comments] .comments .output:hover {
+  opacity: 1;
+}
+/* end of comment css*/
 
 /* start host-state-change widget */
 div[host-state-change] {
@@ -321,3 +494,49 @@ div[host-list] .hosts .Critical {
 div[host-list] .hosts .Critical span {
   font-weight: bold;
 }
+/* start of map widget */
+div[map] {
+  position: relative;
+}
+div[map] h3 {
+  margin: 0px;
+}
+div[map] .charts {
+  width: 500px;
+  box-sizing: border-box;
+  padding: 10px;
+  padding-top: 40px;
+  border-top: 1px solid #ccc;
+}
+div[map] .map-wrapper {
+  height: 500px;
+  overflow: scroll;
+}
+div[map] .tooltip {
+  display: none;
+  position: absolute;
+  top: 90px;
+  left: 20px;
+  padding: 10px;
+  background-color: #e6ece0;
+  border: 1px solid #c7d3bd;
+}
+div[map] .tooltip h4 {
+  margin: 0px;
+}
+div[map] .tooltip table {
+  font-size: 0.75em;
+}
+div[map] .tooltip th {
+  text-align: left;
+}
+div[map] .tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 40px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #e6ece0 transparent transparent transparent;
+}
+/* end of map widget */
