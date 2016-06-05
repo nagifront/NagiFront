@@ -599,8 +599,36 @@ def hosts_services(request):
                                                                            
             else: # For now, NagiFront doesn't provide a service status API for all services. This API should be host-specific.
                 return JsonResponse(dict()) 
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
 
+@login_required
+def host_id_set(request):
+    if request.method == 'GET':
+        try:
+            result = {'ids':{}}
+            host_list = NagiosHosts.objects.all()
+            for host in host_list:
+                result['ids'][host.alias] = host.host_object_id
 
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
+@login_required
+def host_group_id_set(request):
+    if request.method == 'GET':
+        try:
+            result = {'ids':{}}
+            hostgroup_list = NagiosHostgroups.objects.all()
+            for hostgroup in hostgroup_list:
+                result['ids'][hostgroup.alias] = hostgroup.hostgroup_object_id
+
+            return JsonResponse(result)
         except ObjectDoesNotExist:
             return JsonResponse(dict())
     else:

@@ -12,6 +12,7 @@ urlpatterns = [
         url(r'^hosts/status$', views.hosts_status, name='hosts-status'),
         url(r'^hosts/state-change$', views.hosts_state_change, name='hosts-state-change'),
         url(r'^hosts/parent-information$', views.hosts_parent_information, name='hosts-parent-information'),
+        url(r'^hosts/ids$', views.host_id_set, name='hosts-ids'),
 
         url(r'^hosts/groups$', views.hosts_groups, name='hosts-groups'),
         url(r'^hosts/groups/hosts-state$', views.hosts_groups_hosts_state, name='hosts-groups-hosts-state'),
@@ -19,6 +20,7 @@ urlpatterns = [
         url(r'^hosts/groups/trouble-trend$', views.hosts_groups_trouble_trend, name='host-groups-trouble-trend'),
         url(r'^hosts/groups/trouble-hosts$', views.hosts_groups_trouble_hosts, name='host-groups-trouble-hosts'),
         url(r'^hosts/groups/check-schedules$', views.hosts_groups_check_schedules, name='host-groups-check-schedules'),
+        url(r'^hosts/groups/ids$', views.host_group_id_set, name='hosts-groups-ids'),
         
         url(r'^hosts/(?P<host_id>[0-9]+)/trend$', views.hosts_id_trend, name='hosts-id-trend'),
         
