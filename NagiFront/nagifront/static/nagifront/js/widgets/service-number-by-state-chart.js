@@ -13,7 +13,7 @@ angular.module('nagifront')
             +'<span class="state Warning"><span>{{ group.Warning }}</span>   Warning</span>'
             +'<span class="state Critical"><span>{{ group.Critical }}</span>   Critical</span>'
           +'</div>'
-        +'<scrollable>'
+        +'</scrollable>'
       +'</div>',
       link: function(scope, element, attrs) {
         getData = function() {
