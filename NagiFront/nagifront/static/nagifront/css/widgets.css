@@ -494,6 +494,8 @@ div[host-list] .hosts .Critical {
 div[host-list] .hosts .Critical span {
   font-weight: bold;
 }
+/* end of host-list css */
+
 /* start of map widget */
 div[map] {
   position: relative;

@@ -12,7 +12,7 @@ angular.module('nagifront')
       link: function(scope, element, attrs) {
         $http.get(djangoUrl.reverse('hosts-status')+'&host_id='+attrs.hostId).then(function(response_status) {
           scope.alias = response_status.data.hosts[0].alias;
-          });
+         });
 
         getData = function() {
           $http.get(djangoUrl.reverse('hosts-services')+'&host_id='+attrs.hostId).then(function(response_services) {
@@ -38,6 +38,7 @@ angular.module('nagifront')
       },
     };
   }]);
+
 angular.module('nagifront')
   .directive('hostList',['d3','$http','$interval','djangoUrl',function(d3, $http, $interval, djangoUrl) {
     return {
