@@ -5,7 +5,7 @@ angular.module('nagifront')
       scope: {
         data: '=',
       },
-      template: '<h3>호스트 현황</h3><div class="charts"></div>',
+      template: '<h3>호스트 현황</h3><div class="charts"><scrollable always-visible="true"></scrollable></div>',
       link: function(scope, element, attrs) {
         getData = function() {
           $http.get(djangoUrl.reverse('hosts-groups-hosts-state') + '&host_group_id=' + attrs.hostGroupId).then(function(response) {
@@ -108,7 +108,7 @@ angular.module('nagifront')
               
             function add_text(i) {
               svg.append('text')
-              .text(data[i].label+"  :     "+ data[i].data*100/total+' %    ('+data[i].data+')')
+              .text(data[i].label+"  :     "+ parseInt(data[i].data*100/total)+' %    ('+data[i].data+')')
               .attr('dy',(-70+25*i)+'px')
               .attr('dx','240px')
               .style('text-anchor','end')

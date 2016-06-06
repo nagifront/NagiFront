@@ -5,12 +5,14 @@ angular.module('nagifront')
       scope: {
       },
       template: '<h3>문제 발생 호스트</h3><div class="charts">'
-          + '<div class="trouble-item" ng-repeat="trouble in troubles | orderBy : \'-time\'">'
-            + '<span class="state {{ state[trouble.state] }}"></span>'
-            + '<span class="trouble-name"><span>[{{ trouble.host_name }}] {{ trouble.service_name }}</span></span>'
-            + '<time>{{ trouble.time | date : "yyyy/MM/dd HH:mm:ss" }}</time>'
-            + '<div class="output" ng-if="trouble.output!=\'\'"><span>{{ trouble.output }}</span></div>'
-          + '</div>'
+          +'<scrollable always-visible="true">'
+            + '<div class="trouble-item" ng-repeat="trouble in troubles | orderBy : \'-time\'">'
+              + '<span class="state {{ state[trouble.state] }}"></span>'
+              + '<span class="trouble-name"><span>[{{ trouble.host_name }}] {{ trouble.service_name }}</span></span>'
+              + '<time>{{ trouble.time | date : "yyyy/MM/dd HH:mm:ss" }}</time>'
+              + '<div class="output" ng-if="trouble.output!=\'\'"><span>{{ trouble.output }}</span></div>'
+            + '</div>'
+          + '</scrollable>'
         + '</div>',
       link: function(scope, element, attrs){
         getData = function(){
