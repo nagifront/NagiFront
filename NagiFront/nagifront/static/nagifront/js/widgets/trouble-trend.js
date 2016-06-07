@@ -3,8 +3,16 @@ angular.module('nagifront')
     return {
       restrict: 'EA',
       scope: true,
-      template: '<h3>문제 발생 트렌드</h3><div class="charts"><scrollable always-visible="true"></scrollable></div>',
+      template: '<h3>문제 발생 트렌드 - <select ng-model="host_group_id"'
+        + 'ng-options="hostgroup_id.hostgroup_object_id as hostgroup_id.name for hostgroup_id in hostgroup_ids" ng-disabled="!is_modify_setting">'
+        + '</select> <select ng-model="time_scale"'
+        + 'ng-options="t for t in time_scale_list" ng-disabled="!is_modify_setting">'
+        + '</select>'
+        + '</h3><div class="charts"><scrollable always-visible="true"></scrollable></div>',
       link: function(scope, element, attrs) {
+        scope.host_group_id = attrs.hostGroupId * 1;
+        scope.time_scale_list = [ 'day', 'week', ];
+        scope.time_scale = attrs.timeScale;
         getData = function() {
           $http.get(djangoUrl.reverse('host-groups-trouble-trend') + '&host_group_id=' + attrs.hostGroupId + '&time-scale=' + attrs.timeScale).then(function(response) {
             scope.data = response.data;

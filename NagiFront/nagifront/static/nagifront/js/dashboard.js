@@ -1,4 +1,5 @@
 app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
+  $scope.is_modify_setting = false;
   $http.get(djangoUrl.reverse('hosts-ids')).then(function(response) {
     $scope.host_ids = response.data.ids;
   });
