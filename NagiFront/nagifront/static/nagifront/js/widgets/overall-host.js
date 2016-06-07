@@ -5,7 +5,7 @@ angular.module('nagifront')
       scope: {
         data: '=',
       },
-      template: '<h3>호스트 상태</h3><div class="charts"></div>',
+      template: '<h3>호스트 상태</h3><div class="charts"><scrollable always-visible="true"></scrollable></div>',
       link: function(scope, element, attrs){
         getData = function(){
           $http.get(djangoUrl.reverse('hosts-overall')).then(function(response){

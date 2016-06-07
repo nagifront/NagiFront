@@ -185,7 +185,9 @@ angular.module('nagifront')
       },
       template: '<h3>호스트 트렌드<small> - {{ group_name }}</small></h3>'
         + '<div class="charts">'
-        + '<div ng-repeat="member in members" host-trend host_id="{{ member }}">'
+          + '<scrollable always-visible="true">'
+            + '<div ng-repeat="member in members" host-trend host_id="{{ member }}">'
+          + '</scrollable>'
         + '</div>',
       link: function(scope, element, attrs){
         $http.get(djangoUrl.reverse('hosts-groups') + '&host_group_id' + attrs.hostGroupId).then(function(response){

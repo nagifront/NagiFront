@@ -5,12 +5,14 @@ angular.module('nagifront')
     scope: {
     },
     template: '<h3>코멘트 현황</h3><div class="charts">'
-        +'<div class="comments" ng-repeat="comment in comments">'
-          +'<span class="host">[{{comment.host_name}}]</span>'
-          +'<span class="contents">{{comment.contents}}</span>'
-          +'<span class="detail">{{comment.time | date: "yyyy/MM/dd HH:mm:ss"}} by <span>{{comment.author}}</span></span>'
-          +'<div class="output" ng-if="comment.contents.length > 143"><span>{{comment.contents}}</span></div>'
-        +'</div>'
+        +'<scrollable always-visible="true">'
+          +'<div class="comments" ng-repeat="comment in comments">'
+            +'<span class="host">[{{comment.host_name}}]</span>'
+            +'<span class="contents">{{comment.contents}}</span>'
+            +'<span class="detail">{{comment.time | date: "yyyy/MM/dd HH:mm:ss"}} by <span>{{comment.author}}</span></span>'
+            +'<div class="output" ng-if="comment.contents.length > 143"><span>{{comment.contents}}</span></div>'
+          +'</div>'
+        +'</scrollable>'
       +'</div>',
       link: function(scope, element, attrs) {
         getData = function() {

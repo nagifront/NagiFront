@@ -47,8 +47,10 @@ angular.module('nagifront')
       data: '=',
       },
       template: '<h3>호스트 목록</h3><div class="charts">'
-        +'<div class="hosts" ng-repeat="host in hosts" host-service-state host_id="{{ host }}">'
-        +'</div>'
+        +'<scrollable always-visible="true">'
+          +'<div class="hosts" ng-repeat="host in hosts" host-service-state host_id="{{ host }}">'
+          +'</div>'
+        +'</scrollable>'
         +'</div>',
       link: function(scope, element, attrs) {
         $http.get(djangoUrl.reverse('hosts-groups')).then(function(response) {

@@ -1,3 +1,10 @@
+.charts {
+  box-sizing: border-box;
+  padding: 30px 10px 20px 10px;
+  height: 500px;
+  border-top: 1px solid #ccc;
+}
+
 /* start of host-trend-group css */
 div[host-trend-group] .axis path {
   stroke: black;
@@ -8,11 +15,7 @@ div[host-trend-group] .axis path {
 
 /* start of service-number-by-state-chart css */
 div[service-number-by-state-chart] .charts {
-  box-sizing: border-box;
   width: 550px;
-  padding: 10px;
-  padding-top: 30px;
-  border-top: 1px solid #ccc;
 }
 div[service-number-by-state-chart] .groups {
   padding: 10px;
@@ -68,22 +71,19 @@ div[service-number-by-state-chart] .groups .Critical span {
 
 /* start of troule-trend css*/
 div[trouble-trend] .charts {
-  box-sizing: border-box;
   width: 600px;
-  padding: 10px;
-  padding-top: 30px;
-  border-top: 1px solid #ccc;
 }
 /* end of troule-trend css*/
 
 /* start of troule-trend css*/
 div[scheduled-downtime] .charts {
-  box-sizing: border-box;
   width: 750px;
+}
+div[scheduled-downtime] .tables {
+  box-sizing: border-box;
+  width: 100%;
   padding: 10px;
-  padding-top: 30px;
   font-size: 0.9em;
-  border-top: 1px solid #ccc;
   border-spacing: 4px 1px;
 }
 div[scheduled-downtime] .downtimes:nth-child(odd){
@@ -104,12 +104,7 @@ div[scheduled-downtime] tr{
 
 /* start of check-schdules css*/
 div[check-schedules] .charts {
-  box-sizing: border-box;
   width: 650px;
-  padding-right: 20px;
-  padding-bottom: 10px;
-  padding-top: 20px;
-  border-top: 1px solid #ccc;
 }
 div[check-schedules] .schedule {
   background-color: #e6ece0;
@@ -176,11 +171,7 @@ div[check-schedules] .schedule .output:hover {
 
 /* start of comment css*/
 div[comments] .charts {
-  box-sizing: border-box;
   width: 780px;
-  padding: 10px;
-  padding-top: 20px;
-  border-top: 1px solid #ccc;
 }
 div[comments] .comments {
   box-sizing: border-box;
@@ -232,8 +223,10 @@ div[comments] .detail span{
 div[comments] .comments .output {
   position: absolute;
   top: 40px;
+  width: 500px;
   left: 135px;
   box-sizing: border-box;
+  z-index: 1;
   opacity: 0;
   padding-left: 10px;
   border: 1.5px solid #8d9a7b;
@@ -255,13 +248,10 @@ div[host-state-change] {
   min-height: 300px;
 }
 div[host-state-change] h3 {
-  margin: 0px;
+  margin: 20px;
 }
 div[host-state-change] .charts {
-  box-sizing: border-box;
-  padding: 10px;
-  padding-top: 40px;
-  border-top: 1px solid #ccc;
+  width: 100%;
 }
 div[host-state-change] .state-change-item {
   position: relative;
@@ -354,10 +344,7 @@ div[trouble-host] h3 {
   margin: 0px;
 }
 div[trouble-host] .charts {
-  box-sizing: border-box;
-  padding: 10px;
-  padding-top: 40px;
-  border-top: 1px solid #ccc;
+  width: 100%;
 }
 div[trouble-host] .trouble-item {
   position: relative;
@@ -438,11 +425,7 @@ div[trouble-host] .trouble-item .unknown {
 
 /* start of host-list css */
 div[host-list] .charts {
-  box-sizing: border-box;
   width: 550px;
-  padding: 10px;
-  padding-top: 30px;
-  border-top: 1px solid #ccc;
 }
 div[host-list] .hosts {
   padding: 10px;
@@ -505,13 +488,8 @@ div[map] h3 {
 }
 div[map] .charts {
   width: 500px;
-  box-sizing: border-box;
-  padding: 10px;
-  padding-top: 40px;
-  border-top: 1px solid #ccc;
 }
 div[map] .map-wrapper {
-  height: 500px;
   overflow: scroll;
 }
 div[map] .tooltip {
@@ -542,3 +520,27 @@ div[map] .tooltip::after {
   border-color: #e6ece0 transparent transparent transparent;
 }
 /* end of map widget */
+
+/* start of troule-trend css*/
+div[host-status] .charts {
+  width: 500px;
+}
+/* end of troule-trend css*/
+
+/* start of overall-host css*/
+div[overall-host] .charts {
+  width: 600px;
+}
+/* end of overall-host css*/
+
+/* start of service-number-by-state css*/
+div[service-number-by-state] .charts {
+  width: 500px;
+}
+/* end of service-number-by-state css*/
+
+/* start of host-trend css*/
+div[host-trend] .charts {
+  width: 800px;
+}
+/* end of host-trend css*/
