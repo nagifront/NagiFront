@@ -56,6 +56,17 @@
   background-size: 30px;
 }
 
+#dashboard-modify {
+  float: right;
+  position: relative;
+  top: -65px;
+  left: 30px;
+  color: #b1baa6;
+  font-weight: bold;
+  font-size: 0.9em;
+  font-family: "맑은 고딕";
+}
+
 #dashboard {
   margin: 34px;
   width: 85%;

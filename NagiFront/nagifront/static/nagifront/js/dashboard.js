@@ -1,5 +1,11 @@
 app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
   $scope.is_modify_setting = false;
+  $scope.modify_enable = function(){
+    $scope.is_modify_setting = true;
+  }
+  $scope.save = function(){
+    
+  }
   $http.get(djangoUrl.reverse('hosts-ids')).then(function(response) {
     $scope.host_ids = response.data.ids;
   });
@@ -97,7 +103,8 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
 
   function draw_widgets(widget_setting){
     var dashboard = angular.element(document.querySelector( '#dashboard' ))
-    var innerHTML = '<div class="widget_row"><div class="widgets" overall-host></div></div>';
+    var innerHTML = '<span id="dashboard-modify" ng-click="modify_enable()">대쉬보드 설정</span>'
+      + '<div class="widget_row"><div class="widgets" overall-host></div></div>';
     angular.forEach(widget_setting, function(widget_row){
       var widget_row_element = '<div class="widget_row">';
       angular.forEach(widget_row, function(widget){
