@@ -2,8 +2,7 @@ angular.module('nagifront')
   .directive('map', ['d3', '$http', '$interval', 'djangoUrl', function(d3, $http, $interval, djangoUrl){
     return {
       restrict: 'EA',
-      scope: {
-      },
+      scope: true,
       template: '<h3>맵</h3><div class="charts"><div class="map-wrapper"></div></div><div class="tooltip"></div>',
       link: function(scope, element, attrs){
         getData = function(){

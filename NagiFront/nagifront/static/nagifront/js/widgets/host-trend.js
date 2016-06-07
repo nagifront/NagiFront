@@ -2,9 +2,7 @@ angular.module('nagifront')
   .directive('hostTrend', ['d3', '$http', '$interval', 'djangoUrl', function(d3, $http, $interval, djangoUrl){
     return {
       restrict: 'EA',
-      scope: {
-        type: '=',
-      },
+      scope: true,
       template: '<h3>{{ data.host.display_name }}</h3><select ng-model="time"'
         + 'ng-options="type as type.name for type in list track by type.value">'
         + '</select>'
@@ -180,10 +178,8 @@ angular.module('nagifront')
   .directive('hostTrendGroup', ['d3', '$http', 'djangoUrl', function(d3, $http, djangoUrl){
     return {
       restrict: 'EA',
-      scope: {
-        type: '=',
-      },
       template: '<h3>호스트 트렌드<small> - {{ group_name }}</small></h3>'
+      scope: true,
         + '<div class="charts">'
           + '<scrollable always-visible="true">'
             + '<div ng-repeat="member in members" host-trend host_id="{{ member }}">'

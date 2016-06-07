@@ -2,8 +2,7 @@ angular.module('nagifront')
   .directive('comments',['d3','$http','$interval','djangoUrl',function(d3, $http, $interval, djangoUrl) {
   return {
     restrict: 'EA',
-    scope: {
-    },
+    scope: true,
     template: '<h3>코멘트 현황</h3><div class="charts">'
         +'<scrollable always-visible="true">'
           +'<div class="comments" ng-repeat="comment in comments">'

@@ -2,9 +2,7 @@ angular.module('nagifront')
   .directive('hostStatus',['d3', '$http', '$interval', 'djangoUrl', function(d3, $http, $interval, djangoUrl) {
     return {
       restrict: 'EA',
-      scope: {
-        data: '=',
-      },
+      scope: true,
       template: '<h3>호스트 현황</h3><div class="charts"><scrollable always-visible="true"></scrollable></div>',
       link: function(scope, element, attrs) {
         getData = function() {

@@ -2,8 +2,7 @@ angular.module('nagifront')
   .directive('hostStateChange', ['d3', '$http', '$interval', 'djangoUrl', function(d3, $http, $interval, djangoUrl){
     return {
       restrict: 'EA',
-      scope: {
-      },
+      scope: true,
       template: '<h3>호스트 상태 변화</h3><div class="charts">'
           +'<scrollable always-visible="true">'
             + '<div class="state-change-item" ng-repeat="host in hosts | orderBy : \'-last_state_change\'">'

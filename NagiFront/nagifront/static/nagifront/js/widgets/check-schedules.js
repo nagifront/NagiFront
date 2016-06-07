@@ -2,8 +2,7 @@ angular.module('nagifront')
   .directive('checkSchedules',['d3','$http','$interval','djangoUrl',function(d3, $http, $interval, djangoUrl) {
   return {
     restrict: 'EA',
-    scope: {
-    },
+    scope: true,
     template: '<h3>체크 스케쥴</h3><div class="charts">'
         +'<scrollable always-visible="true">'
           +'<div class="schedule" ng-repeat="schedule in schedules">'
