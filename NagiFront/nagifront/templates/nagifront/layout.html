@@ -33,6 +33,10 @@
   </aside>
   {% block main %}
   {% endblock %}
+  <footer id="footer">
+    <div id="footer-left"></div>
+    <div id="footer-right"><small>Icons made by <a href="http://www.flaticon.com/authors/elegant-themes" title="Elegant Themes">Elegant Themes</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></small></div>
+  </footer>
   <script>
     var host_image_url = '{% static 'nagifront/img/host-image.png' %}';
   </script>
@@ -46,9 +50,5 @@
   {% include 'nagifront/widgets.html' %}
   {% block scripts %}
   {% endblock %}
-  <footer>
-    <div id="footer-left"></div>
-    <div id="footer-right"><small>Icons made by <a href="http://www.flaticon.com/authors/elegant-themes" title="Elegant Themes">Elegant Themes</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></small></div>
-  </footer>
 </body>
 {% endblock %}
