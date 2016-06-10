@@ -684,7 +684,49 @@ def hosts_comments(request):
 
                 result = {'comments':comment_list}
                 return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
 
+def hosts_configurations(request):
+    if request.method == 'GET':
+        try:
+            host_configs = list(NagiosHosts.objects.values())
+            host_name_map = {}
+            for host in host_configs:
+                host_name_map[host['host_object_id']] = host['alias']
+
+            host_parent_list = NagiosHostParenthosts.objects.values('host_id', 'parent_host_object_id')
+            host_parent_map = {}
+            for hp in host_parent_list:
+                host_parent_map[hp['host_id']] = host_name_map[hp['parent_host_object_id']]
+
+            timeperiod_list = NagiosTimeperiods.objects.values('alias', 'timeperiod_object_id')
+            timeperiod_name_map = {}
+            for tp in timeperiod_list:
+                timeperiod_name_map[tp['timeperiod_object_id']] = tp['alias']
+
+            contactgroup_list = NagiosHostContactgroups.objects.values('host_id', 'contactgroup_object_id')
+            contactgroup_name_list = NagiosContactgroups.objects.values('contactgroup_object_id', 'alias')
+            
+            contactgroup_name_map = {}
+            for cg in contactgroup_name_list:
+                contactgroup_name_map[cg['contactgroup_object_id']] = cg['alias']
+            
+            host_contactgroup_map = {}
+            for hcg in contactgroup_list:
+                host_contactgroup_map[hcg['host_id']] = contactgroup_name_map[hcg['contactgroup_object_id']]
+            
+            for host in host_configs:
+                host['check_period'] = timeperiod_name_map.get(host['check_timeperiod_object_id'], None)
+                host['notification_period'] = timeperiod_name_map.get(host['notification_timeperiod_object_id'], None)
+                host['contact_group'] = host_contactgroup_map[host['host_id']]
+                host['parent_host'] = host_parent_map.get(host['host_id'], None)
+
+            result = {'host_configurations':host_configs}
+            return JsonResponse(result)
+            
         except ObjectDoesNotExist:
             return JsonResponse(dict())
     else:
