@@ -65,6 +65,7 @@
   font-weight: bold;
   font-size: 0.9em;
   font-family: "맑은 고딕";
+  cursor: pointer;
 }
 
 #dashboard {
@@ -76,3 +77,65 @@
   background-color: #ffffff;
   border: 2px solid #c1ceb0;
 }
+
+#widgets-list-wrapper {
+  position: fixed;
+  top: 70px;
+  right: 0px;
+  width: 220px;
+  height: calc(100vh - 140px - 60px);
+  background-color: yellow;
+}
+#widgets-list-wrapper h3 {
+  margin: 0px;
+  padding: 5px 20px;
+  border: 1px solid blue;
+  font-size: 0.9em;
+
+}
+#widgets-list-wrapper p {
+  margin: 5px 30px;
+  font-size: 0.8em;
+  color: green;
+}
+#widgets-list-wrapper div {
+  margin: 0px 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 160px);
+  overflow: hidden;
+}
+#widgets-list-wrapper ul {
+  margin: 0px;
+  width: calc(100% + 14px);
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0px;
+  border: 1px solid purple;
+  overflow-y: scroll;
+}
+#widgets-list-wrapper li {
+  display: block;
+  list-style: none;
+  padding: 7px 15px;
+  border: 1px solid purple;
+  font-size: 0.8em;
+}
+#widgets-list-wrapper footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 50px;
+  box-sizing: border-box;
+  padding: 10px 5px;
+  background-color: yellowgreen;
+}
+#widgets-list-wrapper footer #recover-setting {
+  cursor: pointer;
+}
+#widgets-list-wrapper footer button {
+  float: right;
+  height: 30px;
+  color: white;
+  cursor: pointer;
+}
+

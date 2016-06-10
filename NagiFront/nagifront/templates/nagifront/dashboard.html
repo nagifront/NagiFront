@@ -16,7 +16,31 @@
     <input><!--
     --><button></button>
   </section>
-  <section id="dashboard"></section>
+  <section id="dashboard">
+    <span id="dashboard-modify" ng-click="modify_enable()">대쉬보드 설정</span>
+    <div id="widgets">
+    </div>
+  </section>
+  <section id="widgets-list-wrapper" ng-cloak ng-show="is_modify_setting">
+    <header>
+      <h3>위젯 설정</h3>
+      <p>드래그해서<br>원하는 위치에 놓으세요</p>
+    </header>
+    <div>
+      <ul>
+        {% verbatim %}
+          <li ng-repeat="widget in widget_list" data="widget">
+            {{ widget_name_map[widget.name] }} ({{ widget_num[widget.name] }})
+          </li>
+        {% endverbatim %}
+      </ul>
+    </div>
+    <footer>
+      <img id="delete-widget" src="{% static "nagifront/img/delete.png" %}" alt="delete" width="30px">
+      <button ng-click="cancel()">취소</button>
+      <button ng-click="save()">저장</button>
+    </footer>
+  </section>
 </main>
 {% endblock %}
 

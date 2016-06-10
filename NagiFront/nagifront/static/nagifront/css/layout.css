@@ -68,6 +68,7 @@
 }
 
 body > main {
+  position: relative;
   margin-left: 122px;
 }
 
