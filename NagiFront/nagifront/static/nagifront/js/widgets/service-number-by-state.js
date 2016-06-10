@@ -5,7 +5,7 @@ angular.module('nagifront')
       scope: {
         data: '=',
       },
-      template: '<h3>그룹별 서비스 현황</h3><div class="charts"></div>',
+      template: '<h3>그룹별 서비스 현황</h3><div class="charts"><scrollable always-visible="true"></scrollable></div>',
       link: function(scope, element, attrs) {
         getData = function() {
           $http.get(djangoUrl.reverse('host-groups-service-number-by-state')).then(function(response) {

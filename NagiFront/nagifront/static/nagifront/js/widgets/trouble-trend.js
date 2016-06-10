@@ -5,7 +5,7 @@ angular.module('nagifront')
       scope: {
         data: '=',
       },
-      template: '<h3>문제 발생 트렌드</h3><div class="charts"></div>',
+      template: '<h3>문제 발생 트렌드</h3><div class="charts"><scrollable always-visible="true"></scrollable></div>',
       link: function(scope, element, attrs) {
         getData = function() {
           $http.get(djangoUrl.reverse('host-groups-trouble-trend') + '&host_group_id=' + attrs.hostGroupId + '&time-scale=' + attrs.timeScale).then(function(response) {

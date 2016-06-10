@@ -4,7 +4,9 @@ angular.module('nagifront')
     restrict: 'EA',
     scope: {
     },
-    template: '<h3>다운타임 스케쥴</h3><table class="charts">'
+    template: '<h3>다운타임 스케쥴</h3><div class="charts">'
+        +'<scrollable always-visible="true">'
+          +'<table class="tables">'
             +'<tr>'
               +'<th>Host name</th>'
               +'<th>Entry Time</th>'
@@ -12,14 +14,16 @@ angular.module('nagifront')
               +'<th>Start Time</th>'
               +'<th>End Time</th>'
             +'</tr>'
-        +'<tr class="downtimes" ng-repeat="downtime in downtimes">'
-          +'<td><span>{{downtime.host_name}}</span></td>'
-          +'<td>{{downtime.entry_time | date:"yyyy/MM/dd HH:mm:ss"}}</td>'
-          +'<td>{{downtime.comment_data}}</td>'
-          +'<td>{{downtime.scheduled_start_time | date:"yyyy/MM/dd HH:mm:ss"}}</td>'
-          +'<td>{{downtime.scheduled_end_time | date:"yyyy/MM/dd HH:mm:ss"}}</td>'
-        +'</tr>'
-      +'</table>',
+            +'<tr class="downtimes" ng-repeat="downtime in downtimes">'
+              +'<td><span>{{downtime.host_name}}</span></td>'
+              +'<td>{{downtime.entry_time | date:"yyyy/MM/dd HH:mm:ss"}}</td>'
+              +'<td>{{downtime.comment_data}}</td>'
+              +'<td>{{downtime.scheduled_start_time | date:"yyyy/MM/dd HH:mm:ss"}}</td>'
+              +'<td>{{downtime.scheduled_end_time | date:"yyyy/MM/dd HH:mm:ss"}}</td>'
+            +'</tr>'
+          +'</table>'
+        +'</scrollable>'
+      +'</div>',
       link: function(scope, element, attrs) {
         getData = function() {
           $http.get(djangoUrl.reverse('configuration-scheduled-downtime')).then(function(response) {

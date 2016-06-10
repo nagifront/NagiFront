@@ -6,12 +6,14 @@ angular.module('nagifront')
       data: '=',
     },
     template: '<h3>그룹별 서비스 현황</h3><div class="charts">'
-        +'<div class="groups" ng-repeat="group in groups">'
-          +'<span class="group-name">{{group.alias}}</span>'
-          +'<span class="state Ok"><span>{{ group.Ok }}</span>   Ok</span>'
-          +'<span class="state Warning"><span>{{ group.Warning }}</span>   Warning</span>'
-          +'<span class="state Critical"><span>{{ group.Critical }}</span>   Critical</span>'
-        +'</div>'
+        +'<scrollable always-visible="true">'
+          +'<div class="groups" ng-repeat="group in groups">'
+            +'<span class="group-name">{{group.alias}}</span>'
+            +'<span class="state Ok"><span>{{ group.Ok }}</span>   Ok</span>'
+            +'<span class="state Warning"><span>{{ group.Warning }}</span>   Warning</span>'
+            +'<span class="state Critical"><span>{{ group.Critical }}</span>   Critical</span>'
+          +'</div>'
+        +'</scrollable>'
       +'</div>',
       link: function(scope, element, attrs) {
         getData = function() {

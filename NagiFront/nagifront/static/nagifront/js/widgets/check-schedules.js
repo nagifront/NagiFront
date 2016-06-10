@@ -5,12 +5,14 @@ angular.module('nagifront')
     scope: {
     },
     template: '<h3>체크 스케쥴</h3><div class="charts">'
-        +'<div class="schedule" ng-repeat="schedule in schedules">'
-          +'<span class="nextCheck">{{schedule.next_check_time | date: "yyyy/MM/dd HH:mm:ss"}}</span>'
-          +'<span class="host"><span>[{{schedule.host_name}}]</span>: {{schedule.service_name}}</span>'
-          +'<span class="lastCheck">last check: {{schedule.last_check_time | date: "yyyy/MM/dd HH:mm:ss" }}</span>'
-	  +'<div class="output" ng-if="(schedule.host_name+schedule.service_name).length>30"><span>[{{schedule.host_name}}]: {{schedule.service_name}}</span></div>'
-        +'</div>'
+        +'<scrollable always-visible="true">'
+          +'<div class="schedule" ng-repeat="schedule in schedules">'
+            +'<span class="nextCheck">{{schedule.next_check_time | date: "yyyy/MM/dd HH:mm:ss"}}</span>'
+            +'<span class="host"><span>[{{schedule.host_name}}]</span>: {{schedule.service_name}}</span>'
+            +'<span class="lastCheck">last check: {{schedule.last_check_time | date: "yyyy/MM/dd HH:mm:ss" }}</span>'
+            +'<div class="output" ng-if="(schedule.host_name+schedule.service_name).length>30"><span>[{{schedule.host_name}}]: {{schedule.service_name}}</span></div>'
+          +'</div>'
+        +'</scrollable>'
       +'</div>',
       link: function(scope, element, attrs) {
         getData = function() {
