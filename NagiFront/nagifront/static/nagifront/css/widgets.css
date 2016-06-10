@@ -542,3 +542,164 @@ div[map] .tooltip::after {
   border-color: #e6ece0 transparent transparent transparent;
 }
 /* end of map widget */
+
+/* start of service status detail widget */
+div[service-status-detail] .charts {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  padding-top: 30px;
+  font-size: 0.9em;
+  border-top: 1px solid #ccc;
+  border-spacing: 4px 1px;
+}
+div[service-status-detail] th {
+  font-weight: bold;
+  border-bottom: 3px #9cab8e solid;
+}
+div[service-status-detail] .state span{
+  font-weight: bold;
+}
+div[service-status-detail] tr{
+  text-align: center;
+  padding: 10px;
+}
+div[service-status-detail] .state {
+  width: 200px;
+}
+div[service-status-detail] .ok {
+  background-color: #8dd775;
+}
+div[service-status-detail] .warning {
+  background-color: #e1e26a;
+}
+div[service-status-detail] .critical {
+  background-color: #ef6a6a;
+}
+div[service-status-detail] .last_check {
+  width: 100px;
+}
+div[service-status-detail] .duration {
+  width: 130px;
+}
+div[service-status-detail] .attempt {
+  width: 70px;
+}
+div[service-status-detail] .info {
+}
+/* end of service status detail widget */
+
+/* start of host status information widget */
+div[host-status-information] .charts {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  padding-top: 30px;
+  font-size: 0.9em;
+  border-top: 1px solid #ccc;
+  border-spacing: 4px 1px;
+}
+div[host-status-information] .info {
+  display: inline-block;
+  width: 700px;
+  margin: 10px;
+}
+div[host-status-information] .enable_check {
+  display: inline-block;
+  float: right;
+  width: 450px;
+  margin: 15px;
+}
+div [host-status-information] .category {
+  display: inline-block;
+  font-weight: bold;
+  width: 200px;
+  border-right: 2px solid #829786;
+  margin: 5px 10px;
+}
+div [host-status-information] .enable_check .category{
+  width: 150px;
+}
+div[host-status-information] .state {
+  display: inline-block;
+  width: 80px;
+  font-weight: bold;
+  text-align: center;
+}
+div[host-status-information] .name {
+  font-weight: bold;
+}
+div[host-status-information] .check {
+  display: inline-block;
+  width: 80px;
+  font-weight: bold;
+  text-align: center;
+}
+div[host-status-information] .UP {
+  border: 1px #6ca65a solid;
+  background-color: #8dd775;
+}
+div[host-status-information] .DOWN {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[host-status-information] .ENABLED {
+  border: 1px #6ca65a solid;
+  background-color: #8dd775;
+}
+div[host-status-information] .DISABLED {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[host-status-information] .YES {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[host-status-information] .NO {
+  border: 1px #6ca65a solid;
+  background-color: #8dd775;
+}
+/* end of host status information widget */
+
+/* start of host status detail widget */
+div[host-status-detail] .charts {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  padding-top: 30px;
+  font-size: 0.9em;
+  border-top: 1px solid #ccc;
+  border-spacing: 4px 1px;
+}
+div[host-status-detail] th {
+  font-weight: bold;
+  border-bottom: 3px #9cab8e solid;
+}
+div[host-status-detail] .state span{
+  font-weight: bold;
+}
+div[host-status-detail] tr{
+  text-align: center;
+  padding: 10px;
+}
+div[host-status-detail] .state {
+  width: 200px;
+}
+div[host-status-detail] .up {
+  background-color: #8dd775;
+}
+div[host-status-detail] .unreachable {
+  background-color: #e1e26a;
+}
+div[host-status-detail] .down {
+  background-color: #ef6a6a;
+}
+div[host-status-detail] .last_check {
+  width: 100px;
+}
+div[host-status-detail] .duration {
+  width: 130px;
+}
+div[host-status-detail] .info {
+}
+/* end of host status detail widget */

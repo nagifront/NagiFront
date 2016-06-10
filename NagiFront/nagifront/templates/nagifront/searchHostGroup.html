@@ -16,7 +16,14 @@
  	  	 <input ng-model="name"><!--
   	  --><button ng-click="move()"></button>
   </section>
-  <section id="dashboard">
+<!--  <div id="dashboard" class="host-group-dashboard">
+    <div class="widgets" host-status host_group_id={{ id }}></div>
+  </div>
+  <div id="dashboard" class="host-group-dashboard">
+    <div class="widgets" host-list host_group_id={{ id }}></div>
+  </div> -->
+  <div id="dashboard" class="host-group-dashboard">
+    <div class="widgets" host-status-detail host_group_id={{ id }}></div>
 <!--    <div class="widgets" map></div>
     <div class="widgets" trouble-host></div>
     <div class="widgets" host-state-change></div>
@@ -28,7 +35,7 @@
     <div class="widgets" check-schedules></div>
     <div class="widgets" comments></div> 
     <div class="widgets" host-list host_group_id="189"></div> -->
-  </section>
+  </div>
 </main>
 {% endblock %}
 
