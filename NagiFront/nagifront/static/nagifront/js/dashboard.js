@@ -5,7 +5,28 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
     $scope.backup = JSON.parse(JSON.stringify($scope.user_setting.widget_setting));
   }
   $scope.save = function(){
-    
+    var dashboard = angular.element(document.querySelector( '#widgets' ))
+    var widget_setting = [];
+    angular.forEach(dashboard.children(), function(widget_row){
+      var widget_row_information = [];
+      angular.forEach(widget_row.children, function(widget){
+        var widget_config = {};
+        widget_config['name'] = widget.attributes[0].name;
+        var selects = angular.element(widget).find('select')
+        var attr = {};
+        angular.forEach(selects, function(select){
+          if (select.name !== ''){
+            attr[select.name] = select.value.split(':')[1];
+          }
+        })
+        widget_config['attr'] = attr;
+        widget_row_information.push(widget_config);
+      })
+      widget_setting.push(widget_row_information);
+    })
+    $scope.user_setting.widget_setting = widget_setting;
+    draw_widgets($scope.user_setting.widget_setting);
+    $scope.is_modify_setting = false;
   }
   $scope.cancel = function(){
     $scope.is_modify_setting = false;

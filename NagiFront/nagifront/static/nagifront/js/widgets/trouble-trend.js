@@ -3,9 +3,9 @@ angular.module('nagifront')
     return {
       restrict: 'EA',
       scope: true,
-      template: '<h3>문제 발생 트렌드 - <select ng-model="host_group_id"'
+      template: '<h3>문제 발생 트렌드 - <select name="host-group-id" ng-model="host_group_id"'
         + 'ng-options="hostgroup_id.hostgroup_object_id as hostgroup_id.name for hostgroup_id in hostgroup_ids" ng-disabled="!is_modify_setting">'
-        + '</select> <select ng-model="time_scale"'
+        + '</select> <select name="time-scale" ng-model="time_scale"'
         + 'ng-options="t for t in time_scale_list" ng-disabled="!is_modify_setting">'
         + '</select>'
         + '</h3><div class="charts"><scrollable always-visible="true"></scrollable></div>',
