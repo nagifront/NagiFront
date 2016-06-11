@@ -644,6 +644,51 @@ def host_group_id_set(request):
     else:
         return JsonResponse(dict())
 
+def hosts_comments(request):
+    if request.method == 'GET':
+        try:
+            host_obj_id = request.GET.get('host_id')
+            if host_obj_id is not None:
+                comment_list = NagiosComments.objects.values('comment_time', 'author_name', 'comment_data') \
+                                                     .filter(object_id=host_obj_id)
+                comment_list = list(comment_list)
+                host_name = NagiosHosts.objects.get(host_object_id=host_obj_id).alias
+
+                for comment in comment_list:
+                    comment['host_name'] = host_name
+                    # Rename dictionary keys properly
+                    comment['contents'] = comment.pop('comment_data')
+                    comment['author'] = comment.pop('author_name')
+                    comment['time'] = comment.pop('comment_time')
+                
+                result = {'comments':comment_list}
+                return JsonResponse(result)
+            else:
+                comment_list = NagiosComments.objects.values('comment_time', 'author_name', 'comment_data', 'object_id') \
+                                                     .filter(comment_type=1) # Filter host comments only
+                
+                comment_list = list(comment_list)
+                host_name_list = NagiosHosts.objects.values('host_object_id', 'alias')
+                host_name_map = {}
+                for host_data in host_name_list:
+                    host_name_map[host_data['host_object_id']] = host_data['alias']
+
+                for comment in comment_list:
+                    comment['host_name'] = host_name_map['object_id']
+                    # Rename dictionary keys properly
+                    comment['contents'] = comment.pop('comment_data')
+                    comment['author'] = comment.pop('author_name')
+                    comment['time'] = comment.pop('comment_time')
+                    # Remove object id
+                    comment.pop('object_id')
+
+                result = {'comments':comment_list}
+                return JsonResponse(result)
+
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
 
 """ GET API Template
 def some_api_name(request):
