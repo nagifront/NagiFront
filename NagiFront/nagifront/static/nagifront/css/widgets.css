@@ -171,7 +171,7 @@ div[check-schedules] .schedule .output:hover {
 
 /* start of comment css*/
 div[comments] .charts {
-  width: 780px;
+  width: 100%;
 }
 div[comments] .comments {
   box-sizing: border-box;
@@ -191,10 +191,10 @@ div[comments] .host {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 120px;
+  width: 10%;
 }
 div[comments] .contents {
-  width: 480px;
+  width: 75%;
   float: left;
   padding-right: 5px;
   text-overflow: ellipsis;
@@ -205,8 +205,8 @@ div[comments] .contents {
   font-size: 0.9em;
 }
 div[comments] .detail {
-  width: 120px;
-  padding: 5px;
+  width: 10%;
+  padding: 5px 5px 5px 20px;
   vertical-align: middle;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -223,8 +223,8 @@ div[comments] .detail span{
 div[comments] .comments .output {
   position: absolute;
   top: 40px;
-  width: 500px;
-  left: 135px;
+  width: 70%;
+  left: 13%;
   box-sizing: border-box;
   z-index: 1;
   opacity: 0;
