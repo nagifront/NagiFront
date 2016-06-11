@@ -1,0 +1,24 @@
+{% extends 'nagifront/layout.html' %}
+
+{% load staticfiles %}
+{% block stylesheets %}
+<link rel="stylesheet" text="text/css" href="{% static "nagifront/css/hosts.css"%}">
+{% endblock %}
+
+{% block main %}
+<main ng-controller="hosts">
+  <section id="host-list-widget">
+    <div class="name">호스트 그룹</div>
+  {% verbatim %}
+    <div class="group" ng-repeat="group in groups"><button class="group-button" ng-click="selectGroup(group)">{{ group.name }}</button></div> 
+  </section>
+    <section id="dashboard">
+    <div ng-if="ready == 1" class="widgets" host-list-with-click host_group_id="{{ selected.id }}"></div>
+    </section>
+  {% endverbatim %}
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'nagifront/js/hosts.js' %}"></script>
+{% endblock %}
