@@ -57,6 +57,12 @@ def logout(request):
     return redirect('login')
 
 @login_required
+def hosts(request):
+    return render(request, 'nagifront/hosts.html', {
+    })
+
+
+@login_required
 def hosts_overall(request):
     if request.method == 'GET':
         # Get the number of hosts and the number of hosts in 'up' state.
