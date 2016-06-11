@@ -29,9 +29,9 @@
     <div>
       <ul>
         {% verbatim %}
-          <li ng-repeat="widget in widget_list" data="widget">
-            {{ widget_name_map[widget.name] }} ({{ widget_num[widget.name] }})
-          </li>
+        <li ng-repeat="widget in widget_list" data-drag="true" data-jqyoui-options="{helper: 'clone'}" ng-model="widget_list" jqyoui-draggable="{index: {{$index}}, placeholder: 'keep'}">
+          {{ widget_name_map[widget.name] }}
+        </li>
         {% endverbatim %}
       </ul>
     </div>

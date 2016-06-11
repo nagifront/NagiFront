@@ -136,15 +136,17 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
   function draw_widgets(widget_setting){
     var dashboard = angular.element(document.querySelector( '#widgets' ))
     var innerHTML = '';
-    angular.forEach(widget_setting, function(widget_row){
-      var widget_row_element = '<div class="widget_row">';
-      angular.forEach(widget_row, function(widget){
+    angular.forEach(widget_setting, function(widget_row, i){
+      var widget_row_element = '<div class="widget-row" ng-model="user_setting.widget_setting['+ i +']"  data-drop="true" jqyoui-droppable="{ multiple: true }">';
+      angular.forEach(widget_row, function(widget, j){
         var widget_element = '<div ';
         widget_element += widget.name;
         angular.forEach(widget.attr, function(value, key){
           widget_element += ' ' + key + '=' + value;
         })
-        widget_element += '></div>';
+        widget_element += ' ng-model="user_setting.widget_setting['+ i +']['+ j +']" '
+          + 'data-drag="is_modify_setting" data-jqyoui-options="{helper: \'clone\'}" ng-model="widget_list" jqyoui-draggable="{index: $index, placeholder: \'keep\'}"'
+          + '></div>';
         widget_row_element += widget_element;
       })
       widget_row_element += '</div>';
