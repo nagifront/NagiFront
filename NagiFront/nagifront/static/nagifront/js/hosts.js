@@ -5,18 +5,18 @@ app.controller('hosts', function($scope, $http, $window, djangoUrl){
   $http.get(djangoUrl.reverse('hosts-groups')).then(function(response) {
     var data = response.data;
       angular.forEach(data, function(value, key) {
-          $scope.groups.push({name: value.alias, id: key});
+        $scope.groups.push({name: value.alias, id: key});
     });
   });
   $scope.selectGroup = function(group) {
     $scope.selected = group;
     $scope.ready = 1;
   };
-  $scope.move = function(host_id) {
-    $http.get(djangoUrl.reverse('search')+'&id='+'&type=host')
+  $scope.move = function(id) {
+    console.log(id);
+    $http.get(djangoUrl.reverse('search')+'&id='+id+'&type=host')
     .then(function(response) {
       $window.location.href = 'search?id='+id+'&type=host';
     });
   };
-    
 })

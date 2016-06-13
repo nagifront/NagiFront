@@ -7,14 +7,14 @@
 
 {% block main %}
 <main ng-controller="hosts">
+ {% verbatim %}
   <section id="host-list-widget">
     <div class="name">호스트 그룹</div>
-  {% verbatim %}
     <div class="group" ng-repeat="group in groups"><button class="group-button" ng-click="selectGroup(group)">{{ group.name }}</button></div> 
   </section>
-    <section id="dashboard">
-    <div ng-if="ready == 1" class="widgets" host-list-with-click host_group_id="{{ selected.id }}"></div>
-    </section>
+  <section id="dashboard">
+  <div ng-if="ready == 1" class="widgets" host-list-with-click host_group_id="{{ selected.id }}"></div>
+  </section>
   {% endverbatim %}
 </main>
 {% endblock %}
