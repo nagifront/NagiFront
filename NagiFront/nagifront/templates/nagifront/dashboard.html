@@ -18,7 +18,8 @@
   </section>
   <section id="dashboard">
     <span id="dashboard-modify" ng-click="modify_enable()">대쉬보드 설정</span>
-    <div id="widgets">
+    <div class="widgets" overall-host></div>
+    <div id="widgets" ng-class="{ modify: is_modify_setting }">
     </div>
   </section>
   <section id="widgets-list-wrapper" ng-cloak ng-show="is_modify_setting">

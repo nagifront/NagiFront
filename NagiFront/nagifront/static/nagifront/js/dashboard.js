@@ -3,9 +3,11 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
   $scope.modify_enable = function(){
     $scope.is_modify_setting = true;
     $scope.backup = JSON.parse(JSON.stringify($scope.user_setting.widget_setting));
+    $scope.load_widget(true);
+    draw_widgets($scope.user_setting.widget_setting);
   }
   $scope.save = function(){
-    $scope.load_widget();
+    $scope.load_widget(false);
     draw_widgets($scope.user_setting.widget_setting);
     $scope.is_modify_setting = false;
   }
@@ -14,11 +16,12 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
     $scope.user_setting.widget_setting = JSON.parse(JSON.stringify($scope.backup));
     draw_widgets($scope.user_setting.widget_setting);
   }
-  $scope.load_widget = function(){
+  $scope.load_widget = function(is_adding_empty_row){
     var dashboard = angular.element(document.querySelector( '#widgets' ))
     var widget_setting = [];
     angular.forEach(dashboard.children(), function(widget_row){
       var widget_row_information = [];
+      var num = 0;
       angular.forEach(widget_row.children, function(widget){
         var widget_config = {};
         widget_config['name'] = widget.attributes[1].name;
@@ -30,11 +33,24 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
           }
         })
         widget_config['attr'] = attr;
+        if (num++ >= 2){
+          alert('한 줄에는 2개 이상의 위젯이 들어갈 수 없습니다');
+          return;
+        }
         widget_row_information.push(widget_config);
       })
       widget_setting.push(widget_row_information);
     })
-    $scope.user_setting.widget_setting = widget_setting;
+    // load
+    widget_setting_reformed = [];
+    angular.forEach(widget_setting, function(row){
+      if (row.length !== 0){
+        widget_setting_reformed.push(row);
+        if (is_adding_empty_row)
+          widget_setting_reformed.push([]);
+      }
+    })
+    $scope.user_setting.widget_setting = widget_setting_reformed;
   }
   $http.get(djangoUrl.reverse('hosts-ids')).then(function(response) {
     $scope.host_ids = response.data.ids;
@@ -44,12 +60,6 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
   });
   $scope.user_setting = {
     widget_setting: [
-      [
-        {
-          name: 'overall-host',
-          attr: {},
-        }
-      ],
       [
         {
           name: 'map',
@@ -138,10 +148,13 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
   };
 
   function draw_widgets(widget_setting){
-    var dashboard = angular.element(document.querySelector( '#widgets' ))
+    var dashboard = angular.element(document.querySelector( '#dashboard' ))
+    var widgets = angular.element(document.querySelector( '#widgets' ))
     var innerHTML = '';
     angular.forEach(widget_setting, function(widget_row, i){
-      var widget_row_element = '<div class="widget-row" ng-model="user_setting.widget_setting['+ i +']"  data-drop="true" jqyoui-droppable="{ multiple: true, onDrop: \'redraw\' }" data-jqyoui-options="{accept: \'.new-widget\'}">';
+      var widget_row_element = '<div class="widget-row" ng-model="user_setting.widget_setting['+ i +']" '
+        + 'data-drop="true" jqyoui-droppable="{ multiple: true, onDrop: \'redraw\' }" '
+        + 'data-jqyoui-options="{accept: \'.new-widget\'}">';
       angular.forEach(widget_row, function(widget, j){
         var widget_element = '<div class="widgets" ';
         widget_element += widget.name;
@@ -154,11 +167,15 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
       widget_row_element += '</div>';
       innerHTML += widget_row_element;
     })
-    dashboard.html(innerHTML);
+    widgets.html(innerHTML);
     $compile(dashboard)($scope)
   }
   draw_widgets($scope.user_setting.widget_setting);
-  $scope.redraw = function(){draw_widgets($scope.user_setting.widget_setting);}
+  $scope.redraw = function(){
+    draw_widgets($scope.user_setting.widget_setting);
+    $scope.load_widget(true);
+    draw_widgets($scope.user_setting.widget_setting);
+  }
 
   $scope.widget_num = {};
   angular.forEach($scope.user_setting.widget_setting, function(widget_row){

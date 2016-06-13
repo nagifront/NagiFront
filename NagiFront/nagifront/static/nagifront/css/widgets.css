@@ -1,15 +1,23 @@
+.widgets h3 {
+  margin: 10px 0px;
+}
 .charts {
   box-sizing: border-box;
   padding: 30px 10px 20px 10px;
-  height: 500px;
   border-top: 1px solid #ccc;
 }
 
 /* start of host-trend-group css */
+div[host-trend-group] > .charts {
+  height: 500px;
+}
 div[host-trend-group] .axis path {
   stroke: black;
   stroke-width: 1;
   fill: none;
+}
+div[host-trend] {
+  display: inline-block;
 }
 /* end of host-trend-group css */
 
@@ -251,11 +259,9 @@ div[host-state-change] {
   width: 450px;
   min-height: 300px;
 }
-div[host-state-change] h3 {
-  margin: 20px;
-}
 div[host-state-change] .charts {
   width: 100%;
+  height: 400px;
 }
 div[host-state-change] .state-change-item {
   position: relative;
@@ -344,11 +350,9 @@ div[trouble-host] {
   width: 450px;
   min-height: 300px;
 }
-div[trouble-host] h3 {
-  margin: 0px;
-}
 div[trouble-host] .charts {
   width: 100%;
+  height: 500px;
 }
 div[trouble-host] .trouble-item {
   position: relative;
@@ -488,9 +492,6 @@ div[host-list] .hosts .Critical span {
 div[map] {
   position: relative;
 }
-div[map] h3 {
-  margin: 0px;
-}
 div[map] .charts {
   width: 500px;
 }
@@ -533,8 +534,8 @@ div[host-status] .charts {
 /* end of troule-trend css*/
 
 /* start of overall-host css*/
-div[overall-host] .charts {
-  width: 600px;
+div[overall-host] {
+  min-width: 50%;
 }
 /* end of overall-host css*/
 
@@ -543,9 +544,3 @@ div[service-number-by-state] .charts {
   width: 500px;
 }
 /* end of service-number-by-state css*/
-
-/* start of host-trend css*/
-div[host-trend] .charts {
-  width: 800px;
-}
-/* end of host-trend css*/
