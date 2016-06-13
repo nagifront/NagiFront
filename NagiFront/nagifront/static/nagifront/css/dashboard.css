@@ -78,6 +78,32 @@
   border: 2px solid #c1ceb0;
 }
 
+.widget-row {
+  display: flex;
+  margin: 10px 0px;
+}
+
+.modify .widget-row {
+  box-sizing: border-box;
+  padding: 20px;
+  border: 1px dotted green;
+}
+
+.widgets {
+  display: inline-block;
+  flex: 1;
+  margin: 0px 5px;
+}
+
+.widget-padding {
+  margin: 0px 5%;
+  min-height: 200px;
+  box-sizing: border-box;
+  padding: 40px;
+  background-color: silver;
+  color: white;
+}
+
 #widgets-list-wrapper {
   position: fixed;
   top: 70px;
