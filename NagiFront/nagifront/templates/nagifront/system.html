@@ -1,0 +1,28 @@
+{% extends 'nagifront/layout.html' %}
+
+{% load staticfiles %}
+{% block stylesheets %}
+<link rel="stylesheet" text="text/css" href="{% static "nagifront/css/system.css"%}">
+{% endblock %}
+
+{% block main %}
+<main ng-controller="system">
+  <section id="option-bar">
+    <span>타입</span>
+    <select>
+      <option>Configuration</option>
+    </select>
+    <select>
+      <option>Host</option>
+    </select>
+    <select>
+      <option>All</option>
+    </select>
+    <button>Update</button>
+  </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'nagifront/js/system.js' %}"></script>
+{% endblock %}
