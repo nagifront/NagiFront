@@ -842,6 +842,40 @@ def configuration_contacts(request):
     else:
         return JsonResponse(dict())
 
+def configuration_contactgroups(request):
+    if request.method == 'GET':
+        try:
+            contact_obj_list =  NagiosObjects.objects.filter(objecttype_id=10).values('object_id', 'name1')
+            contact_name_map = {}
+            for cnt in contact_obj_list:
+                contact_name_map[cnt['object_id']] = cnt['name1']
+            
+            contact_member_list = NagiosContactgroupMembers.objects.values('contactgroup_id', 'contact_object_id')
+            contact_member_map = {}
+            for cm in contact_member_list:
+                if cm['contactgroup_id'] in contact_member_map:
+                    contact_member_map[cm['contactgroup_id']].append(contact_name_map[cm['contact_object_id']])
+                else:
+                    contact_member_map[cm['contactgroup_id']] = [contact_name_map[cm['contact_object_id']]]
+
+            contactgroup_obj_list = NagiosObjects.objects.filter(objecttype_id=11).values('object_id', 'name1')
+            contactgroup_name_map = {}
+            for cg in contactgroup_obj_list:
+                contactgroup_name_map[cg['object_id']] = cg['name1']
+
+            contactgroup_list = list(NagiosContactgroups.objects.values())
+            for cg in contactgroup_list:
+                cg['members'] = contact_member_map[cg['contactgroup_id']]
+                cg['contactgroup_name'] = contactgroup_name_map[cg['contactgroup_object_id']]
+                cg['description'] = cg.pop('alias')
+
+            result = {'contactgroups':contactgroup_list}
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
 """ GET API Template
 def some_api_name(request):
     if request.method == 'GET':

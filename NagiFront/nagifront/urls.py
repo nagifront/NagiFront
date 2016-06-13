@@ -32,4 +32,5 @@ urlpatterns = [
         url(r'^configuration/scheduled-downtime$', views.configuration_scheduled_downtime, name='configuration-scheduled-downtime'),
         url(r'^configuration/comments$', views.configuration_comments, name='configuration-comments'),
         url(r'^configuration/contacts$', views.configuration_contacts, name='configuration-contacts'),
+        url(r'^configuration/contactgroups$', views.configuration_contactgroups, name='configuration-contactgroups'),
         ]
