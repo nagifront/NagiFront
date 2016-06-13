@@ -6,6 +6,10 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
     $scope.load_widget(true);
     draw_widgets($scope.user_setting.widget_setting);
   }
+  $scope.delete_enable = false;
+  $scope.toggle_delete = function(){
+    $scope.delete_enable = !$scope.delete_enable;
+  }
   $scope.save = function(){
     $scope.load_widget(false);
     draw_widgets($scope.user_setting.widget_setting);
@@ -42,7 +46,7 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
       widget_setting.push(widget_row_information);
     })
     // load
-    widget_setting_reformed = [];
+    widget_setting_reformed = [[]];
     angular.forEach(widget_setting, function(row){
       if (row.length !== 0){
         widget_setting_reformed.push(row);
@@ -161,7 +165,7 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
         angular.forEach(widget.attr, function(value, key){
           widget_element += ' ' + key + '=' + value;
         })
-        widget_element += '></div>';
+        widget_element += ' ng-click="erase('+ i +', '+ j +')"></div>';
         widget_row_element += widget_element;
       })
       widget_row_element += '</div>';
@@ -175,6 +179,16 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
     draw_widgets($scope.user_setting.widget_setting);
     $scope.load_widget(true);
     draw_widgets($scope.user_setting.widget_setting);
+  }
+  $scope.erase = function(i, j){
+    if ($scope.delete_enable){
+      if (confirm('정말로 삭제할까요?')){
+        $scope.user_setting.widget_setting[i].splice(j, 1);
+        draw_widgets($scope.user_setting.widget_setting);
+        $scope.load_widget(true);
+        draw_widgets($scope.user_setting.widget_setting);
+      }
+    }
   }
 
   $scope.widget_num = {};

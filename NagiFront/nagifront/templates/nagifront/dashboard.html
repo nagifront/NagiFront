@@ -17,7 +17,7 @@
     --><button></button>
   </section>
   <section id="dashboard">
-    <span id="dashboard-modify" ng-click="modify_enable()">대쉬보드 설정</span>
+    <span id="dashboard-modify" ng-hide="is_modify_setting" ng-click="modify_enable()">대쉬보드 설정</span>
     <div class="widgets" overall-host></div>
     <div id="widgets" ng-class="{ modify: is_modify_setting }">
     </div>
@@ -37,7 +37,8 @@
       </ul>
     </div>
     <footer>
-      <img id="delete-widget" src="{% static "nagifront/img/delete.png" %}" alt="delete" width="30px">
+      <img id="delete-widget" ng-class="{ enable: delete_enable }" ng-click="toggle_delete()" src="{% static "nagifront/img/delete.png" %}" alt="delete" width="30px">
+      <span ng-show="delete_enable">삭제모드</span>
       <button ng-click="cancel()">취소</button>
       <button ng-click="save()">저장</button>
     </footer>

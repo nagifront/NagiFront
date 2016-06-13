@@ -129,8 +129,16 @@
   padding: 10px 5px;
   background-color: yellowgreen;
 }
-#widgets-list-wrapper footer #recover-setting {
+#widgets-list-wrapper footer #delete-widget {
+  box-sizing: border-box;
+  border-radius: 5px;
   cursor: pointer;
+}
+#widgets-list-wrapper footer #delete-widget.enable {
+  border: 2px solid green;
+}
+#widgets-list-wrapper footer span {
+  vertical-align: super;
 }
 #widgets-list-wrapper footer button {
   float: right;
