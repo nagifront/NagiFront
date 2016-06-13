@@ -766,6 +766,55 @@ def hosts_groups_configurations(request):
     else:
         return JsonResponse(dict())
 
+def hosts_services_configurations(request):
+    if request.method == 'GET':
+        try:
+            host_name_list = NagiosHosts.objects.values('host_object_id', 'alias')
+            host_name_map = {}
+            for host in host_name_list:
+                host_name_map[host['host_object_id']] = host['alias']
+
+            timeperiod_list = NagiosTimeperiods.objects.values('alias', 'timeperiod_object_id')
+            timeperiod_name_map = {}
+            for tp in timeperiod_list:
+                timeperiod_name_map[tp['timeperiod_object_id']] = tp['alias']
+
+            contactgroup_list = NagiosServiceContactgroups.objects.values('service_id', 'contactgroup_object_id')
+            contactgroup_name_list = NagiosContactgroups.objects.values('contactgroup_object_id', 'alias')
+            
+            contactgroup_name_map = {}
+            for cg in contactgroup_name_list:
+                contactgroup_name_map[cg['contactgroup_object_id']] = cg['alias']
+            
+            service_contactgroup_map = {}
+            for scg in contactgroup_list:
+                service_contactgroup_map[scg['service_id']] = contactgroup_name_map[scg['contactgroup_object_id']]
+            
+            command_list =  NagiosObjects.objects.filter(objecttype_id=12).values('object_id', 'name1')
+            command_name_map = {}
+            for cmd in command_list:
+                command_name_map[cmd['object_id']] = cmd['name1']
+
+            service_list = list(NagiosServices.objects.values())
+            for service in service_list:
+                service['host'] = host_name_map[service['host_object_id']]
+                if service['check_command_args'] == "":
+                    service['check_command'] = command_name_map[service['check_command_object_id']]
+                else:
+                    service['check_command'] = command_name_map[service['check_command_object_id']] + "!" + service['check_command_args']
+               
+                service['check_period'] = timeperiod_name_map.get(service['check_timeperiod_object_id'], None)
+                service['notification_period'] = timeperiod_name_map.get(service['notification_timeperiod_object_id'], None)
+                service['contact_group'] = service_contactgroup_map[service['service_id']]
+
+            result = {'services':service_list}
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
+
 """ GET API Template
 def some_api_name(request):
     if request.method == 'GET':
