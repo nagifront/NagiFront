@@ -90,6 +90,7 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
           attr: { host_group_id: 185 },
         },
       ],
+      /*
       [
         {
           name: 'host-trend-group',
@@ -148,6 +149,7 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
           attr: { host_group_id: 189, 'time-scale': 'day' },
         },
       ],
+      */
     ],
   };
 
