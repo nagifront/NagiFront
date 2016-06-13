@@ -1,0 +1,67 @@
+#search-widget {
+  width: 100%;
+  height: 71px;
+  box-sizing: border-box;
+  padding: 10px 36px;
+
+  font-size: 14px;
+  line-height: 40px;
+  background-color: #d1dac6;
+  border: 2px solid #c1ceb0;
+}
+
+#search-widget span {
+  vertical-align: middle;
+ 
+  font-weight: bold;
+  color: #687559;
+}
+
+#search-widget select {
+  height: 40px;
+  box-sizing: border-box;
+  margin-left: 10px;
+  padding-left: 15px;
+  font-weight: bold;
+
+  border: 1px solid #c1ceb0;
+  vertical-align: middle;
+}
+
+#search-widget input {
+  height: 40px;
+  width: 76%;
+  box-sizing: border-box;
+  margin-left: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  border: 1px solid #c1ceb0;
+  border-right: none;
+  vertical-align: middle;
+}
+
+#search-widget button {
+  width: 60px;
+  height: 40px;
+  box-sizing: border-box;
+
+  border: 1px solid #c1ceb0;
+  border-left: none;
+  vertical-align: middle;
+  background-color: white;
+  background-image: url(/static/nagifront/img/musica-searcher.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 30px;
+}
+
+.search {
+  margin: 34px;
+  width: 85%;
+  margin-top: 46px;
+  padding: 36px;
+
+  background-color: #ffffff;
+  border: 2px solid #c1ceb0;
+}

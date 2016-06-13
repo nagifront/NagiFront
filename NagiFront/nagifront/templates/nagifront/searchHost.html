@@ -2,32 +2,32 @@
 
 {% load staticfiles %}
 {% block stylesheets %}
-<link rel="stylesheet" text="text/css" href="{% static "nagifront/css/dashboard.css"%}">
+<link rel="stylesheet" text="text/css" href="{% static "nagifront/css/search.css"%}">
 {% endblock %}
 
 {% block main %}
-<main ng-controller="dashboard">
+<main ng-controller="search">
   <section id="search-widget">
-	    <span>상세 검색</span>
-  	  <select ng-model="type">
-    	  <option value="host">Host</option>
-    	  <option value="hostGroup">Host Group</option>
-    	</select>
- 	  	 <input ng-model="name"><!--
-  	  --><button ng-click="move()"></button>
+    <span>상세 검색</span>
+    <select ng-model="type">
+      <option value="host">Host</option>
+      <option value="hostGroup">Host Group</option>
+    </select>
+     <input ng-model="name"><!--
+    --><button ng-click="move()"></button>
   </section>
-  <div id="dashboard">
+  <div class="search">
     <div class="widgets" service-status-detail host_id={{ id }}></div> 
   </div>
-  <div id="dashboard">
+  <div class="search">
     <div class="widgets" host-status-information host_id={{ id }}></div>
   </div>
-  <div id="dashboard">
-  <div class="widgets" comments host_id={{ id }}></div>
+  <div class="search">
+    <div class="widgets" comments host_id={{ id }}></div>
   </div>
 </main>
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'nagifront/js/dashboard.js' %}"></script>
+<script src="{% static 'nagifront/js/search.js' %}"></script>
 {% endblock %}

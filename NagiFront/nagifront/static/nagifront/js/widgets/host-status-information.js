@@ -36,7 +36,7 @@ angular.module('nagifront')
         getData = function() {
           $http.get(djangoUrl.reverse('hosts-status')+'&host_id='+attrs.hostId).then(function(response) {
           scope.host = response.data.hosts[0];
-          var milisec = new Date(scope.host.last_check) - new Date(scope.host.last_state_change);
+          var milisec = new Date(scope.host.status_update_time) - new Date(scope.host.last_state_change);
           var day = parseInt(milisec / time[0]);
           var hour = parseInt((milisec - day * time[0]) / time[1]);
           var min = parseInt((milisec - day * time[0] - hour * time[1]) / time[2]);

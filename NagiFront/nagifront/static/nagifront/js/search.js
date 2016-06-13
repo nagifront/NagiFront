@@ -1,20 +1,37 @@
-var app = angular.module('nagifront', ['djng.urls']).config(function($httpProvider) {
-  $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-  $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-  $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-});
 app.controller('search', function($scope, $http, $window, djangoUrl){
-  $scope.search = function(){
-    $http.post(djangoUrl.reverse('index'), {
-        type: $scope.type,
-        name: $scope.name,
-    }).then(function success(response){
-      var result = response.data.result;
-      if (result){
-        $window.location.href = '/';
-      } else {
-      }
-    }, function failure(response){
+  $scope.move = function() {
+    if($scope.type === "host") {
+      $http.get(djangoUrl.reverse('hosts-ids')).then(function success(response) {
+        var ids = response.data.ids;
+        var id = ids[$scope.name];
+        if(id === undefined) {
+          angular.forEach(ids, function(value, key){
+            if(key.substr(0, $scope.name.length) === $scope.name) id = value;
+          });
+        }
+        $http.get(djangoUrl.reverse('search')+'&id='+id+'&type='+$scope.type)
+        .then(function success(response) {
+          $window.location.href = 'search?id='+id+'&type='+$scope.type;
+        });
     });
-  };
-  })
+    }
+    else if($scope.type === "hostGroup") {
+      $http.get(djangoUrl.reverse('hosts-groups')).then(function success(response) {
+        var data = response.data;
+        var id = -1;
+        angular.forEach(data, function(value, key) {
+          if(value.alias === $scope.name) id = key;
+        });
+        if(id === -1) {
+         angular.forEach(data, function(value, key) {
+            if(value.alias.substr(0, $scope.name.length) === $scope.name) id = key;
+          });
+        }
+        $http.get(djangoUrl.reverse('search')+'&id='+id+'&type='+$scope.type)
+        .then(function success(response) {
+          $window.location.href = 'search?id='+id+'&type='+$scope.type;
+        });
+    });
+    }
+  }
+})

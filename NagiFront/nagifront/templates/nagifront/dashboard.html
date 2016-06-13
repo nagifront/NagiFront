@@ -8,13 +8,13 @@
 {% block main %}
 <main ng-controller="dashboard">
   <section id="search-widget">
-	    <span>상세 검색</span>
-  	  <select ng-model="type">
-    	  <option value="host">Host</option>
-    	  <option value="hostGroup">Host Group</option>
-    	</select>
- 	  	 <input ng-model="name"><!--
-  	  --><button ng-click="move()"></button>
+    <span>상세 검색</span>
+      <select ng-model="type">
+        <option value="host">Host</option>
+        <option value="hostGroup">Host Group</option>
+      </select>
+        <input ng-model="name"><!--
+      --><button ng-click="move()"></button>
   </section>
   <section id="dashboard">
 <!--    <div class="widgets" map></div>
