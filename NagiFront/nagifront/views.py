@@ -814,6 +814,33 @@ def hosts_services_configurations(request):
     else:
         return JsonResponse(dict())
 
+def configuration_contacts(request):
+    if request.method == 'GET':
+        try:
+            timeperiod_list = NagiosTimeperiods.objects.values('alias', 'timeperiod_object_id')
+            timeperiod_name_map = {}
+            for tp in timeperiod_list:
+                timeperiod_name_map[tp['timeperiod_object_id']] = tp['alias']
+
+            contact_obj_list =  NagiosObjects.objects.filter(objecttype_id=10).values('object_id', 'name1')
+            contact_name_map = {}
+            for cnt in contact_obj_list:
+                contact_name_map[cnt['object_id']] = cnt['name1']
+            
+            contact_list = list(NagiosContacts.objects.values())
+            for contact in contact_list:
+                contact['contact_name'] = contact_name_map[contact['contact_object_id']]
+                contact['service_notification_period'] = timeperiod_name_map[contact['service_timeperiod_object_id']]
+                contact['host_notification_period'] = timeperiod_name_map[contact['host_timeperiod_object_id']]
+                contact['description'] = contact.pop('alias')
+
+            result = {'contacts':contact_list}
+            return JsonResponse(result)
+        
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
 
 """ GET API Template
 def some_api_name(request):
