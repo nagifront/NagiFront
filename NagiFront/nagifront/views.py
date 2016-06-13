@@ -26,13 +26,13 @@ def index(request):
 
 @login_required
 def search(request) :
-        if request.method == 'GET':
-            host_id = request.GET.get('id')
-            search_type = request.GET.get('type')
-            if search_type == "hostGroup":
-                return render(request, 'nagifront/searchHostGroup.html', {'id' : host_id})
-            elif search_type == "host":
-                return render(request, 'nagifront/searchHost.html', {'id' : host_id})
+    if request.method == 'GET':
+        host_id = request.GET.get('id')
+        search_type = request.GET.get('type')
+        if search_type == "hostGroup":
+            return render(request, 'nagifront/searchHostGroup.html', {'id' : host_id})
+        elif search_type == "host":
+            return render(request, 'nagifront/searchHost.html', {'id' : host_id})
 
 def login(request):
     message = None
