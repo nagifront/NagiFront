@@ -732,6 +732,40 @@ def hosts_configurations(request):
     else:
         return JsonResponse(dict())
 
+def hosts_groups_configurations(request):
+    if request.method == 'GET':
+        try:
+            member_list = NagiosHostgroupMembers.objects.values('hostgroup_id', 'host_object_id')
+            group_member_map = {}
+            for member in member_list:
+                if member['hostgroup_id'] in group_member_map:
+                    group_member_map[member['hostgroup_id']].append(member['host_object_id'])
+                else:
+                    group_member_map[member['hostgroup_id']] = [member['host_object_id']]
+
+            host_list = NagiosHosts.objects.values('host_object_id', 'alias')
+            host_alias_map = {}
+            for host in host_list:
+                host_alias_map[host['host_object_id']] = host['alias']
+
+            hostgroup_obj_list = NagiosObjects.objects.filter(objecttype_id=3).values('object_id', 'name1')
+            hostgroup_name_map = {}
+            for group in hostgroup_obj_list:
+                hostgroup_name_map[group['object_id']] = group['name1']
+
+            group_list = list(NagiosHostgroups.objects.values())
+            for group in group_list:
+                group['host_members'] = [host_alias_map[m_id] for m_id in group_member_map[group['hostgroup_id']]]
+                group['group_name'] = hostgroup_name_map[group['hostgroup_object_id']]
+                group['description'] = group.pop('alias') # Renaming the key 'alias' to 'description'
+
+            result = {'hostgroups':group_list}
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
 """ GET API Template
 def some_api_name(request):
     if request.method == 'GET':
