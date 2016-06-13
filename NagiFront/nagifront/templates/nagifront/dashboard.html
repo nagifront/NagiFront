@@ -43,6 +43,13 @@
       <button ng-click="save()">저장</button>
     </footer>
   </section>
+  <div class="modal-backboard" ng-show="show_modal" ng-cloak>
+    <div class="modal">
+      <h1>Fatal!</h1>
+      <p ng-bind="message"></p>
+      <button ng-click="close_modal()">OK</button>
+    </div>
+  </div>
 </main>
 {% endblock %}
 

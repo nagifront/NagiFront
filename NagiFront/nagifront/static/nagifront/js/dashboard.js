@@ -38,7 +38,7 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
         })
         widget_config['attr'] = attr;
         if (num++ >= 2){
-          alert('한 줄에는 2개 이상의 위젯이 들어갈 수 없습니다');
+          $scope.widget_limit_modal_enable();
           return;
         }
         widget_row_information.push(widget_config);
@@ -229,4 +229,13 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
     'service-number-by-state-chart': '그룹별 서비스 현황 (그래프)',
     'trouble-host': '문제 발생 호스트',
   };
+
+  $scope.show_modal = false;
+  $scope.widget_limit_modal_enable = function(){
+    $scope.show_modal = true;
+    $scope.message = '한 줄에 2개 이상의 위젯을 둘 순 없습니다';
+  }
+  $scope.close_modal = function(){
+    $scope.show_modal = false;
+  }
 })
