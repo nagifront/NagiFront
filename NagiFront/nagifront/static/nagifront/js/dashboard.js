@@ -5,6 +5,15 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
     $scope.backup = JSON.parse(JSON.stringify($scope.user_setting.widget_setting));
   }
   $scope.save = function(){
+    $scope.load_widget();
+    draw_widgets($scope.user_setting.widget_setting);
+    $scope.is_modify_setting = false;
+  }
+  $scope.cancel = function(){
+    $scope.is_modify_setting = false;
+    $scope.user_setting.widget_setting = JSON.parse(JSON.stringify($scope.backup));
+  }
+  $scope.load_widget = function(){
     var dashboard = angular.element(document.querySelector( '#widgets' ))
     var widget_setting = [];
     angular.forEach(dashboard.children(), function(widget_row){
@@ -25,12 +34,6 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
       widget_setting.push(widget_row_information);
     })
     $scope.user_setting.widget_setting = widget_setting;
-    draw_widgets($scope.user_setting.widget_setting);
-    $scope.is_modify_setting = false;
-  }
-  $scope.cancel = function(){
-    $scope.is_modify_setting = false;
-    $scope.user_setting.widget_setting = JSON.parse(JSON.stringify($scope.backup));
   }
   $http.get(djangoUrl.reverse('hosts-ids')).then(function(response) {
     $scope.host_ids = response.data.ids;
@@ -137,16 +140,14 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
     var dashboard = angular.element(document.querySelector( '#widgets' ))
     var innerHTML = '';
     angular.forEach(widget_setting, function(widget_row, i){
-      var widget_row_element = '<div class="widget-row" ng-model="user_setting.widget_setting['+ i +']"  data-drop="true" jqyoui-droppable="{ multiple: true }">';
+      var widget_row_element = '<div class="widget-row" ng-model="user_setting.widget_setting['+ i +']"  data-drop="true" jqyoui-droppable="{ multiple: true, onDrop: \'redraw\' }" data-jqyoui-options="{accept: \'.new-widget\'}">';
       angular.forEach(widget_row, function(widget, j){
         var widget_element = '<div ';
         widget_element += widget.name;
         angular.forEach(widget.attr, function(value, key){
           widget_element += ' ' + key + '=' + value;
         })
-        widget_element += ' ng-model="user_setting.widget_setting['+ i +']['+ j +']" '
-          + 'data-drag="is_modify_setting" data-jqyoui-options="{helper: \'clone\'}" ng-model="widget_list" jqyoui-draggable="{index: $index, placeholder: \'keep\'}"'
-          + '></div>';
+        widget_element += '></div>';
         widget_row_element += widget_element;
       })
       widget_row_element += '</div>';
@@ -156,6 +157,7 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
     $compile(dashboard)($scope)
   }
   draw_widgets($scope.user_setting.widget_setting);
+  $scope.redraw = function(){draw_widgets($scope.user_setting.widget_setting);}
 
   $scope.widget_num = {};
   angular.forEach($scope.user_setting.widget_setting, function(widget_row){
