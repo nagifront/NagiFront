@@ -43,12 +43,13 @@ angular.module('nagifront')
       restrict: 'EA',
       scope: true,
       template: '<h3>호스트 목록 - <select name="host-group-id" ng-model="host_group_id"'
-        + 'ng-options="hostgroup_id.hostgroup_object_id as hostgroup_id.name for hostgroup_id in hostgroup_ids" ng-disabled="!is_modify_setting"></select></h3><div class="charts">'
+        + 'ng-options="hostgroup_id.hostgroup_object_id as hostgroup_id.name for hostgroup_id in hostgroup_ids" ng-disabled="!is_modify_setting"></select></h3><div class="charts" ng-if="!is_modify_setting">'
         +'<scrollable always-visible="true">'
           +'<div class="hosts" ng-repeat="host in hosts" host-service-state host_id="{{ host }}">'
           +'</div>'
         +'</scrollable>'
-        +'</div>',
+        +'</div>'
+        + '<div class="widget-padding" ng-if="is_modify_setting"><p>호스트 목록</p></div>',
       link: function(scope, element, attrs) {
         scope.host_group_id = attrs.hostGroupId * 1;
         $http.get(djangoUrl.reverse('hosts-groups')).then(function(response) {

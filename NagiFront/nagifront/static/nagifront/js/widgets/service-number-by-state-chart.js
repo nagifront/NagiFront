@@ -3,7 +3,7 @@ angular.module('nagifront')
   return {
     restrict: 'EA',
     scope: true,
-    template: '<h3>그룹별 서비스 현황</h3><div class="charts">'
+    template: '<h3>그룹별 서비스 현황</h3><div class="charts" ng-if="!is_modify_setting">'
         +'<scrollable always-visible="true">'
           +'<div class="groups" ng-repeat="group in groups">'
             +'<span class="group-name">{{group.alias}}</span>'
@@ -12,7 +12,8 @@ angular.module('nagifront')
             +'<span class="state Critical"><span>{{ group.Critical }}</span>   Critical</span>'
           +'</div>'
         +'</scrollable>'
-      +'</div>',
+      +'</div>'
+        + '<div class="widget-padding" ng-if="is_modify_setting"><p>그룹별 서비스 현황</p></div>',
       link: function(scope, element, attrs) {
         getData = function() {
           $http.get(djangoUrl.reverse('host-groups-service-number-by-state')).then(function(response) {

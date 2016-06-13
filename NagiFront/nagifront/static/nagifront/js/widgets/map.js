@@ -3,7 +3,8 @@ angular.module('nagifront')
     return {
       restrict: 'EA',
       scope: true,
-      template: '<h3>맵</h3><div class="charts"><div class="map-wrapper"></div></div><div class="tooltip"></div>',
+      template: '<h3>맵</h3><div class="charts" ng-if="!is_modify_setting"><div class="map-wrapper"></div></div><div class="tooltip"></div>'
+        + '<div class="widget-padding" ng-if="is_modify_setting"><p>맵</p></div>',
       link: function(scope, element, attrs){
         getData = function(){
           $http.get(djangoUrl.reverse('hosts-parent-information')).then(function(response){

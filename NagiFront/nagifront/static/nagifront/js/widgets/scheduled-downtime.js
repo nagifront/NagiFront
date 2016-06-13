@@ -3,7 +3,7 @@ angular.module('nagifront')
   return {
     restrict: 'EA',
     scope: true,
-    template: '<h3>다운타임 스케쥴</h3><div class="charts">'
+    template: '<h3>다운타임 스케쥴</h3><div class="charts" ng-if="!is_modify_setting">'
         +'<scrollable always-visible="true">'
           +'<table class="tables">'
             +'<tr>'
@@ -22,7 +22,8 @@ angular.module('nagifront')
             +'</tr>'
           +'</table>'
         +'</scrollable>'
-      +'</div>',
+      +'</div>'
+        + '<div class="widget-padding" ng-if="is_modify_setting"><p>다운타임 스케쥴</p></div>',
       link: function(scope, element, attrs) {
         getData = function() {
           $http.get(djangoUrl.reverse('configuration-scheduled-downtime')).then(function(response) {

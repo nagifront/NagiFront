@@ -8,7 +8,8 @@ angular.module('nagifront')
         + '</select> <select name="time-scale" ng-model="time_scale"'
         + 'ng-options="t for t in time_scale_list" ng-disabled="!is_modify_setting">'
         + '</select>'
-        + '</h3><div class="charts"><scrollable always-visible="true"></scrollable></div>',
+        + '</h3><div class="charts" ng-if="!is_modify_setting"><scrollable always-visible="true"></scrollable></div>'
+        + '<div class="widget-padding" ng-if="is_modify_setting"><p>문제 발생 트렌드</p></div>',
       link: function(scope, element, attrs) {
         scope.host_group_id = attrs.hostGroupId * 1;
         scope.time_scale_list = [ 'day', 'week', ];

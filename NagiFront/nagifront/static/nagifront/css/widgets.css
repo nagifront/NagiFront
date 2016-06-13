@@ -16,6 +16,7 @@ div[host-trend-group] .axis path {
 /* start of service-number-by-state-chart css */
 div[service-number-by-state-chart] .charts {
   width: 550px;
+  height: 400px;
 }
 div[service-number-by-state-chart] .groups {
   padding: 10px;
@@ -78,6 +79,7 @@ div[trouble-trend] .charts {
 /* start of troule-trend css*/
 div[scheduled-downtime] .charts {
   width: 750px;
+  height: 400px;
 }
 div[scheduled-downtime] .tables {
   box-sizing: border-box;
@@ -105,6 +107,7 @@ div[scheduled-downtime] tr{
 /* start of check-schdules css*/
 div[check-schedules] .charts {
   width: 650px;
+  height: 400px;
 }
 div[check-schedules] .schedule {
   background-color: #e6ece0;
@@ -172,6 +175,7 @@ div[check-schedules] .schedule .output:hover {
 /* start of comment css*/
 div[comments] .charts {
   width: 780px;
+  height: 400px;
 }
 div[comments] .comments {
   box-sizing: border-box;
@@ -426,6 +430,7 @@ div[trouble-host] .trouble-item .unknown {
 /* start of host-list css */
 div[host-list] .charts {
   width: 550px;
+  height: 400px;
 }
 div[host-list] .hosts {
   padding: 10px;

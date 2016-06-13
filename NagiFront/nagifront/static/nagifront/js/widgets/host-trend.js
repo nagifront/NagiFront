@@ -6,7 +6,8 @@ angular.module('nagifront')
       template: '<h3>{{ data.host.display_name }}</h3><select ng-model="time"'
         + 'ng-options="type as type.name for type in list track by type.value">'
         + '</select>'
-        + '<div class="charts"></div>',
+        + '<div class="charts" ng-if="!is_modify_setting"></div>'
+        + '<div class="widget-padding" ng-if="is_modify_setting"><p>호스트 트렌드</p></div>',
       link: function(scope, element, attrs){
         scope.list = [
           { value: 12 * 60 * 60 * 1000, name: '12 hours' },

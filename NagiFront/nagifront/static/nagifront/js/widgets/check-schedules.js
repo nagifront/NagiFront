@@ -3,7 +3,7 @@ angular.module('nagifront')
   return {
     restrict: 'EA',
     scope: true,
-    template: '<h3>체크 스케쥴</h3><div class="charts">'
+    template: '<h3>체크 스케쥴</h3><div class="charts" ng-if="!is_modify_setting">'
         +'<scrollable always-visible="true">'
           +'<div class="schedule" ng-repeat="schedule in schedules">'
             +'<span class="nextCheck">{{schedule.next_check_time | date: "yyyy/MM/dd HH:mm:ss"}}</span>'
@@ -12,7 +12,8 @@ angular.module('nagifront')
             +'<div class="output" ng-if="(schedule.host_name+schedule.service_name).length>30"><span>[{{schedule.host_name}}]: {{schedule.service_name}}</span></div>'
           +'</div>'
         +'</scrollable>'
-      +'</div>',
+      +'</div>'
+        + '<div class="widget-padding" ng-if="is_modify_setting"><p>체크 스케쥴</p></div>',
       link: function(scope, element, attrs) {
         getData = function() {
           if(attrs.hasOwnProperty('hostGroupId')) $http.get(djangoUrl.reverse('host-groups-check-schedules') + '&host_group_id=' + attrs.hostGroupId).then(function(response) {

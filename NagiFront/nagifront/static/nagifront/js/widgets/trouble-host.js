@@ -3,7 +3,7 @@ angular.module('nagifront')
     return {
       restrict: 'EA',
       scope: true,
-      template: '<h3>문제 발생 호스트</h3><div class="charts">'
+      template: '<h3>문제 발생 호스트</h3><div class="charts" ng-if="!is_modify_setting">'
           +'<scrollable always-visible="true">'
             + '<div class="trouble-item" ng-repeat="trouble in troubles | orderBy : \'-time\'">'
               + '<span class="state {{ state[trouble.state] }}"></span>'
@@ -12,7 +12,8 @@ angular.module('nagifront')
               + '<div class="output" ng-if="trouble.output!=\'\'"><span>{{ trouble.output }}</span></div>'
             + '</div>'
           + '</scrollable>'
-        + '</div>',
+        + '</div>'
+        + '<div class="widget-padding" ng-if="is_modify_setting"><p>문제 발생 호스트</p></div>',
       link: function(scope, element, attrs){
         getData = function(){
           $http.get(djangoUrl.reverse('host-groups-trouble-hosts')).then(function(response){
