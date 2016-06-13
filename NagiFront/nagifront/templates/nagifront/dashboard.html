@@ -6,8 +6,8 @@
 {% endblock %}
 
 {% block main %}
-<main ng-controller="dashboard">
-  <section id="search-widget">
+<main>
+  <section id="search-widget" ng-controller="search">
     <span>상세 검색</span>
       <select ng-model="type">
         <option value="host">Host</option>
@@ -16,7 +16,7 @@
         <input ng-model="name"><!--
       --><button ng-click="move()"></button>
   </section>
-  <section id="dashboard">
+  <section id="dashboard" ng-controller="dashboard">
 <!--    <div class="widgets" map></div>
     <div class="widgets" trouble-host></div>
     <div class="widgets" host-state-change></div>
@@ -34,4 +34,5 @@
 
 {% block scripts %}
 <script src="{% static 'nagifront/js/dashboard.js' %}"></script>
+<script src="{% static 'nagifront/js/search.js' %}"></script>
 {% endblock %}
