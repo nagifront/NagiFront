@@ -13,7 +13,7 @@
     <div class="group" ng-repeat="group in groups"><button class="group-button" ng-click="selectGroup(group)">{{ group.name }}</button></div> 
   </section>
   <section id="dashboard">
-    <div ng-if="ready == 1" class="widgets" host-list-with-click host_group_id="{{ selected.id }}"></div>
+  <div ng-if="ready" class="widgets" host-list-with-click host_group_id="{{ selected.id }}"></div>
   </section>
   {% endverbatim %}
 </main>
