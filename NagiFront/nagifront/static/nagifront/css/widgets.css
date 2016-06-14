@@ -571,13 +571,13 @@ div[host-status-information] .charts {
 }
 div[host-status-information] .info {
   display: inline-block;
-  width: 700px;
+  width: 56%;
   margin: 10px;
 }
 div[host-status-information] .enable_check {
   display: inline-block;
   float: right;
-  width: 450px;
+  width: 36%;
   margin: 15px;
 }
 div [host-status-information] .category {
