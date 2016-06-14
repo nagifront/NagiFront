@@ -1,4 +1,5 @@
 app.controller('search', function($scope, $http, $window, djangoUrl){
+  $scope.type = 'host';
   $scope.move = function() {
     if($scope.type === "host") {
       $http.get(djangoUrl.reverse('hosts-ids')).then(function success(response) {
