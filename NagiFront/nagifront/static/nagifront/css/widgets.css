@@ -706,6 +706,7 @@ div[host-list-with-click] h3 {
 }
 div[host-list-with-click] .charts {
   width: 100%;
+  height: 500px;
   color: #71835b;
 }
 div[host-list-with-click] .hosts {
