@@ -690,12 +690,246 @@ def hosts_comments(request):
 
                 result = {'comments':comment_list}
                 return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
+def hosts_configurations(request):
+    if request.method == 'GET':
+        try:
+            host_configs = list(NagiosHosts.objects.values())
+            host_name_map = {}
+            for host in host_configs:
+                host_name_map[host['host_object_id']] = host['alias']
+
+            host_parent_list = NagiosHostParenthosts.objects.values('host_id', 'parent_host_object_id')
+            host_parent_map = {}
+            for hp in host_parent_list:
+                host_parent_map[hp['host_id']] = host_name_map[hp['parent_host_object_id']]
+
+            timeperiod_list = NagiosTimeperiods.objects.values('alias', 'timeperiod_object_id')
+            timeperiod_name_map = {}
+            for tp in timeperiod_list:
+                timeperiod_name_map[tp['timeperiod_object_id']] = tp['alias']
+
+            contactgroup_list = NagiosHostContactgroups.objects.values('host_id', 'contactgroup_object_id')
+            contactgroup_name_list = NagiosContactgroups.objects.values('contactgroup_object_id', 'alias')
+            
+            contactgroup_name_map = {}
+            for cg in contactgroup_name_list:
+                contactgroup_name_map[cg['contactgroup_object_id']] = cg['alias']
+            
+            host_contactgroup_map = {}
+            for hcg in contactgroup_list:
+                host_contactgroup_map[hcg['host_id']] = contactgroup_name_map[hcg['contactgroup_object_id']]
+            
+            for host in host_configs:
+                host['check_period'] = timeperiod_name_map.get(host['check_timeperiod_object_id'], None)
+                host['notification_period'] = timeperiod_name_map.get(host['notification_timeperiod_object_id'], None)
+                host['contact_group'] = host_contactgroup_map[host['host_id']]
+                host['parent_host'] = host_parent_map.get(host['host_id'], None)
+
+            result = {'host_configurations':host_configs}
+            return JsonResponse(result)
+            
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
+def hosts_groups_configurations(request):
+    if request.method == 'GET':
+        try:
+            member_list = NagiosHostgroupMembers.objects.values('hostgroup_id', 'host_object_id')
+            group_member_map = {}
+            for member in member_list:
+                if member['hostgroup_id'] in group_member_map:
+                    group_member_map[member['hostgroup_id']].append(member['host_object_id'])
+                else:
+                    group_member_map[member['hostgroup_id']] = [member['host_object_id']]
+
+            host_list = NagiosHosts.objects.values('host_object_id', 'alias')
+            host_alias_map = {}
+            for host in host_list:
+                host_alias_map[host['host_object_id']] = host['alias']
+
+            hostgroup_obj_list = NagiosObjects.objects.filter(objecttype_id=3).values('object_id', 'name1')
+            hostgroup_name_map = {}
+            for group in hostgroup_obj_list:
+                hostgroup_name_map[group['object_id']] = group['name1']
+
+            group_list = list(NagiosHostgroups.objects.values())
+            for group in group_list:
+                group['host_members'] = [host_alias_map[m_id] for m_id in group_member_map[group['hostgroup_id']]]
+                group['group_name'] = hostgroup_name_map[group['hostgroup_object_id']]
+                group['description'] = group.pop('alias') # Renaming the key 'alias' to 'description'
+
+            result = {'hostgroups':group_list}
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
+def hosts_services_configurations(request):
+    if request.method == 'GET':
+        try:
+            host_name_list = NagiosHosts.objects.values('host_object_id', 'alias')
+            host_name_map = {}
+            for host in host_name_list:
+                host_name_map[host['host_object_id']] = host['alias']
+
+            timeperiod_list = NagiosTimeperiods.objects.values('alias', 'timeperiod_object_id')
+            timeperiod_name_map = {}
+            for tp in timeperiod_list:
+                timeperiod_name_map[tp['timeperiod_object_id']] = tp['alias']
+
+            contactgroup_list = NagiosServiceContactgroups.objects.values('service_id', 'contactgroup_object_id')
+            contactgroup_name_list = NagiosContactgroups.objects.values('contactgroup_object_id', 'alias')
+            
+            contactgroup_name_map = {}
+            for cg in contactgroup_name_list:
+                contactgroup_name_map[cg['contactgroup_object_id']] = cg['alias']
+            
+            service_contactgroup_map = {}
+            for scg in contactgroup_list:
+                service_contactgroup_map[scg['service_id']] = contactgroup_name_map[scg['contactgroup_object_id']]
+            
+            command_list =  NagiosObjects.objects.filter(objecttype_id=12).values('object_id', 'name1')
+            command_name_map = {}
+            for cmd in command_list:
+                command_name_map[cmd['object_id']] = cmd['name1']
+
+            service_list = list(NagiosServices.objects.values())
+            for service in service_list:
+                service['host'] = host_name_map[service['host_object_id']]
+                if service['check_command_args'] == "":
+                    service['check_command'] = command_name_map[service['check_command_object_id']]
+                else:
+                    service['check_command'] = command_name_map[service['check_command_object_id']] + "!" + service['check_command_args']
+               
+                service['check_period'] = timeperiod_name_map.get(service['check_timeperiod_object_id'], None)
+                service['notification_period'] = timeperiod_name_map.get(service['notification_timeperiod_object_id'], None)
+                service['contact_group'] = service_contactgroup_map[service['service_id']]
+
+            result = {'services':service_list}
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
+def configuration_contacts(request):
+    if request.method == 'GET':
+        try:
+            timeperiod_list = NagiosTimeperiods.objects.values('alias', 'timeperiod_object_id')
+            timeperiod_name_map = {}
+            for tp in timeperiod_list:
+                timeperiod_name_map[tp['timeperiod_object_id']] = tp['alias']
+
+            contact_obj_list =  NagiosObjects.objects.filter(objecttype_id=10).values('object_id', 'name1')
+            contact_name_map = {}
+            for cnt in contact_obj_list:
+                contact_name_map[cnt['object_id']] = cnt['name1']
+            
+            contact_list = list(NagiosContacts.objects.values())
+            for contact in contact_list:
+                contact['contact_name'] = contact_name_map[contact['contact_object_id']]
+                contact['service_notification_period'] = timeperiod_name_map[contact['service_timeperiod_object_id']]
+                contact['host_notification_period'] = timeperiod_name_map[contact['host_timeperiod_object_id']]
+                contact['description'] = contact.pop('alias')
+
+            result = {'contacts':contact_list}
+            return JsonResponse(result)
+        
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
+def configuration_contactgroups(request):
+    if request.method == 'GET':
+        try:
+            contact_obj_list =  NagiosObjects.objects.filter(objecttype_id=10).values('object_id', 'name1')
+            contact_name_map = {}
+            for cnt in contact_obj_list:
+                contact_name_map[cnt['object_id']] = cnt['name1']
+            
+            contact_member_list = NagiosContactgroupMembers.objects.values('contactgroup_id', 'contact_object_id')
+            contact_member_map = {}
+            for cm in contact_member_list:
+                if cm['contactgroup_id'] in contact_member_map:
+                    contact_member_map[cm['contactgroup_id']].append(contact_name_map[cm['contact_object_id']])
+                else:
+                    contact_member_map[cm['contactgroup_id']] = [contact_name_map[cm['contact_object_id']]]
+
+            contactgroup_obj_list = NagiosObjects.objects.filter(objecttype_id=11).values('object_id', 'name1')
+            contactgroup_name_map = {}
+            for cg in contactgroup_obj_list:
+                contactgroup_name_map[cg['object_id']] = cg['name1']
+
+            contactgroup_list = list(NagiosContactgroups.objects.values())
+            for cg in contactgroup_list:
+                cg['members'] = contact_member_map[cg['contactgroup_id']]
+                cg['contactgroup_name'] = contactgroup_name_map[cg['contactgroup_object_id']]
+                cg['description'] = cg.pop('alias')
+
+            result = {'contactgroups':contactgroup_list}
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
+def configuration_timeperiods(request):
+    if request.method == 'GET':
+        try:
+            timerange_list = NagiosTimeperiodTimeranges.objects.values()
+            timeperiod_range_map = {}
+            for tr in timerange_list:
+                if tr['timeperiod_id'] in timeperiod_range_map:
+                    timeperiod_range_map[tr['timeperiod_id']].append({'day':tr['day'], 'start_sec':tr['start_sec'], 'end_sec':tr['end_sec']})
+                else:
+                    timeperiod_range_map[tr['timeperiod_id']] = [{'day':tr['day'], 'start_sec':tr['start_sec'], 'end_sec':tr['end_sec']}]
+
+            timeperiod_obj_list = NagiosObjects.objects.filter(objecttype_id=9).values('object_id', 'name1')
+            timeperiod_name_map = {}
+            for tp in timeperiod_obj_list:
+                timeperiod_name_map[tp['object_id']] = tp['name1']
+            
+            timeperiod_list = list(NagiosTimeperiods.objects.values())
+            for timeperiod in timeperiod_list:
+                timeperiod['time_ranges'] = timeperiod_range_map.get(timeperiod['timeperiod_id'], None)
+                timeperiod['timeperiod_name'] = timeperiod_name_map[timeperiod['timeperiod_object_id']]
+                timeperiod['description'] = timeperiod.pop('alias')
+
+            result = {'timeperiods':timeperiod_list}
+            return JsonResponse(result)
 
         except ObjectDoesNotExist:
             return JsonResponse(dict())
     else:
         return JsonResponse(dict())
 
+def configuration_commands(request):
+    if request.method == 'GET':
+        try:
+            command_obj_list = NagiosObjects.objects.filter(objecttype_id=12).values('object_id', 'name1')
+            command_name_map = {}
+            for cmd in command_obj_list:
+                command_name_map[cmd['object_id']] = cmd['name1']
+
+            command_list = list(NagiosCommands.objects.values())
+            for command in command_list:
+                command['command_name'] = command_name_map[command['object_id']]
+
+            result = {'commands':command_list}
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
 """ GET API Template
 def some_api_name(request):
     if request.method == 'GET':
