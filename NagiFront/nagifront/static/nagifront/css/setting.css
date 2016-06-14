@@ -1,5 +1,5 @@
 .block {
-  margin: 45px 34px 0px 34pX;
+  margin: 45px 34px 0px 34px;
   width: 85%;
   padding: 6px 36px;
   background-color: #ffffff;
@@ -69,7 +69,7 @@ th {
 .address {
   width: 250px;
 }
-.host_notification {
+.host-notification {
   float: left;
   margin-left: 15%;
   padding-right: 18%;
@@ -87,7 +87,7 @@ th {
   text-align: initial;
   border-bottom: 3px solid #ced7c2;
 }
-.service_notification {
+.service-notification {
   display: inline-block;
   margin-bottom: 30px;
 }
