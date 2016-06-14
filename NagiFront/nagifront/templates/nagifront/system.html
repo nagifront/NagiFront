@@ -9,13 +9,13 @@
 <main ng-controller="system">
   <section id="option-bar">
     <span>타입</span>
+    <span>{{ divisions }}</span>
     {% verbatim %}
-    <span>{{ categories }}</span>
-    {% endverbatim %}
-    <span dynamic-select lists={{ categories }}></span>
-    <span dynamic-select lists={{ divisions }}></span>
-    <span dynamic-select lists={{ sections }}></span>
+    <span dynamic-select alias="category" lists="{{ categories }}"></span>
+    <span dynamic-select alias="division" lists="{{ divisions }}"></span>
+    <span dynamic-select alias="section" lists="{{ sections }}"></span>
     <button ng-click="show()">Update</button>
+    {% endverbatim %}
   </section>
 </main>
 {% endblock %}
