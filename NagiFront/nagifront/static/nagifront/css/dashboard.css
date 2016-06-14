@@ -118,7 +118,7 @@
   z-index: 1;
 }
 .modify .widgets-wrapper h3 {
-  display: none;
+  margin-left: 20px;
 }
 
 #widgets-list-wrapper {
