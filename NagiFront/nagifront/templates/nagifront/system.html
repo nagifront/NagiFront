@@ -17,6 +17,29 @@
     <button ng-click="show()">Update</button>
     {% endverbatim %}
   </section>
+  <section class="block" ng-if="ready">
+    <div ng-if="isHosts()">
+    <div class="widgets" configuration-hosts option={{ option }}></div>
+    </div>
+    <div ng-if="isHostgroups()">
+    <div class="widgets" configuration-hostgroups option={{ option }}></div>
+    </div>
+    <div ng-if="isServices()">
+    <div class="widgets" configuration-services option={{ option }}></div>
+    </div>
+<!--    <div ng-if="isContacts()">
+    <div class="widgets" configuration-contacts></div>
+    </div>
+    <div ng-if="isContactgroups()">
+    <div class="widgets" configuration-contactgroups></div>
+    </div>
+    <div ng-if="isTimeperiods()">
+    <div class="widgets" configuration-timeperiods></div>
+    </div>
+    <div ng-if="isCommands()">
+    <div class="widgets" configuration-commands></div>
+    </div> -->
+  </section>
 </main>
 {% endblock %}
 
