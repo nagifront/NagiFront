@@ -33,4 +33,5 @@ urlpatterns = [
         url(r'^configuration/comments$', views.configuration_comments, name='configuration-comments'),
         url(r'^configuration/contacts$', views.configuration_contacts, name='configuration-contacts'),
         url(r'^configuration/contactgroups$', views.configuration_contactgroups, name='configuration-contactgroups'),
+        url(r'^configuration/timeperiods$', views.configuration_timeperiods, name='configuration-timeperiods'),
         ]

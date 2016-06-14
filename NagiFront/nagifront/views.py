@@ -876,6 +876,36 @@ def configuration_contactgroups(request):
     else:
         return JsonResponse(dict())
 
+def configuration_timeperiods(request):
+    if request.method == 'GET':
+        try:
+            timerange_list = NagiosTimeperiodTimeranges.objects.values()
+            timeperiod_range_map = {}
+            for tr in timerange_list:
+                if tr['timeperiod_id'] in timeperiod_range_map:
+                    timeperiod_range_map[tr['timeperiod_id']].append({'day':tr['day'], 'start_sec':tr['start_sec'], 'end_sec':tr['end_sec']})
+                else:
+                    timeperiod_range_map[tr['timeperiod_id']] = [{'day':tr['day'], 'start_sec':tr['start_sec'], 'end_sec':tr['end_sec']}]
+
+            timeperiod_obj_list = NagiosObjects.objects.filter(objecttype_id=9).values('object_id', 'name1')
+            timeperiod_name_map = {}
+            for tp in timeperiod_obj_list:
+                timeperiod_name_map[tp['object_id']] = tp['name1']
+            
+            timeperiod_list = list(NagiosTimeperiods.objects.values())
+            for timeperiod in timeperiod_list:
+                timeperiod['time_ranges'] = timeperiod_range_map.get(timeperiod['timeperiod_id'], None)
+                timeperiod['timeperiod_name'] = timeperiod_name_map[timeperiod['timeperiod_object_id']]
+                timeperiod['description'] = timeperiod.pop('alias')
+
+            result = {'timeperiods':timeperiod_list}
+            return JsonResponse(result)
+
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
 """ GET API Template
 def some_api_name(request):
     if request.method == 'GET':
