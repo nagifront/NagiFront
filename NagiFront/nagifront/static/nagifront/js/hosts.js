@@ -13,7 +13,6 @@ app.controller('hosts', function($scope, $http, $window, djangoUrl){
     $scope.ready = 1;
   };
   $scope.move = function(id) {
-    console.log(id);
     $http.get(djangoUrl.reverse('search')+'&id='+id+'&type=host')
     .then(function(response) {
       $window.location.href = 'search?id='+id+'&type=host';

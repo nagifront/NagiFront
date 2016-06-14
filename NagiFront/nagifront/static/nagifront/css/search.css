@@ -55,7 +55,8 @@
   background-position: center center;
   background-size: 30px;
 }
-#dashboard {
+
+.block {
   margin: 34px;
   width: 85%;
   margin-top: 46px;
