@@ -82,26 +82,43 @@
   display: flex;
   margin: 10px 0px;
 }
+.widgets-wrapper {
+  display: inline-block;
+  position: relative;
+  flex: 1;
+  margin: 0px 5px;
+}
+.widget-padding {
+  margin: 10px 5%;
+  min-height: 200px;
+  box-sizing: border-box;
+  padding: 40px;
+  background-color: silver;
+  color: white;
+}
 
 .modify .widget-row {
   box-sizing: border-box;
   padding: 20px;
   border: 1px dotted green;
 }
-
-.widgets {
-  display: inline-block;
-  flex: 1;
-  margin: 0px 5px;
-}
-
-.widget-padding {
-  margin: 0px 5%;
-  min-height: 200px;
+.modify .widgets-wrapper {
   box-sizing: border-box;
-  padding: 40px;
-  background-color: silver;
+  padding: 5px;
+  border: 1px solid gray;
+}
+.modify .widgets-wrapper .delete-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 0px 5px;
+  background-color: black;
   color: white;
+  cursor: pointer;
+  z-index: 1;
+}
+.modify .widgets-wrapper h3 {
+  display: none;
 }
 
 #widgets-list-wrapper {

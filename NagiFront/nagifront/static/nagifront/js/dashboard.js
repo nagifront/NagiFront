@@ -6,10 +6,6 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
     $scope.load_widget(true);
     draw_widgets($scope.user_setting.widget_setting);
   }
-  $scope.delete_enable = false;
-  $scope.toggle_delete = function(){
-    $scope.delete_enable = !$scope.delete_enable;
-  }
   $scope.save = function(){
     $scope.load_widget(false);
     draw_widgets($scope.user_setting.widget_setting);
@@ -26,7 +22,8 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
     angular.forEach(dashboard.children(), function(widget_row){
       var widget_row_information = [];
       var num = 0;
-      angular.forEach(widget_row.children, function(widget){
+      angular.forEach(widget_row.children, function(widget_wrapper){
+        var widget = widget_wrapper.children[1];
         var widget_config = {};
         widget_config['name'] = widget.attributes[1].name;
         var selects = angular.element(widget).find('select')
@@ -162,12 +159,15 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
         + 'data-drop="true" jqyoui-droppable="{ multiple: true, onDrop: \'redraw\' }" '
         + 'data-jqyoui-options="{accept: \'.new-widget\'}">';
       angular.forEach(widget_row, function(widget, j){
-        var widget_element = '<div class="widgets" ';
+        var widget_element = '<div class="widgets-wrapper">';
+        widget_element += '<span ng-show="is_modify_setting" class="delete-button" ng-click="erase('+ i +', '+ j +')">X</span>';
+        widget_element += '<div class="widgets" ';
         widget_element += widget.name;
         angular.forEach(widget.attr, function(value, key){
           widget_element += ' ' + key + '=' + value;
         })
-        widget_element += ' ng-click="erase('+ i +', '+ j +')"></div>';
+        widget_element += '></div>';
+        widget_element += '</div>';
         widget_row_element += widget_element;
       })
       widget_row_element += '</div>';
@@ -183,7 +183,7 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
     draw_widgets($scope.user_setting.widget_setting);
   }
   $scope.erase = function(i, j){
-    if ($scope.delete_enable){
+    if ($scope.is_modify_setting){
       if (confirm('정말로 삭제할까요?')){
         $scope.user_setting.widget_setting[i].splice(j, 1);
         draw_widgets($scope.user_setting.widget_setting);
