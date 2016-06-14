@@ -1,5 +1,5 @@
 angular.module('nagifront')
-  .directive('configurationHosts', ['$http', '$interval', 'djangoUrl', function($http, $interval, djangoUrl) {
+  .directive('configurationHosts', ['$http', 'djangoUrl', function($http, djangoUrl) {
     return {
       restrict: 'EA',
       scope: true,
@@ -21,31 +21,6 @@ angular.module('nagifront')
                 +'</tr>'
                 +'</table>',
       link: function(scope, element, attrs) {
-        scope.detail = 'none';
-        function getData() {
-          if(scope.detail !== attrs.detail) {
-             scope.detail = attrs.detail;
-             console.log(scope.detail);
-             $http.get(djangoUrl.reverse('hosts-configurations')).then(function(response) {
-                scope.data = response.data.host_configurations;
-                if(scope.detail === 'All') {
-                  scope.lists = scope.data;
-                }
-                else {
-                  for(var i = 0; i < scope.data.length; i++) {
-                    if(scope.data[i].alias === scope.detail) {
-                      scope.lists = [];
-                      scope.lists.push(scope.data[i]);
-                      break;
-                    }
-                  }
-                }
-             });
-          }
-        };
-        $interval(getData, 1000);
-        getData();
-
         window.onresize = function() {
           scope.$apply();
         };
@@ -54,6 +29,24 @@ angular.module('nagifront')
         }, function() {
           scope.$apply();
         });
+
+        scope.$watch('option', function(){
+          $http.get(djangoUrl.reverse('hosts-configurations')).then(function(response) {
+            scope.data = response.data.host_configurations;
+            if(scope.option === 'All') {
+              scope.lists = scope.data;
+            }
+            else {
+              for(var i = 0; i < scope.data.length; i++) {
+                if(scope.data[i].alias === scope.option) {
+                  scope.lists = [];
+                  scope.lists.push(scope.data[i]);
+                  break;
+                }
+              }
+            }
+          });
+        });
       },
-     };
-   }]);
+    };
+  }]);

@@ -1,5 +1,5 @@
 angular.module('nagifront')
-  .directive('configurationServices', ['$http', '$interval', 'djangoUrl', function($http, $interval, djangoUrl) {
+  .directive('configurationServices', ['$http', 'djangoUrl', function($http, djangoUrl) {
     return {
       restrict: 'EA',
       scope: true,
@@ -21,29 +21,6 @@ angular.module('nagifront')
                 +'</tr>'
                 +'</table>',
       link: function(scope, element, attrs) {
-        scope.detail = 'none';
-        function getData() {
-          if(scope.detail !== attrs.detail) {
-             scope.detail = attrs.detail;
-             $http.get(djangoUrl.reverse('hosts-services-configurations')).then(function(response) {
-                scope.data = response.data.services;
-                if(scope.detail === 'All') {
-                  scope.lists = scope.data;
-                }
-                else {
-                    scope.lists = [];
-                  for(var i = 0; i < scope.data.length; i++) {
-                    if(scope.data[i].host === scope.detail) {
-                      scope.lists.push(scope.data[i]);
-                    }
-                  }
-                }
-             });
-          }
-        };
-        $interval(getData, 10000);
-        getData();
-
         window.onresize = function() {
           scope.$apply();
         };
@@ -52,6 +29,23 @@ angular.module('nagifront')
         }, function() {
           scope.$apply();
         });
+
+        scope.$watch('option', function(){
+          $http.get(djangoUrl.reverse('hosts-services-configurations')).then(function(response) {
+            scope.data = response.data.services;
+            if(scope.option === 'All') {
+              scope.lists = scope.data;
+            }
+            else {
+              scope.lists = [];
+              for(var i = 0; i < scope.data.length; i++) {
+                if(scope.data[i].host === scope.option) {
+                  scope.lists.push(scope.data[i]);
+                }
+              }
+            }
+          });
+        });
       },
-     };
-   }]);
+    };
+  }]);
