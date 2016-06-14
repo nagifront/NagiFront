@@ -7,19 +7,26 @@
 
 {% block main %}
 <main ng-controller="dashboard">
-  <section id="search-widget">
+  <section id="search-widget" ng-controller="search">
     <span>상세 검색</span>
-    <select>
-      <option>Host</option>
-      <option>Host Group</option>
+    <select ng-model="type">
+      <option value="host">Host</option>
+      <option value="hostGroup">Host Group</option>
     </select>
-    <input><!--
-    --><button></button>
+    <input ng-model="name"><!--
+ --><button ng-click="move()"></button>
   </section>
   <section id="dashboard">
     <span id="dashboard-modify" ng-hide="is_modify_setting" ng-click="modify_enable()">대쉬보드 설정</span>
     <div class="widgets" overall-host></div>
     <div id="widgets" ng-class="{ modify: is_modify_setting }">
+    </div>
+    <div class="modal-backboard" ng-show="show_modal" ng-cloak>
+      <div class="modal">
+        <h1>Fatal!</h1>
+        <p ng-bind="message"></p>
+        <button ng-click="close_modal()">OK</button>
+      </div>
     </div>
   </section>
   <section id="widgets-list-wrapper" ng-cloak ng-show="is_modify_setting">
@@ -41,16 +48,10 @@
       <button ng-click="save()">저장</button>
     </footer>
   </section>
-  <div class="modal-backboard" ng-show="show_modal" ng-cloak>
-    <div class="modal">
-      <h1>Fatal!</h1>
-      <p ng-bind="message"></p>
-      <button ng-click="close_modal()">OK</button>
-    </div>
-  </div>
 </main>
 {% endblock %}
 
 {% block scripts %}
 <script src="{% static 'nagifront/js/dashboard.js' %}"></script>
+<script src="{% static 'nagifront/js/search.js' %}"></script>
 {% endblock %}

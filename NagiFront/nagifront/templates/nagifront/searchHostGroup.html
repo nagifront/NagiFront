@@ -1,0 +1,42 @@
+{% extends 'nagifront/layout.html' %}
+
+{% load staticfiles %}
+{% block stylesheets %}
+<link rel="stylesheet" text="text/css" href="{% static "nagifront/css/search.css"%}">
+{% endblock %}
+
+{% block main %}
+<main ng-controller="search">
+  <section id="search-widget">
+    <span>상세 검색</span>
+    <select ng-model="type">
+      <option value="host">Host</option>
+      <option value="hostGroup">Host Group</option>
+    </select>
+     <input ng-model="name"><!--
+    --><button ng-click="move()"></button>
+  </section>
+  <div class="block host-group-dashboard">
+    <div class="widgets" host-status-detail host_group_id={{ id }}></div>
+  </div>
+  <div class="block host-group-dashboard">
+    <div class="widgets" host-status host_group_id={{ id }}></div>
+  </div>
+  <div class="block host-group-dashboard">
+    <div class="widgets" host-list host_group_id={{ id }}></div>
+  </div>
+  <div class="block host-group-dashboard">
+    <div class="widgets" check-schedules host_group_id={{ id }}></div>
+  </div>
+  <div class="block host-group-dashboard">
+    <div class="widgets" host-trend-group host_group_id={{ id }}></div>
+  </div>
+  <div class="block host-group-dashboard">
+    <div class="widgets" trouble-trend host_group_id={{ id }}></div>
+  </div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'nagifront/js/search.js' %}"></script>
+{% endblock %}

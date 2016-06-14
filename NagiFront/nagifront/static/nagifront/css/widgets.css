@@ -182,7 +182,7 @@ div[check-schedules] .schedule .output:hover {
 
 /* start of comment css*/
 div[comments] .charts {
-  width: 780px;
+  width: 100%;
   height: 400px;
 }
 div[comments] .comments {
@@ -203,10 +203,10 @@ div[comments] .host {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 120px;
+  width: 10%;
 }
 div[comments] .contents {
-  width: 480px;
+  width: 75%;
   float: left;
   padding-right: 5px;
   text-overflow: ellipsis;
@@ -217,8 +217,8 @@ div[comments] .contents {
   font-size: 0.9em;
 }
 div[comments] .detail {
-  width: 120px;
-  padding: 5px;
+  width: 10%;
+  padding: 5px 5px 5px 20px;
   vertical-align: middle;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -235,8 +235,8 @@ div[comments] .detail span{
 div[comments] .comments .output {
   position: absolute;
   top: 40px;
-  width: 500px;
-  left: 135px;
+  width: 70%;
+  left: 13%;
   box-sizing: border-box;
   z-index: 1;
   opacity: 0;
@@ -527,6 +527,155 @@ div[map] .tooltip::after {
 }
 /* end of map widget */
 
+/* start of service status detail widget */
+div[service-status-detail] .charts {
+  width: 100%;
+  font-size: 0.9em;
+  border-spacing: 4px 1px;
+}
+div[service-status-detail] th {
+  font-weight: bold;
+  border-bottom: 3px #9cab8e solid;
+}
+div[service-status-detail] .state span{
+  font-weight: bold;
+}
+div[service-status-detail] tr{
+  text-align: center;
+  padding: 10px;
+}
+div[service-status-detail] .state {
+  width: 200px;
+}
+div[service-status-detail] .ok {
+  background-color: #8dd775;
+}
+div[service-status-detail] .warning {
+  background-color: #e1e26a;
+}
+div[service-status-detail] .critical {
+  background-color: #ef6a6a;
+}
+div[service-status-detail] .last_check {
+  width: 100px;
+}
+div[service-status-detail] .duration {
+  width: 130px;
+}
+div[service-status-detail] .attempt {
+  width: 70px;
+}
+div[service-status-detail] .info {
+}
+/* end of service status detail widget */
+
+/* start of host status information widget */
+div[host-status-information] .charts {
+  width: 100%;
+  font-size: 0.9em;
+  border-spacing: 4px 1px;
+}
+div[host-status-information] .info {
+  display: inline-block;
+  width: 56%;
+  margin: 10px;
+}
+div[host-status-information] .enable_check {
+  display: inline-block;
+  float: right;
+  width: 36%;
+  margin: 15px;
+}
+div [host-status-information] .category {
+  display: inline-block;
+  font-weight: bold;
+  width: 200px;
+  border-right: 2px solid #829786;
+  margin: 5px 10px;
+}
+div [host-status-information] .enable_check .category{
+  width: 150px;
+}
+div[host-status-information] .state {
+  display: inline-block;
+  width: 80px;
+  font-weight: bold;
+  text-align: center;
+}
+div[host-status-information] .name {
+  font-weight: bold;
+}
+div[host-status-information] .check {
+  display: inline-block;
+  width: 80px;
+  font-weight: bold;
+  text-align: center;
+}
+div[host-status-information] .UP {
+  border: 1px #6ca65a solid;
+  background-color: #8dd775;
+}
+div[host-status-information] .DOWN {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[host-status-information] .ENABLED {
+  border: 1px #6ca65a solid;
+  background-color: #8dd775;
+}
+div[host-status-information] .DISABLED {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[host-status-information] .YES {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[host-status-information] .NO {
+  border: 1px #6ca65a solid;
+  background-color: #8dd775;
+}
+/* end of host status information widget */
+
+/* start of host status detail widget */
+div[host-status-detail] .charts {
+  width: 100%;
+  font-size: 0.9em;
+  border-spacing: 4px 1px;
+}
+div[host-status-detail] th {
+  font-weight: bold;
+  border-bottom: 3px #9cab8e solid;
+}
+div[host-status-detail] .state span{
+  font-weight: bold;
+}
+div[host-status-detail] tr{
+  text-align: center;
+  padding: 10px;
+}
+div[host-status-detail] .state {
+  width: 200px;
+}
+div[host-status-detail] .up {
+  background-color: #8dd775;
+}
+div[host-status-detail] .unreachable {
+  background-color: #e1e26a;
+}
+div[host-status-detail] .down {
+  background-color: #ef6a6a;
+}
+div[host-status-detail] .last_check {
+  width: 100px;
+}
+div[host-status-detail] .duration {
+  width: 130px;
+}
+div[host-status-detail] .info {
+}
+/* end of host status detail widget */
+
 /* start of troule-trend css*/
 div[host-status] .charts {
   width: 500px;
@@ -544,3 +693,76 @@ div[service-number-by-state] .charts {
   width: 500px;
 }
 /* end of service-number-by-state css*/
+
+/* start of host-trend css*/
+div[host-trend] .charts {
+  width: 800px;
+}
+/* end of host-trend css*/
+
+/* start of host-list css */
+div[host-list-with-click] h3 {
+  color: #6a7857;
+}
+div[host-list-with-click] .charts {
+  width: 100%;
+  color: #71835b;
+}
+div[host-list-with-click] .hosts {
+  padding: 10px;
+  width: 100%;
+  height: 45px;
+  box-sizing: border-box;
+}
+div[host-list-with-click] .hosts .host-name:focus {
+  outline: none;
+  color: #474e3c;
+}
+div[host-list-with-click] .hosts .host-name:hover {
+  color: #474e3c;
+}
+div[host-list-with-click] .hosts .host-name {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 130px;
+  font-weight: bold;
+  background: white;
+  border: none;
+  color: #72845a;
+  font-size: 0.95em;
+  text-align: inherit;
+}
+div[host-list-with-click] .hosts .state {
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 10px;
+  width: 90px;
+  height: 25px;
+  vertical-align: top;
+  text-align: center;
+  font-size: 0.95em;
+  color: #515f4e;
+}
+div[host-list-with-click] .hosts .Ok {
+  background-color: #8dd775;
+  border: 1px #6ca65a solid;
+}
+div[host-list-with-click] .hosts .Ok span {
+  font-weight: bold;
+}
+div[host-list-with-click] .hosts .Warning {
+  background-color: #e1e26a;
+  border: 1px #cbcf30 solid;
+}
+div[host-list-with-click] .hosts .Warning span {
+  font-weight: bold;
+}
+div[host-list-with-click] .hosts .Critical {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[host-list-with-click] .hosts .Critical span {
+  font-weight: bold;
+}
