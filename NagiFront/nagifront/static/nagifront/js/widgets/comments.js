@@ -2,9 +2,8 @@ angular.module('nagifront')
   .directive('comments',['d3','$http','$interval','djangoUrl',function(d3, $http, $interval, djangoUrl) {
   return {
     restrict: 'EA',
-    scope: {
-    },
-    template: '<h3>코멘트 현황</h3><div class="charts">'
+    scope: true,
+    template: '<h3>코멘트 현황</h3><div class="charts" ng-if="!is_modify_setting">'
         +'<scrollable always-visible="true">'
           +'<div class="comments" ng-repeat="comment in comments">'
             +'<span class="host">[{{comment.host_name}}]</span>'
@@ -13,7 +12,8 @@ angular.module('nagifront')
             +'<div class="output" ng-if="comment.contents.length > 256"><span>{{comment.contents}}</span></div>'
           +'</div>'
         +'</scrollable>'
-      +'</div>',
+      +'</div>'
+        + '<div class="widget-padding" ng-if="is_modify_setting"><p>코멘트 현황</p></div>',
       link: function(scope, element, attrs) {
         getData = function() {
           if(attrs.hasOwnProperty('hostId')) {

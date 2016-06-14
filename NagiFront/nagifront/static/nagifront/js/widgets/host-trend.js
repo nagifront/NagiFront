@@ -2,9 +2,7 @@ angular.module('nagifront')
   .directive('hostTrend', ['d3', '$http', '$interval', 'djangoUrl', function(d3, $http, $interval, djangoUrl){
     return {
       restrict: 'EA',
-      scope: {
-        type: '=',
-      },
+      scope: true,
       template: '<h3>{{ data.host.display_name }}</h3><select ng-model="time"'
         + 'ng-options="type as type.name for type in list track by type.value">'
         + '</select>'
@@ -180,16 +178,17 @@ angular.module('nagifront')
   .directive('hostTrendGroup', ['d3', '$http', 'djangoUrl', function(d3, $http, djangoUrl){
     return {
       restrict: 'EA',
-      scope: {
-        type: '=',
-      },
-      template: '<h3>호스트 트렌드<small> - {{ group_name }}</small></h3>'
-        + '<div class="charts">'
+      scope: true,
+      template: '<h3>호스트 트렌드 - <select name="host-group-id" ng-model="host_group_id"'
+        + 'ng-options="hostgroup_id.hostgroup_object_id as hostgroup_id.name for hostgroup_id in hostgroup_ids" ng-disabled="!is_modify_setting"></select></h3>'
+        + '<div class="charts" ng-if="!is_modify_setting">'
           + '<scrollable always-visible="true">'
             + '<div ng-repeat="member in members" host-trend host_id="{{ member }}">'
           + '</scrollable>'
-        + '</div>',
+        + '</div>'
+        + '<div class="widget-padding" ng-if="is_modify_setting"><p>호스트 트렌드</p></div>',
       link: function(scope, element, attrs){
+        scope.host_group_id = attrs.hostGroupId * 1;
         $http.get(djangoUrl.reverse('hosts-groups') + '&host_group_id' + attrs.hostGroupId).then(function(response){
           scope.members = response.data[attrs.hostGroupId].members
           scope.group_name = response.data[attrs.hostGroupId].alias

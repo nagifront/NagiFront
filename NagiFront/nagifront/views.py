@@ -624,10 +624,13 @@ def hosts_services(request):
 def host_id_set(request):
     if request.method == 'GET':
         try:
-            result = {'ids':{}}
+            result = {'ids':[]}
             host_list = NagiosHosts.objects.values('host_object_id', 'alias')
             for host in host_list:
-                result['ids'][host['alias']] = host['host_object_id']
+                m = {}
+                m['name'] = host['alias']
+                m['host_object_id'] = host['host_object_id']
+                result['ids'].append(m)
 
             return JsonResponse(result)
         except ObjectDoesNotExist:
@@ -639,10 +642,13 @@ def host_id_set(request):
 def host_group_id_set(request):
     if request.method == 'GET':
         try:
-            result = {'ids':{}}
+            result = {'ids':[]}
             hostgroup_list = NagiosHostgroups.objects.values('hostgroup_object_id', 'alias')
             for hostgroup in hostgroup_list:
-                result['ids'][hostgroup['alias']] = hostgroup['hostgroup_object_id']
+                m = {}
+                m['name']  = hostgroup['alias']
+                m['hostgroup_object_id'] = hostgroup['hostgroup_object_id']
+                result['ids'].append(m)
 
             return JsonResponse(result)
         except ObjectDoesNotExist:

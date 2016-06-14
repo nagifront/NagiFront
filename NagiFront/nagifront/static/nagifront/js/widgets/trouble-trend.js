@@ -2,11 +2,18 @@ angular.module('nagifront')
   .directive('troubleTrend',['d3', '$http', '$interval', 'djangoUrl', function(d3, $http, $interval, djangoUrl) {
     return {
       restrict: 'EA',
-      scope: {
-        data: '=',
-      },
-      template: '<h3>문제 발생 트렌드</h3><div class="charts"><scrollable always-visible="true"></scrollable></div>',
+      scope: true,
+      template: '<h3>문제 발생 트렌드 - <select name="host-group-id" ng-model="host_group_id"'
+        + 'ng-options="hostgroup_id.hostgroup_object_id as hostgroup_id.name for hostgroup_id in hostgroup_ids" ng-disabled="!is_modify_setting">'
+        + '</select> <select name="time-scale" ng-model="time_scale"'
+        + 'ng-options="t for t in time_scale_list" ng-disabled="!is_modify_setting">'
+        + '</select>'
+        + '</h3><div class="charts" ng-if="!is_modify_setting"><scrollable always-visible="true"></scrollable></div>'
+        + '<div class="widget-padding" ng-if="is_modify_setting"><p>문제 발생 트렌드</p></div>',
       link: function(scope, element, attrs) {
+        scope.host_group_id = attrs.hostGroupId * 1;
+        scope.time_scale_list = [ 'day', 'week', ];
+        scope.time_scale = attrs.timeScale;
         getData = function() {
           $http.get(djangoUrl.reverse('host-groups-trouble-trend') + '&host_group_id=' + attrs.hostGroupId + '&time-scale=' + attrs.timeScale).then(function(response) {
             scope.data = response.data;

@@ -2,9 +2,8 @@ angular.module('nagifront')
   .directive('hostStateChange', ['d3', '$http', '$interval', 'djangoUrl', function(d3, $http, $interval, djangoUrl){
     return {
       restrict: 'EA',
-      scope: {
-      },
-      template: '<h3>호스트 상태 변화</h3><div class="charts">'
+      scope: true,
+      template: '<h3>호스트 상태 변화</h3><div class="charts" ng-if="!is_modify_setting">'
           +'<scrollable always-visible="true">'
             + '<div class="state-change-item" ng-repeat="host in hosts | orderBy : \'-last_state_change\'">'
               + '<span class="state {{ state[host.state] }}">{{ state[host.state] }}</span>'
@@ -13,7 +12,8 @@ angular.module('nagifront')
               + '<div class="output" ng-if="host.output!=\'\'"><span>{{ host.output }}</span></div>'
             + '</div>'
           + ' </scrollable>'
-        + '</div>',
+        + '</div>'
+        + '<div class="widget-padding" ng-if="is_modify_setting"><p>호스트 상태 변화</p></div>',
       link: function(scope, element, attrs){
         getData = function(){
           $http.get(djangoUrl.reverse('hosts-state-change')).then(function(response){
