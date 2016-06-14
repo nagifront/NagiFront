@@ -40,7 +40,7 @@ app.controller('system', function($scope, $http, djangoUrl){
         var data = response.data.ids;
         $scope.sections = ['All'];
         angular.forEach(data, function(value, key) {
-          $scope.sections.push(key);
+          $scope.sections.push(value.name);
         });
       });
       $scope.division = value;
@@ -60,7 +60,7 @@ app.controller('system', function($scope, $http, djangoUrl){
         var data = response.data.ids;
         $scope.sections = ['All'];
         angular.forEach(data, function(value, key) {
-          $scope.sections.push(key);
+          $scope.sections.push(value.name);
         });
       });
       $scope.division = value;

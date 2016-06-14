@@ -7,6 +7,7 @@
 {% load staticfiles %}
 {% block head %}
   <link rel="stylesheet" text="text/css" href="{% static "nagifront/css/layout.css" %}">
+  <link rel="stylesheet" text="text/css" href="{% static "nagifront/css/modal.css"%}">
   <link rel="stylesheet" text="text/css" href="{% static "nagifront/css/widgets.css" %}">
   <link rel="stylesheet" text="text/css" href="{% static "library/nanoscroller.css" %}">
   {% block stylesheets %}
@@ -33,22 +34,24 @@
   </aside>
   {% block main %}
   {% endblock %}
+  <footer id="footer">
+    <div id="footer-left"></div>
+    <div id="footer-right"><small>Icons made by <a href="http://www.flaticon.com/authors/elegant-themes" title="Elegant Themes">Elegant Themes</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></small></div>
+  </footer>
   <script>
     var host_image_url = '{% static 'nagifront/img/host-image.png' %}';
   </script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   <script src="{% static 'djng/js/django-angular.min.js' %}"></script>
   <script src="{% static 'library/d3.js' %}"></script>
   <script src="{% static 'nagifront/js/layout.js' %}"></script>
   <script src="{% static 'library/jquery.nanoscroller.js' %}"></script>
   <script src="{% static 'library/scrollable.js' %}"></script>
+  <script src="{% static 'library/angular-dragdrop.min.js' %}"></script>
   {% include 'nagifront/widgets.html' %}
   {% block scripts %}
   {% endblock %}
-  <footer>
-    <div id="footer-left"></div>
-    <div id="footer-right"><small>Icons made by <a href="http://www.flaticon.com/authors/elegant-themes" title="Elegant Themes">Elegant Themes</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></small></div>
-  </footer>
 </body>
 {% endblock %}

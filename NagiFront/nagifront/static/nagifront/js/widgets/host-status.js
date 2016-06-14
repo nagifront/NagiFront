@@ -2,11 +2,14 @@ angular.module('nagifront')
   .directive('hostStatus',['d3', '$http', '$interval', 'djangoUrl', function(d3, $http, $interval, djangoUrl) {
     return {
       restrict: 'EA',
-      scope: {
-        data: '=',
-      },
-      template: '<h3>호스트 현황</h3><div class="charts"><scrollable always-visible="true"></scrollable></div>',
+      scope: true,
+      template: '<h3>호스트 현황 - <select name="host-group-id" ng-model="host_group_id"'
+        + 'ng-options="hostgroup_id.hostgroup_object_id as hostgroup_id.name for hostgroup_id in hostgroup_ids" ng-disabled="!is_modify_setting">'
+        + '</select></h3>'
+        + '<div class="charts" ng-if="!is_modify_setting"><scrollable always-visible="true"></scrollable></div>'
+        + '<div class="widget-padding" ng-if="is_modify_setting"><p>호스트 현황</p></div>',
       link: function(scope, element, attrs) {
+        scope.host_group_id = attrs.hostGroupId * 1;
         getData = function() {
           $http.get(djangoUrl.reverse('hosts-groups-hosts-state') + '&host_group_id=' + attrs.hostGroupId).then(function(response) {
             scope.data = response.data;

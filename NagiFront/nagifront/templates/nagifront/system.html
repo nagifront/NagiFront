@@ -9,23 +9,22 @@
 <main ng-controller="system">
   <section id="option-bar">
     <span>타입</span>
-    <span>{{ divisions }}</span>
     {% verbatim %}
     <span dynamic-select alias="category" lists="{{ categories }}"></span>
     <span dynamic-select alias="division" lists="{{ divisions }}"></span>
     <span dynamic-select alias="section" lists="{{ sections }}"></span>
     <button ng-click="show()">Update</button>
-    {% endverbatim %}
   </section>
   <section class="block" ng-if="ready">
     <div ng-if="isHosts()">
-    <div class="widgets" configuration-hosts option={{ option }}></div>
+    <div class="widgets" configuration-hosts detail="{{ option }}"></div>
     </div>
     <div ng-if="isHostgroups()">
-    <div class="widgets" configuration-hostgroups option={{ option }}></div>
+    <div class="widgets" configuration-hostgroups detail="{{ option }}"></div>
     </div>
     <div ng-if="isServices()">
-    <div class="widgets" configuration-services option={{ option }}></div>
+    <div class="widgets" configuration-services detail="{{ option }}"></div>
+    {% endverbatim %}
     </div>
 <!--    <div ng-if="isContacts()">
     <div class="widgets" configuration-contacts></div>

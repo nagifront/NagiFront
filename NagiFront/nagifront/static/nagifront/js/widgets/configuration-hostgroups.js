@@ -10,25 +10,23 @@ angular.module('nagifront')
                 +'<th>description</th>'
                 +'<th>host members</th>'
                 +'<th>notes</th>'
-                +'<th></th>'
                 +'</tr>'
                 +'<tr ng-repeat="group in lists">'
-                +'<td>{{group.alias}}</td>'
-                +'<td>{{group.address}}</td>'
-                +'<td>{{group.parent_host}}</td>'
+                +'<td><span>{{group.description}}</span></td>'
+                +'<td>{{group.group_name}}</td>'
+                +'<td>{{group.host_members}}</td>'
                 +'<td>{{group.notes}}</td>'
-                +'<td>{{group.check_period}}</td>'
                 +'</tr>'
                 +'</table>',
       link: function(scope, element, attrs) {
-        scope.option = 'none';
+        scope.detail = 'none';
         function getData() {
-          if(scope.option !== attrs.option) {
-             scope.option = attrs.option;
+          if(scope.detail !== attrs.detail) {
+             scope.detail = attrs.detail;
              $http.get(djangoUrl.reverse('hosts-groups-configurations')).then(function(response) {
                 scope.data = response.data.hostgroups;
                   for(var i = 0; i < scope.data.length; i++) {
-                    if(scope.data[i].group_name === scope.option) {
+                    if(scope.data[i].description === scope.detail) {
                       scope.lists = [];
                       scope.lists.push(scope.data[i]);
                       break;

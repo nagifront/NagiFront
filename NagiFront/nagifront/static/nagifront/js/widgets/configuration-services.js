@@ -11,30 +11,29 @@ angular.module('nagifront')
                 +'<th>check command</th>'
                 +'<th>notes</th>'
                 +'<th>check period</th>'
-                +'<th></th>'
                 +'</tr>'
                 +'<tr ng-repeat="service in lists">'
-                +'<td>{{service.alias}}</td>'
-                +'<td>{{service.display_name}}</td>'
+                +'<td><span>{{service.host}}</span></td>'
+                +'<td><span>{{service.display_name}}</span></td>'
                 +'<td>{{service.check_command}}</td>'
                 +'<td>{{service.notes}}</td>'
                 +'<td>{{service.check_period}}</td>'
                 +'</tr>'
                 +'</table>',
       link: function(scope, element, attrs) {
-        scope.option = 'none';
+        scope.detail = 'none';
         function getData() {
-          if(scope.option !== attrs.option) {
-             scope.option = attrs.option;
+          if(scope.detail !== attrs.detail) {
+             scope.detail = attrs.detail;
              $http.get(djangoUrl.reverse('hosts-services-configurations')).then(function(response) {
                 scope.data = response.data.services;
-                if(scope.option === 'All') {
+                if(scope.detail === 'All') {
                   scope.lists = scope.data;
                 }
                 else {
-                  for(var i = 0; i < scope.data.length; i++) {
                     scope.lists = [];
-                    if(scope.data[i].host === scope.option) {
+                  for(var i = 0; i < scope.data.length; i++) {
+                    if(scope.data[i].host === scope.detail) {
                       scope.lists.push(scope.data[i]);
                     }
                   }
@@ -42,7 +41,7 @@ angular.module('nagifront')
              });
           }
         };
-        $interval(getData, 1000);
+        $interval(getData, 10000);
         getData();
 
         window.onresize = function() {

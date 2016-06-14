@@ -11,10 +11,9 @@ angular.module('nagifront')
                 +'<th>parent hosts</th>'
                 +'<th>notes</th>'
                 +'<th>check period</th>'
-                +'<th></th>'
                 +'</tr>'
                 +'<tr ng-repeat="host in lists">'
-                +'<td>{{host.alias}}</td>'
+                +'<td><span>{{host.alias}}</span></td>'
                 +'<td>{{host.address}}</td>'
                 +'<td>{{host.parent_host}}</td>'
                 +'<td>{{host.notes}}</td>'
@@ -22,18 +21,19 @@ angular.module('nagifront')
                 +'</tr>'
                 +'</table>',
       link: function(scope, element, attrs) {
-        scope.option = 'none';
+        scope.detail = 'none';
         function getData() {
-          if(scope.option !== attrs.option) {
-             scope.option = attrs.option;
+          if(scope.detail !== attrs.detail) {
+             scope.detail = attrs.detail;
+             console.log(scope.detail);
              $http.get(djangoUrl.reverse('hosts-configurations')).then(function(response) {
                 scope.data = response.data.host_configurations;
-                if(scope.option === 'All') {
+                if(scope.detail === 'All') {
                   scope.lists = scope.data;
                 }
                 else {
                   for(var i = 0; i < scope.data.length; i++) {
-                    if(scope.data[i].alias === scope.option) {
+                    if(scope.data[i].alias === scope.detail) {
                       scope.lists = [];
                       scope.lists.push(scope.data[i]);
                       break;
