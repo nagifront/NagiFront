@@ -25,26 +25,18 @@ angular.module('nagifront')
         }
         $interval(getData, 30000);
         getData();
-
-        window.onresize = function() {
-          scope.$apply();
-        };
-        scope.$watch(function() {
-          return angular.element(window)[0].innerWidth;
-        }, function() {
-          scope.$apply();
-        });
       }
     };
   }]);
+
 angular.module('nagifront')
   .directive('hostStatusDetail',['d3','$http','$interval','djangoUrl',function(d3, $http, $interval, djangoUrl) {
     return {
-     restrict: 'EA',
-     scope: {
-      data: '=',
-     },
-     template: '<h3>호스트 현황</h3><table class="charts">'
+      restrict: 'EA',
+      scope: {
+        data: '=',
+      },
+      template: '<h3>호스트 현황</h3><table class="charts">'
                 +'<tr>'
                    +'<th>Host</th>'
                     +'<th>Last Check</th>'
@@ -54,11 +46,11 @@ angular.module('nagifront')
                 +'<tr class="hosts" ng-repeat="host in hosts" a-host-status-detail host_id="{{ host }}">'
                 +'</tr>'
                 +'</table>', 
-     link: function(scope, element, attrs) {
-      $http.get(djangoUrl.reverse('hosts-groups')).then(function(response) {
-        scope.hosts = response.data[attrs.hostGroupId].members;
-      });
-     },
-     };
+      link: function(scope, element, attrs) {
+        $http.get(djangoUrl.reverse('hosts-groups')).then(function(response) {
+          scope.hosts = response.data[attrs.hostGroupId].members;
+        });
+      },
+    };
   }]);
 

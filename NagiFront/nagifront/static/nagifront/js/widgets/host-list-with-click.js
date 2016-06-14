@@ -23,16 +23,6 @@ angular.module('nagifront')
          }).then(getData());
         $interval(getData, 100000);
         getData();
-
-        window.onresize = function(){
-          scope.$apply();
-        };
-
-        scope.$watch(function(){
-          return angular.element(window)[0].innerWidth;
-        }, function() {
-          scope.$apply();
-        });
       },
     };
   }]);
@@ -62,16 +52,6 @@ angular.module('nagifront')
         }
         $interval(getData, 1000);
         getData();
-
-        window.onresize = function(){
-          scope.$apply();
-        };
-
-        scope.$watch(function(){
-          return angular.element(window)[0].innerWidth;
-        }, function() {
-          scope.$apply();
-        });
       },
     };
   }]);

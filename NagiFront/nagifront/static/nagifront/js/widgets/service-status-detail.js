@@ -37,15 +37,6 @@ angular.module('nagifront')
         }
         $interval(getData, 30000);
         getData();
-
-        window.onresize = function() {
-          scope.$apply();
-        };
-        scope.$watch(function() {
-          return angular.element(window)[0].innerWidth;
-        }, function() {
-          scope.$apply();
-        });
       }
     };
   }]);

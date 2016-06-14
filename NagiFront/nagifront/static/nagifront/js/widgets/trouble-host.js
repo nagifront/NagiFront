@@ -26,16 +26,6 @@ angular.module('nagifront')
         
         scope.state = {0: 'ok', 1: 'warning', 2: 'critical', 3: 'unknown'}
         // init data
-
-        window.onresize = function(){
-          scope.$apply();
-        };
-        scope.$watch(function(){
-          return angular.element(window)[0].innerWidth;
-        }, function(){
-          scope.$apply();
-        });
-        // re render
       },
     };
   }]);
