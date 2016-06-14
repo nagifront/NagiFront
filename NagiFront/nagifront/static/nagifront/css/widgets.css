@@ -693,3 +693,70 @@ div[host-trend] .charts {
   width: 800px;
 }
 /* end of host-trend css*/
+
+/* start of host-list css */
+div[host-list-with-click] h3 {
+  color: #6a7857;
+}
+div[host-list-with-click] .charts {
+  width: 100%;
+  color: #71835b;
+}
+div[host-list-with-click] .hosts {
+  padding: 10px;
+  width: 100%;
+  height: 45px;
+  box-sizing: border-box;
+}
+div[host-list-with-click] .hosts .host-name:focus {
+  outline: none;
+  color: #474e3c;
+}
+div[host-list-with-click] .hosts .host-name:hover {
+  color: #474e3c;
+}
+div[host-list-with-click] .hosts .host-name {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 130px;
+  font-weight: bold;
+  background: white;
+  border: none;
+  color: #72845a;
+  font-size: 0.95em;
+  text-align: inherit;
+}
+div[host-list-with-click] .hosts .state {
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 10px;
+  width: 90px;
+  height: 25px;
+  vertical-align: top;
+  text-align: center;
+  font-size: 0.95em;
+  color: #515f4e;
+}
+div[host-list-with-click] .hosts .Ok {
+  background-color: #8dd775;
+  border: 1px #6ca65a solid;
+}
+div[host-list-with-click] .hosts .Ok span {
+  font-weight: bold;
+}
+div[host-list-with-click] .hosts .Warning {
+  background-color: #e1e26a;
+  border: 1px #cbcf30 solid;
+}
+div[host-list-with-click] .hosts .Warning span {
+  font-weight: bold;
+}
+div[host-list-with-click] .hosts .Critical {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[host-list-with-click] .hosts .Critical span {
+  font-weight: bold;
+}

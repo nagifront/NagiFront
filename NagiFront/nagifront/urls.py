@@ -7,7 +7,8 @@ urlpatterns = [
         url(r'^search$', views.search, name='search'),
         url(r'^login$', views.login, name='login'),
         url(r'^logout$', views.logout, name='logout'),
-        
+        url(r'^hosts$', views.hosts, name="hosts"),
+
         url(r'^hosts/overall$', views.hosts_overall, name='hosts-overall'),
         url(r'^hosts/services$', views.hosts_services, name='hosts-services'),
         url(r'^hosts/status$', views.hosts_status, name='hosts-status'),
