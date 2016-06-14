@@ -906,6 +906,24 @@ def configuration_timeperiods(request):
     else:
         return JsonResponse(dict())
 
+def configuration_commands(request):
+    if request.method == 'GET':
+        try:
+            command_obj_list = NagiosObjects.objects.filter(objecttype_id=12).values('object_id', 'name1')
+            command_name_map = {}
+            for cmd in command_obj_list:
+                command_name_map[cmd['object_id']] = cmd['name1']
+
+            command_list = list(NagiosCommands.objects.values())
+            for command in command_list:
+                command['command_name'] = command_name_map[command['object_id']]
+
+            result = {'commands':command_list}
+            return JsonResponse(result)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
 """ GET API Template
 def some_api_name(request):
     if request.method == 'GET':
