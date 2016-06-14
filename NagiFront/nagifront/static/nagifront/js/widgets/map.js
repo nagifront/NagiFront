@@ -2,9 +2,9 @@ angular.module('nagifront')
   .directive('map', ['d3', '$http', '$interval', 'djangoUrl', function(d3, $http, $interval, djangoUrl){
     return {
       restrict: 'EA',
-      scope: {
-      },
-      template: '<h3>맵</h3><div class="charts"><div class="map-wrapper"></div></div><div class="tooltip"></div>',
+      scope: true,
+      template: '<h3>맵</h3><div class="charts" ng-if="!is_modify_setting"><div class="map-wrapper"></div></div><div class="tooltip"></div>'
+        + '<div class="widget-padding" ng-if="is_modify_setting"><p>맵</p></div>',
       link: function(scope, element, attrs){
         getData = function(){
           $http.get(djangoUrl.reverse('hosts-parent-information')).then(function(response){
@@ -29,8 +29,8 @@ angular.module('nagifront')
           scope.render();
         });
 
-        var map_wrapper = element[0].children[1].children[0];
-        var tooltip = element[0].children[2];
+        var tooltip = jQuery(element[0]).children('div.tooltip')[0];
+        // FIXME use angular only
 
         var is_first = true;
         scope.render = function() {
@@ -200,6 +200,8 @@ angular.module('nagifront')
             })
 
           if (is_first){
+            var map_wrapper = jQuery(element[0]).find('.map-wrapper');
+            // FIXME use angular
             map_wrapper.scrollTop = width / 2 - (element[0].children[1].children[0].offsetWidth / 2)
             map_wrapper.scrollLeft = height / 2 - (element[0].children[1].children[0].offsetHeight /2 )
             is_first = false;

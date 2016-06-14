@@ -1,0 +1,52 @@
+
+#option-bar {
+  width: 100%;
+  height: 60px;
+  box-sizing: border-box;
+  padding: 5px 36px;
+
+  font-size: 14px;
+  line-height: 40px;
+  background-color: #d1dac6;
+  border: 2px solid #c1ceb0;
+}
+#option-bar span {
+  vertical-align: middle;
+ 
+  font-weight: bold;
+  color: #687559;
+}
+
+#option-bar select {
+  height: 30px;
+  width: 150px;
+  box-sizing: border-box;
+  margin-left: 30px;
+  padding-left: 15px;
+  font-weight: bold;
+
+  border: 1px solid #c1ceb0;
+  vertical-align: middle;
+}
+
+#option-bar button{
+  margin-left: 50px;
+  border: 2px solid #517057;
+  width: 160px;
+  height: 30px;
+  box-sizing: border-box;
+  padding: 0px;
+  background-color: #63886a;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.block {
+  margin: 34px;
+  width: 85%;
+  margin-top: 46px;
+  padding: 36px;
+
+  background-color: #ffffff;
+  border: 2px solid #c1ceb0;
+}

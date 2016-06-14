@@ -67,11 +67,12 @@
   background-color: #47644d;
 }
 
-main {
+body > main {
+  position: relative;
   margin-left: 122px;
 }
 
-footer {
+#footer {
   position: fixed;
   bottom: 0px;
   width: 100%;
@@ -86,15 +87,15 @@ footer {
   border-color: #868686;
   color: #337263;
 }
-footer a {
+#footer a {
   color: #337263;
 }
-footer a:hover {
+#footer a:hover {
   color: #337263;
 }
-footer #footer-left {
+#footer #footer-left {
   float: left;
 }
-footer #footer-right {
+#footer #footer-right {
   float: right;
 }
