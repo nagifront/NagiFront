@@ -13,7 +13,7 @@ angular.module('nagifront')
             + '</div>'
           + ' </scrollable>'
         + '</div>'
-        + '<div class="widget-padding" ng-if="is_modify_setting"><p>호스트 상태 변화</p></div>',
+        + '<div class="widget-padding" ng-if="is_modify_setting"></div>',
       link: function(scope, element, attrs){
         getData = function(){
           $http.get(djangoUrl.reverse('hosts-state-change')).then(function(response){

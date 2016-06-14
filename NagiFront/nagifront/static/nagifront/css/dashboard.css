@@ -61,7 +61,7 @@
   position: relative;
   top: -65px;
   left: 30px;
-  color: #b1baa6;
+  color: #6c795f;
   font-weight: bold;
   font-size: 0.9em;
   font-family: "맑은 고딕";
@@ -90,30 +90,35 @@
 }
 .widget-padding {
   margin: 10px 5%;
-  min-height: 200px;
+  min-height: 150px;
   box-sizing: border-box;
   padding: 40px;
-  background-color: silver;
-  color: white;
+  background-color: #d1dac7;
+  color:  #d1dac7;
 }
 
 .modify .widget-row {
   box-sizing: border-box;
   padding: 20px;
-  border: 1px dotted green;
+  border: 2px dotted #b7c1a8;
 }
 .modify .widgets-wrapper {
   box-sizing: border-box;
+  height: 250px;
   padding: 5px;
-  border: 1px solid gray;
+  border: 2px solid #b7c1a8;
 }
 .modify .widgets-wrapper .delete-button {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  padding: 0px 5px;
-  background-color: black;
-  color: white;
+  top: 50px;
+  left: 20px;
+  width: 90%;
+  height: 90px;
+  text-align: center;
+  padding: 60px 0px 0px 0px;
+  font-size: 0.95em;
+  font-weight: bold;
+  color: #4e6141;
   cursor: pointer;
   z-index: 1;
 }
@@ -127,19 +132,22 @@
   right: 0px;
   width: 220px;
   height: calc(100vh - 140px - 60px);
-  background-color: yellow;
+  background-color: #b7c1a8;
+  border: 1px solid #6f815b;
 }
 #widgets-list-wrapper h3 {
   margin: 0px;
   padding: 5px 20px;
-  border: 1px solid blue;
+  border-bottom: 1px solid #6f815b;
   font-size: 0.9em;
+  font-weight: bold;
+  color: #6c7a60;
 
 }
 #widgets-list-wrapper p {
   margin: 5px 30px;
   font-size: 0.8em;
-  color: green;
+  color: #ecf4df;
 }
 #widgets-list-wrapper div {
   margin: 0px 20px;
@@ -153,14 +161,15 @@
   height: 100%;
   box-sizing: border-box;
   padding: 0px;
-  border: 1px solid purple;
+  border: 1px solid #9fae91;
   overflow-y: scroll;
 }
 #widgets-list-wrapper li {
   display: block;
   list-style: none;
   padding: 7px 15px;
-  border: 1px solid purple;
+  background-color: #e2e5de;
+  border: 1px solid #9fae91;
   font-size: 0.8em;
 }
 #widgets-list-wrapper footer {
@@ -170,7 +179,8 @@
   height: 50px;
   box-sizing: border-box;
   padding: 10px 5px;
-  background-color: yellowgreen;
+  border-top: 1px solid #6f815b;
+  background-color: #87937b;
 }
 #widgets-list-wrapper footer #delete-widget {
   box-sizing: border-box;
@@ -185,7 +195,11 @@
 }
 #widgets-list-wrapper footer button {
   float: right;
+  width: 50px;
   height: 30px;
+  margin-right: 10px;
+  background-color: #47654b;
+  border: 1px solid #3d5440;
   color: white;
   cursor: pointer;
 }

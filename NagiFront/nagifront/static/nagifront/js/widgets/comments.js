@@ -13,7 +13,7 @@ angular.module('nagifront')
           +'</div>'
         +'</scrollable>'
       +'</div>'
-        + '<div class="widget-padding" ng-if="is_modify_setting"><p>코멘트 현황</p></div>',
+        + '<div class="widget-padding" ng-if="is_modify_setting"></div>',
       link: function(scope, element, attrs) {
         getData = function() {
           if(attrs.hasOwnProperty('hostId')) {
