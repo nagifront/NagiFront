@@ -66,6 +66,10 @@ def logout(request):
     django_logout(request)
     return redirect('login')
 
+def system(request):
+    return render(request, 'nagifront/system.html', {
+    })
+
 @login_required
 def hosts(request):
     return render(request, 'nagifront/hosts.html', {

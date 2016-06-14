@@ -700,7 +700,7 @@ div[host-trend] .charts {
 }
 /* end of host-trend css*/
 
-/* start of host-list css */
+/* start of host-list-with-click css */
 div[host-list-with-click] h3 {
   color: #6a7857;
 }
@@ -767,3 +767,61 @@ div[host-list-with-click] .hosts .Critical {
 div[host-list-with-click] .hosts .Critical span {
   font-weight: bold;
 }
+/* end of host-list-with-click css */
+
+/* start of configuration-hosts css */
+div[configuration-hosts] .charts {
+  width: 100%;
+  font-size: 0.9em;
+  border-spacing: 4px 1px;
+}
+div[configuration-hosts] span {
+  font-weight: bold;
+}
+div[configuration-hosts] th {
+  font-weight: bold;
+  border-bottom: 3px #9cab8e solid;
+}
+div[configuration-hosts] tr{
+  text-align: center;
+  padding: 15px;
+}
+/* end of configuration-hosts css */
+
+/* start of configuration-hostgroups css */
+div[configuration-hostgroups] .charts {
+  width: 100%;
+  font-size: 0.9em;
+  border-spacing: 4px 1px;
+}
+div[configuration-hostgroups] th {
+  font-weight: bold;
+  border-bottom: 3px #9cab8e solid;
+}
+div[configuration-hostgroups] span {
+  font-weight: bold;
+}
+div[configuration-hostgroups] tr{
+  text-align: center;
+  padding: 15px;
+}
+/* end of configuration-hostgroups css */
+
+/* start of configuration-services css */
+div[configuration-services] .charts {
+  width: 100%;
+  font-size: 0.9em;
+  border-spacing: 4px 1px;
+}
+div[configuration-services] th {
+  font-weight: bold;
+  border-bottom: 3px #9cab8e solid;
+}
+div[configuration-services] span {
+  font-weight: bold;
+}
+div[configuration-services] tr{
+  text-align: center;
+  padding: 15px;
+}
+/* end of configuration-services css */
