@@ -140,8 +140,8 @@ angular.module('nagifront')
                   + '<td>'+ dependency_processed[host.host_object_id].children.length +'</td></tr>'
                 + '</table>'
             tooltip.style.display = 'block';
-            tooltip.style.top = (window.scrollY + event.clientY - element[0].offsetTop - 170) + 'px';
-            tooltip.style.left = (window.scrollX + event.clientX - element[0].offsetLeft - 40) + 'px';
+            tooltip.style.top = (event.clientY - element[0].offsetTop - 160) + 'px';
+            tooltip.style.left = (event.clientX - element[0].offsetLeft - 45) + 'px';
           }
           function hide_information(){
             tooltip.style.display = 'none';
