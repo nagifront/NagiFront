@@ -7,7 +7,7 @@ angular.module('nagifront')
         + 'ng-options="hostgroup_id.hostgroup_object_id as hostgroup_id.name for hostgroup_id in hostgroup_ids" ng-disabled="!is_modify_setting">'
         + '</select></h3>'
         + '<div class="charts" ng-if="!is_modify_setting"><scrollable always-visible="true"></scrollable></div>'
-        + '<div class="widget-padding" ng-if="is_modify_setting"><p>호스트 현황</p></div>',
+        + '<div class="widget-padding" ng-if="is_modify_setting"></div>',
       link: function(scope, element, attrs) {
         scope.host_group_id = attrs.hostGroupId * 1;
         getData = function() {

@@ -13,7 +13,7 @@ angular.module('nagifront')
           +'</div>'
         +'</scrollable>'
       +'</div>'
-        + '<div class="widget-padding" ng-if="is_modify_setting"><p>체크 스케쥴</p></div>',
+        + '<div class="widget-padding" ng-if="is_modify_setting"></div>',
       link: function(scope, element, attrs) {
         getData = function() {
           if(attrs.hasOwnProperty('hostGroupId')) $http.get(djangoUrl.reverse('host-groups-check-schedules') + '&host_group_id=' + attrs.hostGroupId).then(function(response) {

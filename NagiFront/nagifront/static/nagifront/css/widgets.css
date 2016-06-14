@@ -23,7 +23,7 @@ div[host-trend] {
 
 /* start of service-number-by-state-chart css */
 div[service-number-by-state-chart] .charts {
-  width: 550px;
+  min-width: 550px;
   height: 400px;
 }
 div[service-number-by-state-chart] .groups {
@@ -80,13 +80,13 @@ div[service-number-by-state-chart] .groups .Critical span {
 
 /* start of troule-trend css*/
 div[trouble-trend] .charts {
-  width: 600px;
+  min-width: 600px;
 }
 /* end of troule-trend css*/
 
 /* start of troule-trend css*/
 div[scheduled-downtime] .charts {
-  width: 750px;
+  min-width: 750px;
   height: 400px;
 }
 div[scheduled-downtime] .tables {
@@ -114,7 +114,7 @@ div[scheduled-downtime] tr{
 
 /* start of check-schdules css*/
 div[check-schedules] .charts {
-  width: 650px;
+  min-width: 650px;
   height: 400px;
 }
 div[check-schedules] .schedule {
@@ -256,7 +256,7 @@ div[comments] .comments .output:hover {
 
 /* start host-state-change widget */
 div[host-state-change] {
-  width: 450px;
+  min-width: 450px;
   min-height: 300px;
 }
 div[host-state-change] .charts {
@@ -347,7 +347,7 @@ div[host-state-change] .state-change-item .indeterminate {
 
 /* start of trouble-host widget */
 div[trouble-host] {
-  width: 450px;
+  min-width: 450px;
   min-height: 300px;
 }
 div[trouble-host] .charts {
@@ -433,7 +433,7 @@ div[trouble-host] .trouble-item .unknown {
 
 /* start of host-list css */
 div[host-list] .charts {
-  width: 550px;
+  min-width: 550px;
   height: 400px;
 }
 div[host-list] .hosts {
@@ -493,7 +493,7 @@ div[map] {
   position: relative;
 }
 div[map] .charts {
-  width: 500px;
+  min-width: 500px;
 }
 div[map] .map-wrapper {
   overflow: scroll;
@@ -678,13 +678,14 @@ div[host-status-detail] .info {
 
 /* start of troule-trend css*/
 div[host-status] .charts {
-  width: 500px;
+  min-width: 500px;
 }
 /* end of troule-trend css*/
 
 /* start of overall-host css*/
 div[overall-host] {
   min-width: 50%;
+  margin-bottom: 30px; 
 }
 /* end of overall-host css*/
 

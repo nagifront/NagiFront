@@ -13,7 +13,7 @@ angular.module('nagifront')
             + '</div>'
           + '</scrollable>'
         + '</div>'
-        + '<div class="widget-padding" ng-if="is_modify_setting"><p>문제 발생 호스트</p></div>',
+        + '<div class="widget-padding" ng-if="is_modify_setting"></div>',
       link: function(scope, element, attrs){
         getData = function(){
           $http.get(djangoUrl.reverse('host-groups-trouble-hosts')).then(function(response){
