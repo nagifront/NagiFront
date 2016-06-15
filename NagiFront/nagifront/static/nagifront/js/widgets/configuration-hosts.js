@@ -21,15 +21,6 @@ angular.module('nagifront')
                 +'</tr>'
                 +'</table>',
       link: function(scope, element, attrs) {
-        window.onresize = function() {
-          scope.$apply();
-        };
-        scope.$watch(function() {
-          return angular.element(window)[0].innerWidth;
-        }, function() {
-          scope.$apply();
-        });
-
         scope.$watch('option', function(){
           $http.get(djangoUrl.reverse('hosts-configurations')).then(function(response) {
             scope.data = response.data.host_configurations;

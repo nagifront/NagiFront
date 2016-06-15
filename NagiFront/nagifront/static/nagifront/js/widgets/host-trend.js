@@ -27,14 +27,6 @@ angular.module('nagifront')
         getData();
         // get data
 
-        window.onresize = function(){
-          scope.$apply();
-        };
-        scope.$watch(function(){
-          return angular.element(window)[0].innerWidth;
-        }, function(){
-          scope.render(scope.data);
-        });
         scope.$watch('data', function(newVal){
           scope.render(scope.data);
         }, true);

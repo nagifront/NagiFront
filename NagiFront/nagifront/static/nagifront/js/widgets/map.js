@@ -20,15 +20,6 @@ angular.module('nagifront')
         getData();
         // get data
         
-        window.onresize = function() {
-          scope.$apply();
-        };
-        scope.$watch(function() {
-        return angular.element(window)[0].innerWidth;
-        }, function() {
-          scope.render();
-        });
-
         var tooltip = jQuery(element[0]).children('div.tooltip')[0];
         // FIXME use angular only
 

@@ -13,15 +13,6 @@ angular.module('nagifront')
         };
         $interval(updateData, 1000);
         updateData();
-
-        window.onresize = function() {
-          scope.$apply();
-        };
-        scope.$watch(function() {
-          return angular.element(window)[0].innerWidth;
-        }, function() {
-          scope.$apply();
-        });
       },
      };
    }]);
