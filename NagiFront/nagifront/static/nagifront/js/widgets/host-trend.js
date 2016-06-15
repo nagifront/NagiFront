@@ -3,9 +3,9 @@ angular.module('nagifront')
     return {
       restrict: 'EA',
       scope: true,
-      template: '<h3>{{ data.host.display_name }}</h3><select ng-model="time"'
+      template: '<h3>{{ data.host.display_name }} <select ng-model="time"'
         + 'ng-options="type as type.name for type in list track by type.value">'
-        + '</select>'
+        + '</select></h3>'
         + '<div class="charts"></div>',
       link: function(scope, element, attrs){
         scope.list = [

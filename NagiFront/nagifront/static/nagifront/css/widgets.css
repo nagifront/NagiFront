@@ -17,7 +17,11 @@ div[host-trend-group] .axis path {
   fill: none;
 }
 div[host-trend] {
+  margin: 0px 10px;
   display: inline-block;
+}
+div[host-trend] .charts {
+  border: 2px solid #e7efde;
 }
 /* end of host-trend-group css */
 
@@ -694,12 +698,6 @@ div[service-number-by-state] .charts {
   width: 500px;
 }
 /* end of service-number-by-state css*/
-
-/* start of host-trend css*/
-div[host-trend] .charts {
-  width: 800px;
-}
-/* end of host-trend css*/
 
 /* start of host-list-with-click css */
 div[host-list-with-click] h3 {
