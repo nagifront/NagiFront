@@ -4,11 +4,9 @@ app.controller('search', function($scope, $http, $window, djangoUrl){
     if($scope.type === "host") {
       $http.get(djangoUrl.reverse('hosts-ids')).then(function success(response) {
         var ids = response.data.ids;
-        var id = ids[$scope.name];
-        if(id === undefined) {
-          angular.forEach(ids, function(value, key){
-            if(key.substr(0, $scope.name.length) === $scope.name) id = value;
-          });
+        var id;
+        for(var  i = 0; i < ids.length; i++) {
+          if(ids[i].name.substr(0, $scope.name.length) === $scope.name) id = ids[i].host_object_id;
         }
         $http.get(djangoUrl.reverse('search')+'&id='+id+'&type='+$scope.type)
         .then(function success(response) {
