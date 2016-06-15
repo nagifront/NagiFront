@@ -497,16 +497,14 @@ div[map] {
   position: relative;
 }
 div[map] .charts {
-  min-width: 500px;
+  width: 500px;
 }
 div[map] .map-wrapper {
   overflow: scroll;
 }
 div[map] .tooltip {
   display: none;
-  position: absolute;
-  top: 90px;
-  left: 20px;
+  position: fixed;
   padding: 10px;
   background-color: #e6ece0;
   border: 1px solid #c7d3bd;
