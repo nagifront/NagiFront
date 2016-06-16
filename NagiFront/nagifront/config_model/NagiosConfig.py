@@ -24,12 +24,12 @@ class NagiosConfig:
         return ret == 0
 
     def move(self, temp, real):
-        command = 'echo %s | sudo -S mv %s %s' % (password, temp, real)
+        command = 'echo %s | sudo -S mv %s %s' % (password, temp.replace(' ', '\ '), real.replace(' ', '\ '))
         ret = os.system(command)
         return ret == 0
 
     def erase(self, filename):
-        command = 'echo %s | sudo -S rm %s' % (password, filename)
+        command = 'echo %s | sudo -S rm %s' % (password, filename.replace(' ', '\ '))
         ret = os.system(command)
         return ret == 0
 
@@ -284,8 +284,8 @@ class NagiosServiceConfig(NagiosConfig):
         { "name": "check_period", "description": "감시 시간대 (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 9 },
         { "name": "notification_interval", "description": "알림 간격 (0이면 한 번만) (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 0 },
         { "name": "notification_period", "description": "알림 시간대 (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 9 },
-        { "name": "contacts", "description": " (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 10 },
-        { "name": "contact_groups", "description": " (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 11 },
+        { "name": "contacts", "description": " (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 11 },
+        { "name": "contact_groups", "description": " (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 10 },
         { "name": "hostgroup_name", "description": "감시할 호스트 그룹", "default": None, "is_necessary": False, "is_advanced": False, "option_kind": 2 },
         { "name": "display_name", "description": "", "default": None, "is_necessary": False, "is_advanced": False, "option_kind": 0 },
         { "name": "servicegroups", "description": "서비스 그룹", "default": None, "is_necessary": False, "is_advanced": False, "option_kind": 4 },

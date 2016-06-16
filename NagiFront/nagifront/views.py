@@ -92,6 +92,65 @@ def setting(request):
     })
 
 @login_required
+def add_config(request, objecttype):
+    message = request.session.get('message', None)
+    request.session['message'] = None
+    if objecttype == 'host':
+        config_module = NagiosHostConfig()
+    elif objecttype == 'service':
+        config_module = NagiosServiceConfig()
+    elif objecttype == 'hostgroup':
+        config_module = NagiosHostgroupConfig()
+    else:
+        return Http404("No object type")
+    config_module.read('you can\'t read')
+    if request.method == 'POST':
+        for directive in config_module.directives_list:
+            val = ','.join(request.POST.getlist(directive['name']))
+            config_module.edit(directive['name'], val)
+        # edit
+        tempfile = os.path.join(settings.NAGIOS_TEMP_FILE_DIRECTORY, config_module.gen_filename())
+        filename = os.path.join(settings.NAGIOS_CONFIG_ROOT, config_module.gen_filename())
+        config_module.write(tempfile)
+        if not config_module.move(tempfile, filename):
+            request.session['message'] = '설정 변경에 실패했습니다. 데이터를 다시 확인 해주세요'
+            return redirect('add-config', objecttype=objecttype)
+        # file generate
+        if config_module.valid():
+        # valid check
+            if config_module.restart():
+        # restart
+                request.session['message'] = '설정이 반영되었습니다'
+                return redirect('system')
+            else:
+                # restore
+                # restart
+                request.session['message'] = '설정 변경에 실패했습니다. 데이터를 다시 확인 해주세요'
+                return redirect('add-config', objecttype=objecttype)
+        else:
+            request.session['message'] = '설정 변경에 실패했습니다. 데이터를 다시 확인 해주세요'
+            return redirect('add-config', objecttype=objecttype)
+
+    hosts = [''] + list(NagiosObjects.objects.filter(objecttype_id=1, is_active=1).values_list('name1', flat=True))
+    hostgroups = [''] + list(NagiosObjects.objects.filter(objecttype_id=3, is_active=1).values_list('name1', flat=True))
+    services = NagiosObjects.objects.filter(objecttype_id=2, is_active=1).values_list('name2', 'name1')
+    timeperiods = NagiosObjects.objects.filter(objecttype_id=9, is_active=1).values_list('name1', flat=True)
+    contactgroups = [''] + list(NagiosObjects.objects.filter(objecttype_id=10, is_active=1).values_list('name1', flat=True))
+    contacts = [''] + list(NagiosObjects.objects.filter(objecttype_id=11, is_active=1).values_list('name1', flat=True))
+    return render(request, 'nagifront/add-config.html', {
+        'hosts': hosts,
+        'hostgroups': hostgroups,
+        'services': services,
+        'timeperiods': timeperiods,
+        'contactgroups': contactgroups,
+        'contacts': contacts,
+        'config_module': config_module,
+        'objecttype': objecttype,
+        'message': message,
+    })
+    
+
+@login_required
 def edit_config(request, object_id):
     message = request.session.get('message', None)
     request.session['message'] = None
