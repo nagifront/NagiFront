@@ -33,6 +33,7 @@ urlpatterns = [
         url(r'^hosts/(?P<host_id>[0-9]+)/trend$', views.hosts_id_trend, name='hosts-id-trend'),
         url(r'^hosts/services/(?P<service_id>[0-9]+)/trend$', views.service_id_trend, name='hosts-services-id-trend'),
         
+        url(r'^configuration/add/(?P<objecttype>.*)$', views.add_config, name='add-config'),
         url(r'^configuration/edit/(?P<object_id>[0-9]+)', views.edit_config, name='edit-config'),
         url(r'^configuration/scheduled-downtime$', views.configuration_scheduled_downtime, name='configuration-scheduled-downtime'),
         url(r'^configuration/comments$', views.configuration_comments, name='configuration-comments'),
