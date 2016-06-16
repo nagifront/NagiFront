@@ -273,12 +273,61 @@ class NagiosHostgroupConfig(NagiosConfig):
     def gen_filename(self):
         return self.config['hostgroup_name'] + '.cfg'
 
-'''
-class Nagios__Config(NagiosConfig):
+class NagiosServiceConfig(NagiosConfig):
     directives_list = [
+        { "name": "host_name", "description": "감시할 호스트 이름 (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 1 },
+        { "name": "service_description", "description": "서비스 이름 (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 0 },
+        { "name": "check_command", "description": "서비스 체크 커맨드 (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 0 },
+        { "name": "max_check_attempts", "description": "최대 시도 횟수 (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 0 },
+        { "name": "check_interval", "description": "체크 간격 (분) (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 0 },
+        { "name": "retry_interval", "description": "재시도 간격 (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 0 },
+        { "name": "check_period", "description": "감시 시간대 (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 9 },
+        { "name": "notification_interval", "description": "알림 간격 (0이면 한 번만) (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 9 },
+        { "name": "notification_period", "description": "알림 시간대 (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 0 },
+        { "name": "contacts", "description": " (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 10 },
+        { "name": "contact_groups", "description": " (필수)", "default": None, "is_necessary": True, "is_advanced": False, "option_kind": 11 },
+        { "name": "hostgroup_name", "description": "감시할 호스트 그룹", "default": None, "is_necessary": False, "is_advanced": False, "option_kind": 2 },
+        { "name": "display_name", "description": "", "default": None, "is_necessary": False, "is_advanced": False, "option_kind": 0 },
+        { "name": "servicegroups", "description": "서비스 그룹", "default": None, "is_necessary": False, "is_advanced": False, "option_kind": 4 },
+        { "name": "initial_state", "description": "초기 상태", "default": None, "is_necessary": False, "is_advanced": False, "option_kind": 0 },
+        { "name": "active_checks_enabled", "description": "나기오스로 체크 활성화", "default": None, "is_necessary": False, "is_advanced": False, "option_kind": 0 },
+        { "name": "first_notification_delay", "description": "첫 알림 딜레이", "default": None, "is_necessary": False, "is_advanced": False, "option_kind": 0 },
+        { "name": "notification_options", "description": "알림 옵션", "default": None, "is_necessary": False, "is_advanced": False, "option_kind": 0 },
+        { "name": "notifications_enabled", "description": "알림 활성화", "default": None, "is_necessary": False, "is_advanced": False, "option_kind": 0 },
+        { "name": "notes", "description": "노트", "default": None, "is_necessary": False, "is_advanced": False, "option_kind": 0 },
+        { "name": "notes_url", "description": "", "default": None, "is_necessary": False, "is_advanced": False, "option_kind": 0 },
+        { "name": "action_url", "description": "", "default": None, "is_necessary": False, "is_advanced": False, "option_kind": 0 },
+        { "name": "icon_image", "description": "", "default": None, "is_necessary": False, "is_advanced": False, "option_kind": 0 },
+        { "name": "icon_image_alt", "description": "", "default": None, "is_necessary": False, "is_advanced": False, "option_kind": 0 },
+        { "name": "is_volatile", "description": "", "default": "0", "is_necessary": False, "is_advanced": True, "option_kind": 0 },
+        { "name": "passive_checks_enabled", "description": "외부 명령어 체크 활성화", "default": None, "is_necessary": False, "is_advanced": True, "option_kind": 0 },
+        { "name": "obsess_over_service", "description": "", "default": None, "is_necessary": False, "is_advanced": True, "option_kind": 0 },
+        { "name": "check_freshness", "description": "", "default": None, "is_necessary": False, "is_advanced": True, "option_kind": 0 },
+        { "name": "freshness_threshold", "description": "", "default": None, "is_necessary": False, "is_advanced": True, "option_kind": 0 },
+        { "name": "event_handler", "description": "", "default": None, "is_necessary": False, "is_advanced": True, "option_kind": 0 },
+        { "name": "event_handler_enabled", "description": "", "default": None, "is_necessary": False, "is_advanced": True, "option_kind": 0 },
+        { "name": "low_flap_threshold", "description": "", "default": None, "is_necessary": False, "is_advanced": True, "option_kind": 0 },
+        { "name": "high_flap_threshold", "description": "", "default": None, "is_necessary": False, "is_advanced": True, "option_kind": 0 },
+        { "name": "flap_detection_enabled", "description": "", "default": None, "is_necessary": False, "is_advanced": True, "option_kind": 0 },
+        { "name": "flap_detection_options", "description": "", "default": None, "is_necessary": False, "is_advanced": True, "option_kind": 0 },
+        { "name": "process_perf_data", "description": "", "default": None, "is_necessary": False, "is_advanced": True, "option_kind": 0 },
+        { "name": "retain_status_information", "description": "", "default": None, "is_necessary": False, "is_advanced": True, "option_kind": 0 },
+        { "name": "retain_nonstatus_information", "description": "", "default": None, "is_necessary": False, "is_advanced": True, "option_kind": 0 },
+        { "name": "stalking_options", "description": "", "default": None, "is_necessary": False, "is_advanced": True, "option_kind": 0 },
     ]
     # Necessary Directive List
     necessary_directives_list = [
+        'host_name',
+        'service_description',
+        'check_command',
+        'max_check_attempts',
+        'check_interval',
+        'retry_interval',
+        'check_period',
+        'notification_interval',
+        'notification_period',
+        'contacts',
+        'contact_groups',
     ]
     def __init__(self):
         self.config = {}
@@ -304,7 +353,83 @@ class Nagios__Config(NagiosConfig):
         except FileNotFoundError:
             pass
         # 읽어온다
-        for directive in NagiosHostConfig.directives_list:
+        for directive in NagiosServiceConfig.directives_list:
+            key = directive['name']
+            if key in read_config.keys():
+                self.config[key] = read_config[key]
+            else:
+                self.config[key] = directive['default']
+        # 키 리스트를 돌면서 넣는데
+        # 그 키가 읽어온 거에 있으면
+          # 그걸 넣고
+        # 아니면
+          # 디폴트를 넣는다
+
+    def write(self, filename):
+        f = open(filename, 'w')
+        # 주어진 포맷에 맞게 저장
+        f.write(
+'''
+# 이 설정 파일은 Nagifront로부터 생성된 설정 파일입니다
+# 수정하지 마세요
+
+'''
+        )
+        f.write('define service {\n')
+        for k, v in self.config.items():
+            if v is not None:
+        # 근데 None 이면 안 됨
+                f.write('    ' + k + ' ' + v + '\n')
+            else:
+                f.write('    ' + '# ' + k + '\n')
+        f.write('}')
+        f.close()
+
+    def edit(self, key, value):
+        # 해당 키에서 value를 고친다
+        if value == '':
+            value = None
+        self.config[key] = value
+
+    def valid(self):
+        # 필수가 있는지 확인
+        return super().valid()
+
+    def gen_filename(self):
+        return self.config['host_name'] + '_' + self.config['service_description'] + '.cfg'
+
+'''
+class Nagios__Config(NagiosConfig):
+    directives_list = [
+    ]
+    # Necessary Directive List
+    necessary_directives_list = [
+    ]
+    def __init__(self):
+        self.config = {}
+        self.backup = ''
+
+    def __str__(self):
+        pass
+
+    def read(self, filename):
+        read_config = dict()
+        try:
+            f = open(filename, 'r')
+            while True:
+                line = f.readline()
+                if not line: break
+                if re.match('\s*[#;].*', line) is not None: continue # comment
+                r = re.match('\s*([a-zA-Z_]*)\s+(.*)\s+[#;]?.*', line)
+                if r is None: continue
+                key = r.group(1)
+                value = r.group(2)
+                read_config[key] = value
+            f.close()
+        except FileNotFoundError:
+            pass
+        # 읽어온다
+        for directive in Nagios__Config.directives_list:
             key = directive['name']
             if key in read_config.keys():
                 self.config[key] = read_config[key]

@@ -97,7 +97,7 @@ def edit_config(request, object_id):
     request.session['message'] = None
     try:
         nagios_object = NagiosObjects.objects.get(pk=object_id)
-        if not nagios_object.objecttype_id in [1, 2, 3]:
+        if not nagios_object.objecttype_id in [1, 2, 3] or nagios_object.is_active == 0:
             raise ObjectDoesNotExist
     except ObjectDoesNotExist:
         return Http404("No object for change configuration.")
@@ -105,6 +105,8 @@ def edit_config(request, object_id):
     filename = os.path.join(settings.NAGIOS_CONFIG_ROOT, filename)
     if nagios_object.objecttype_id == 1:
         config_module = NagiosHostConfig()
+    elif nagios_object.objecttype_id == 2:
+        config_module = NagiosServiceConfig()
     elif nagios_object.objecttype_id == 3:
         config_module = NagiosHostgroupConfig()
     print(filename)
