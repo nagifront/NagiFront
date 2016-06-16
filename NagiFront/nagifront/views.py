@@ -66,6 +66,7 @@ def logout(request):
     django_logout(request)
     return redirect('login')
 
+@login_required
 def system(request):
     return render(request, 'nagifront/system.html', {
     })
@@ -594,6 +595,7 @@ def configuration_comments(request):
     else:
         return JsonResponse(dict())
 
+@login_required
 def hosts_services(request):
     if request.method == 'GET':
         try:
@@ -665,6 +667,7 @@ def host_group_id_set(request):
     else:
         return JsonResponse(dict())
 
+@login_required
 def hosts_comments(request):
     if request.method == 'GET':
         try:
@@ -710,6 +713,7 @@ def hosts_comments(request):
     else:
         return JsonResponse(dict())
 
+@login_required
 def hosts_configurations(request):
     if request.method == 'GET':
         try:
@@ -753,6 +757,7 @@ def hosts_configurations(request):
     else:
         return JsonResponse(dict())
 
+@login_required
 def hosts_groups_configurations(request):
     if request.method == 'GET':
         try:
@@ -787,6 +792,7 @@ def hosts_groups_configurations(request):
     else:
         return JsonResponse(dict())
 
+@login_required
 def hosts_services_configurations(request):
     if request.method == 'GET':
         try:
@@ -835,6 +841,7 @@ def hosts_services_configurations(request):
     else:
         return JsonResponse(dict())
 
+@login_required
 def configuration_contacts(request):
     if request.method == 'GET':
         try:
@@ -863,6 +870,7 @@ def configuration_contacts(request):
     else:
         return JsonResponse(dict())
 
+@login_required
 def configuration_contactgroups(request):
     if request.method == 'GET':
         try:
@@ -897,6 +905,7 @@ def configuration_contactgroups(request):
     else:
         return JsonResponse(dict())
 
+@login_required
 def configuration_timeperiods(request):
     if request.method == 'GET':
         try:
@@ -927,6 +936,7 @@ def configuration_timeperiods(request):
     else:
         return JsonResponse(dict())
 
+@login_required
 def configuration_commands(request):
     if request.method == 'GET':
         try:
@@ -945,7 +955,9 @@ def configuration_commands(request):
             return JsonResponse(dict())
     else:
         return JsonResponse(dict())
+
 """ GET API Template
+@login_required
 def some_api_name(request):
     if request.method == 'GET':
         try:
