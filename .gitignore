@@ -98,3 +98,4 @@ ENV/
 # NagiFront project specific ignore lists
 NagiFront/db_settings.cnf
 NagiFront/ndoutils_db_settings.cnf
+NagiFront/nagifront/config_model/Password.py

@@ -142,3 +142,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+# Nagios Configuration File Root
+NAGIOS_TEMP_FILE_DIRECTORY = '/tmp'
+NAGIOS_ROOT = '/etc/nagios3'
+NAGIOS_CONFIG_ROOT = '/etc/nagios3/conf.d'
