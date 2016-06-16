@@ -31,6 +31,7 @@ urlpatterns = [
         url(r'^hosts/groups/ids$', views.host_group_id_set, name='hosts-groups-ids'),
         
         url(r'^hosts/(?P<host_id>[0-9]+)/trend$', views.hosts_id_trend, name='hosts-id-trend'),
+        url(r'^hosts/services/(?P<service_id>[0-9]+)/trend$', views.service_id_trend, name='hosts-services-id-trend'),
         
         url(r'^configuration/scheduled-downtime$', views.configuration_scheduled_downtime, name='configuration-scheduled-downtime'),
         url(r'^configuration/comments$', views.configuration_comments, name='configuration-comments'),
