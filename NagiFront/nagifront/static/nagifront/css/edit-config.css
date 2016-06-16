@@ -1,0 +1,38 @@
+section {
+  margin: 34px;
+  width: 85%;
+  margin-top: 46px;
+  padding: 36px;
+
+  background-color: #ffffff;
+  border: 2px solid #c1ceb0;
+}
+
+section form div {
+  margin: 5px 0px;
+}
+
+section form div.necessary {
+  color: red;
+}
+section form div.advanced {
+  display: none;
+}
+section form.active_advanced div.advanced {
+  display: block;
+}
+section form label {
+  display: inline-block;
+  width: 250px;
+  text-align: right;
+  vertical-align: top;
+}
+section form input,
+section form select {
+  margin-left: 10px;
+  width: 300px;
+}
+section form input[type=button] {
+  margin: initial;
+  width: auto;
+}

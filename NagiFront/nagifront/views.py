@@ -1,9 +1,12 @@
+import os
 import json
 from datetime import datetime, timedelta, time
 
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, Http404
 from django.utils import timezone;
+
+from django.conf import settings
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -16,6 +19,8 @@ from .customfields import CustomJSONEncoder
 from django.db.models import Count
 from .models import UserProfile
 from .nagios_models import *
+
+from nagifront.config_model.NagiosConfig import *
 
 # Create your views here.
 
@@ -84,6 +89,67 @@ def hosts(request):
 @login_required
 def setting(request):
     return render(request, 'nagifront/setting.html', {
+    })
+
+@login_required
+def edit_config(request, object_id):
+    message = request.session.get('message', None)
+    request.session['message'] = None
+    try:
+        nagios_object = NagiosObjects.objects.get(pk=object_id)
+        if not nagios_object.objecttype_id in [1, 2, 3]:
+            raise ObjectDoesNotExist
+    except ObjectDoesNotExist:
+        return Http404("No object for change configuration.")
+    filename = nagios_object.name1 + ('_' + nagios_object.name2 if nagios_object.name2 is not None else '') + '.cfg'
+    filename = os.path.join(settings.NAGIOS_CONFIG_ROOT, filename)
+    if nagios_object.objecttype_id == 1:
+        config_module = NagiosHostConfig()
+    config_module.read(filename)
+    # read
+    if request.method == 'POST':
+        for directive in config_module.directives_list:
+            val = ','.join(request.POST.getlist(directive['name']))
+            config_module.edit(directive['name'], val)
+        # edit
+        config_module.erase(filename)
+        # file rm
+        tempfile = os.path.join(settings.NAGIOS_TEMP_FILE_DIRECTORY, config_module.gen_filename())
+        filename = os.path.join(settings.NAGIOS_CONFIG_ROOT, config_module.gen_filename())
+        config_module.write(tempfile)
+        config_module.move(tempfile, filename)
+        # file generate
+        if config_module.valid():
+        # valid check
+            if config_module.restart():
+        # restart
+                request.session['message'] = '설정이 반영되었습니다'
+                return redirect('edit-config', object_id=nagios_object.object_id)
+            else:
+                # restore
+                # restart
+                request.session['message'] = '설정 변경에 실패했습니다. 데이터를 다시 확인 해주세요'
+                return redirect('edit-config', object_id=nagios_object.object_id)
+        else:
+            request.session['message'] = '설정 변경에 실패했습니다. 데이터를 다시 확인 해주세요'
+            return redirect('edit-config', object_id=nagios_object.object_id)
+
+    hosts = [''] + list(NagiosObjects.objects.filter(objecttype_id=1, is_active=1).values_list('name1', flat=True))
+    hostgroups = [''] + list(NagiosObjects.objects.filter(objecttype_id=3, is_active=1).values_list('name1', flat=True))
+    services = NagiosObjects.objects.filter(objecttype_id=2, is_active=1).values_list('name2', 'name1')
+    timeperiods = NagiosObjects.objects.filter(objecttype_id=9, is_active=1).values_list('name1', flat=True)
+    contactgroups = [''] + list(NagiosObjects.objects.filter(objecttype_id=10, is_active=1).values_list('name1', flat=True))
+    contacts = [''] + list(NagiosObjects.objects.filter(objecttype_id=11, is_active=1).values_list('name1', flat=True))
+    return render(request, 'nagifront/edit-config.html', {
+        'hosts': hosts,
+        'hostgroups': hostgroups,
+        'services': services,
+        'timeperiods': timeperiods,
+        'contactgroups': contactgroups,
+        'contacts': contacts,
+        'object': nagios_object,
+        'config_module': config_module,
+        'message': message,
     })
 
 @login_required
