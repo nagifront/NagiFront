@@ -6,7 +6,31 @@
   padding: 30px 10px 20px 10px;
   border-top: 1px solid #ccc;
 }
-
+.simple-charts td {
+  width: 15%;
+}
+.simple-charts {
+  box-sizing: border-box;
+  padding: 30px 10px 20px 10px;
+  border-top: 1px solid #ccc;
+}
+.detailed-charts td {
+  width: 15%;
+}
+.detailed-charts {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 30px 10px 20px 10px;
+}
+.detailed-button {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9em;
+  color: #6d7d3a;
+  text-decoration: underline;
+  outline: none;
+}
 /* start of host-trend-group css */
 div[host-trend-group] > .charts {
   height: 500px;
