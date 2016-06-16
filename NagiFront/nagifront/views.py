@@ -112,7 +112,9 @@ def add_config(request, objecttype):
         tempfile = os.path.join(settings.NAGIOS_TEMP_FILE_DIRECTORY, config_module.gen_filename())
         filename = os.path.join(settings.NAGIOS_CONFIG_ROOT, config_module.gen_filename())
         config_module.write(tempfile)
-        config_module.move(tempfile, filename)
+        if not config_module.move(tempfile, filename):
+            request.session['message'] = '설정 변경에 실패했습니다. 데이터를 다시 확인 해주세요'
+            return redirect('add-config', objecttype=objecttype)
         # file generate
         if config_module.valid():
         # valid check
