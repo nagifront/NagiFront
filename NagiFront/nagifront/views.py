@@ -105,6 +105,9 @@ def edit_config(request, object_id):
     filename = os.path.join(settings.NAGIOS_CONFIG_ROOT, filename)
     if nagios_object.objecttype_id == 1:
         config_module = NagiosHostConfig()
+    elif nagios_object.objecttype_id == 3:
+        config_module = NagiosHostgroupConfig()
+    print(filename)
     config_module.read(filename)
     # read
     if request.method == 'POST':

@@ -188,4 +188,165 @@ class NagiosHostConfig(NagiosConfig):
     def gen_filename(self):
         return self.config['host_name'] + '.cfg'
 
+class NagiosHostgroupConfig(NagiosConfig):
+    directives_list = [
+        { "name": "hostgroup_name", "description": "호스트 그룹 이름 (필수)", "default": None, "is_necessary": True, "is_advanced": False, 'option_kind': 0 },
+        { "name": "alias", "description": "호스트 그룹 별명 (필수)", "default": None, "is_necessary": True, "is_advanced": False, 'option_kind': 0 },
+        # Necessary
+        { "name": "members", "description": "그룹 멤버", "default": None, "is_necessary": False, "is_advanced": False, 'option_kind': 1 },
+        { "name": "hostgroup_members", "description": "호스트 그룹", "default": None, "is_necessary": False, "is_advanced": False, 'option_kind': 2 },
+        { "name": "notes", "description": "노트", "default": None, "is_necessary": False, "is_advanced": False, 'option_kind': 0 },
+        { "name": "notes_url", "description": "", "default": None, "is_necessary": False, "is_advanced": False, 'option_kind': 0 },
+        { "name": "action_url", "description": "", "default": None, "is_necessary": False, "is_advanced": False, 'option_kind': 0 },
+    ]
+    # Necessary Directive List
+    necessary_directives_list = [
+      'hostgroup_name',
+      'alias',
+    ]
+    def __init__(self):
+        self.config = {}
+        self.backup = ''
 
+    def __str__(self):
+        pass
+
+    def read(self, filename):
+        read_config = dict()
+        try:
+            f = open(filename, 'r')
+            while True:
+                line = f.readline()
+                if not line: break
+                if re.match('\s*#.*', line) is not None: continue # comment
+                r = re.match('\s*([a-zA-Z_]*)\s+(.*)', line)
+                if r is None: continue
+                key = r.group(1)
+                value = r.group(2)
+                read_config[key] = value
+            f.close()
+        except FileNotFoundError:
+            pass
+        # 읽어온다
+        for directive in NagiosHostgroupConfig.directives_list:
+            key = directive['name']
+            if key in read_config.keys():
+                self.config[key] = read_config[key]
+            else:
+                self.config[key] = directive['default']
+        # 키 리스트를 돌면서 넣는데
+        # 그 키가 읽어온 거에 있으면
+          # 그걸 넣고
+        # 아니면
+          # 디폴트를 넣는다
+
+    def write(self, filename):
+        f = open(filename, 'w')
+        # 주어진 포맷에 맞게 저장
+        f.write(
+'''
+# 이 설정 파일은 Nagifront로부터 생성된 설정 파일입니다
+# 수정하지 마세요
+
+'''
+        )
+        f.write('define hostgroup {\n')
+        for k, v in self.config.items():
+            if v is not None:
+        # 근데 None 이면 안 됨
+                f.write('    ' + k + ' ' + v + '\n')
+            else:
+                f.write('    ' + '# ' + k + '\n')
+        f.write('}')
+        f.close()
+
+    def edit(self, key, value):
+        # 해당 키에서 value를 고친다
+        if value == '':
+            value = None
+        self.config[key] = value
+
+    def valid(self):
+        # 필수가 있는지 확인
+        return super().valid()
+
+    def gen_filename(self):
+        return self.config['hostgroup_name'] + '.cfg'
+
+'''
+class Nagios__Config(NagiosConfig):
+    directives_list = [
+    ]
+    # Necessary Directive List
+    necessary_directives_list = [
+    ]
+    def __init__(self):
+        self.config = {}
+        self.backup = ''
+
+    def __str__(self):
+        pass
+
+    def read(self, filename):
+        read_config = dict()
+        try:
+            f = open(filename, 'r')
+            while True:
+                line = f.readline()
+                if not line: break
+                if re.match('\s*#.*', line) is not None: continue # comment
+                r = re.match('\s*([a-zA-Z_]*)\s+(.*)', line)
+                if r is None: continue
+                key = r.group(1)
+                value = r.group(2)
+                read_config[key] = value
+            f.close()
+        except FileNotFoundError:
+            pass
+        # 읽어온다
+        for directive in NagiosHostConfig.directives_list:
+            key = directive['name']
+            if key in read_config.keys():
+                self.config[key] = read_config[key]
+            else:
+                self.config[key] = directive['default']
+        # 키 리스트를 돌면서 넣는데
+        # 그 키가 읽어온 거에 있으면
+          # 그걸 넣고
+        # 아니면
+          # 디폴트를 넣는다
+
+    def write(self, filename):
+        f = open(filename, 'w')
+        # 주어진 포맷에 맞게 저장
+        f.write(
+'''
+# 이 설정 파일은 Nagifront로부터 생성된 설정 파일입니다
+# 수정하지 마세요
+
+'''
+        )
+        f.write('define __ {\n')
+        for k, v in self.config.items():
+            if v is not None:
+        # 근데 None 이면 안 됨
+                f.write('    ' + k + ' ' + v + '\n')
+            else:
+                f.write('    ' + '# ' + k + '\n')
+        f.write('}')
+        f.close()
+
+    def edit(self, key, value):
+        # 해당 키에서 value를 고친다
+        if value == '':
+            value = None
+        self.config[key] = value
+
+    def valid(self):
+        # 필수가 있는지 확인
+        return super().valid()
+
+    def gen_filename(self):
+        return self.config['host_name'] + '.cfg'
+    # 
+'''
