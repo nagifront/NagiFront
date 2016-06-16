@@ -24,6 +24,7 @@
   background-color: #d1dac7;
   color: #616b52;
   border-left: 4px solid #64896a;
+  cursor: pointer;
 }
 #host-list-widget .group-button:focus{
   outline: none;

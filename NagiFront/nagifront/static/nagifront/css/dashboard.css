@@ -88,42 +88,41 @@
   flex: 1;
   margin: 0px 5px;
 }
-.widget-padding {
-  margin: 10px 5%;
-  min-height: 150px;
-  box-sizing: border-box;
-  padding: 40px;
-  background-color: #d1dac7;
-  color:  #d1dac7;
+.mode.true{
+  border: 2px solid #87937b;
+  padding-top: 65px;
+  text-align: center;
+  color: #4c5840;
+  width: 100%;
+  height: 100px;
 }
-
 .modify .widget-row {
   box-sizing: border-box;
   padding: 20px;
-  border: 2px dotted #b7c1a8;
+  background-color: #d1dac7;
+  border: 2px dotted #aeb9a4;
 }
 .modify .widgets-wrapper {
   box-sizing: border-box;
-  height: 250px;
+  height: 200px;
   padding: 5px;
-  border: 2px solid #b7c1a8;
+  background-color: white;
+  border: 2px solid #87937b;
 }
 .modify .widgets-wrapper .delete-button {
   position: absolute;
-  top: 50px;
-  left: 20px;
-  width: 90%;
-  height: 90px;
+  border: 2px solid #87937b;
   text-align: center;
-  padding: 60px 0px 0px 0px;
-  font-size: 0.95em;
+  padding: 0px 5px;
   font-weight: bold;
-  color: #4e6141;
+  color: #87937b;
   cursor: pointer;
-  z-index: 1;
 }
 .modify .widgets-wrapper h3 {
+  text-align: center;
+  padding-top: 75px;
   margin-left: 20px;
+  color: #4c5840;
 }
 
 #widgets-list-wrapper {
@@ -168,8 +167,9 @@
   display: block;
   list-style: none;
   padding: 7px 15px;
-  background-color: #e2e5de;
+  background-color: white;
   border: 1px solid #9fae91;
+  cursor: pointer;
   font-size: 0.8em;
 }
 #widgets-list-wrapper footer {

@@ -12,8 +12,7 @@ angular.module('nagifront')
             +'<div class="output" ng-if="(schedule.host_name+schedule.service_name).length>30"><span>[{{schedule.host_name}}]: {{schedule.service_name}}</span></div>'
           +'</div>'
         +'</scrollable>'
-      +'</div>'
-        + '<div class="widget-padding" ng-if="is_modify_setting"></div>',
+      +'</div>',
       link: function(scope, element, attrs) {
         getData = function() {
           if(attrs.hasOwnProperty('hostGroupId')) $http.get(djangoUrl.reverse('host-groups-check-schedules') + '&host_group_id=' + attrs.hostGroupId).then(function(response) {

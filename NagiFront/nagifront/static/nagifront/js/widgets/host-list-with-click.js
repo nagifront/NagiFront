@@ -3,7 +3,7 @@ angular.module('nagifront')
     return {
       restrict: 'EA',
       scope: true,
-      template: '<button class="host-name" ng-click="move(id)">▶ {{alias}}</button>'
+      template: '<button class="host-name" ng-click="move(id)"><span>▶ {{alias}}</span></button>'
         +'<span class="state Ok"><span>{{Ok}}</span> Ok</span>'
         +'<span class="state Warning"><span>{{Warning}}</span> Warning</span>'
         +'<span class="state Critical"><span>{{Critical}}</span> Critical</span>',

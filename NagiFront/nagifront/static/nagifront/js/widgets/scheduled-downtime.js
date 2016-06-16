@@ -22,8 +22,7 @@ angular.module('nagifront')
             +'</tr>'
           +'</table>'
         +'</scrollable>'
-      +'</div>'
-        + '<div class="widget-padding" ng-if="is_modify_setting"></div>',
+      +'</div>',
       link: function(scope, element, attrs) {
         getData = function() {
           $http.get(djangoUrl.reverse('configuration-scheduled-downtime')).then(function(response) {

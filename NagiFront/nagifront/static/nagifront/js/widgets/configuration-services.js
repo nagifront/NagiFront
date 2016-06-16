@@ -3,7 +3,7 @@ angular.module('nagifront')
     return {
       restrict: 'EA',
       scope: true,
-      template: '<h3>서비스 설정</h3>'
+      template: '<h3>서비스 설정: {{option}}</h3>'
                 +'<table class="charts">'
                 +'<tr class="category">'
                 +'<th>host</th>'

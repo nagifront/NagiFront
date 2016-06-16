@@ -38,8 +38,7 @@ angular.module('nagifront')
           +'<div class="hosts" ng-repeat="host in hosts" host-service-state host_id="{{ host }}">'
           +'</div>'
         +'</scrollable>'
-        +'</div>'
-        + '<div class="widget-padding" ng-if="is_modify_setting"></div>',
+        +'</div>',
       link: function(scope, element, attrs) {
         scope.host_group_id = attrs.hostGroupId * 1;
         $http.get(djangoUrl.reverse('hosts-groups')).then(function(response) {

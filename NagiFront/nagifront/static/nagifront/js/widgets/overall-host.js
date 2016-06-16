@@ -3,8 +3,9 @@ angular.module('nagifront')
     return {
       restrict: 'EA',
       scope: true,
-      template: '<h3>호스트 상태</h3><div class="charts" ng-if="!is_modify_setting"></div>'
-        + '<div class="widget-padding" ng-if="is_modify_setting"></div>',
+      template: '<div class="mode {{is_modify_setting}}">'
+        + '<h3>호스트 상태</h3><div class="charts" ng-if="!is_modify_setting"></div>'
+        + '</div>',
       link: function(scope, element, attrs){
         getData = function(){
           $http.get(djangoUrl.reverse('hosts-overall')).then(function(response){
@@ -55,7 +56,7 @@ angular.module('nagifront')
           var color = {
             base: '#C4C4C4',
             up_base: '#919191',
-            up: '#5BB6FF',
+            up: '#8dd775',
             critical: '#FD6860',
             warning: '#FEEA5B',
           };

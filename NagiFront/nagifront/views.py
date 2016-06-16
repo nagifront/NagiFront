@@ -67,7 +67,11 @@ def logout(request):
     return redirect('login')
 
 def system(request):
-    return render(request, 'nagifront/system.html', {
+    host_id = request.GET.get('id')
+    if host_id is not None:
+        return render(request, 'nagifront/system.html', {'id' : host_id})
+    else:
+        return render(request, 'nagifront/system.html', {
     })
 
 @login_required
