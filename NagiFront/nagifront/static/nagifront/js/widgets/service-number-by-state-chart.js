@@ -12,8 +12,7 @@ angular.module('nagifront')
             +'<span class="state Critical"><span>{{ group.Critical }}</span>   Critical</span>'
           +'</div>'
         +'</scrollable>'
-      +'</div>'
-        + '<div class="widget-padding" ng-if="is_modify_setting"></div>',
+      +'</div>',
       link: function(scope, element, attrs) {
         getData = function() {
           $http.get(djangoUrl.reverse('host-groups-service-number-by-state')).then(function(response) {

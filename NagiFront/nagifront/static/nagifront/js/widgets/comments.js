@@ -12,8 +12,7 @@ angular.module('nagifront')
             +'<div class="output" ng-if="comment.contents.length > 256"><span>{{comment.contents}}</span></div>'
           +'</div>'
         +'</scrollable>'
-      +'</div>'
-        + '<div class="widget-padding" ng-if="is_modify_setting"></div>',
+      +'</div>',
       link: function(scope, element, attrs) {
         getData = function() {
           if(attrs.hasOwnProperty('hostId')) {

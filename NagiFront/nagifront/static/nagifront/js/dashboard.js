@@ -69,7 +69,7 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
         {
           name: 'trouble-host',
           attr: {},
-        },
+        }, 
       ], // row
 /*      [
         {
@@ -160,7 +160,7 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
         + 'data-jqyoui-options="{accept: \'.new-widget\'}">';
       angular.forEach(widget_row, function(widget, j){
         var widget_element = '<div class="widgets-wrapper">';
-        widget_element += '<span ng-show="is_modify_setting" class="delete-button" ng-click="erase('+ i +', '+ j +')">위젯 삭제</span>';
+        widget_element += '<span ng-show="is_modify_setting" class="delete-button" ng-click="erase('+ i +', '+ j +')">X</span>';
         widget_element += '<div class="widgets" ';
         widget_element += widget.name;
         angular.forEach(widget.attr, function(value, key){

@@ -1,4 +1,4 @@
-app.controller('system', function($scope, $http, djangoUrl){
+app.controller('system', function($scope, $location, $http, djangoUrl){
   $scope.categories = ['Configuration'];
   $scope.divisions = [''];
   $scope.type = 'none';
@@ -30,6 +30,34 @@ app.controller('system', function($scope, $http, djangoUrl){
    $scope.type = $scope.division;
    $scope.option = $scope.section;
   }
+  var parseUrl = function(url) {
+    var value = '';
+    for(var i = 0; i < url.length; i++) {
+      if(url[i] === '=') {
+        for(var j = i+1;  j < url.length; j++) {
+            value = value + url[j];
+        }
+      }
+    }
+    return value;
+  }
+  $scope.init = function() {
+    $http.get(djangoUrl.reverse('hosts-ids')).then(function success(response) {
+      var ids = response.data.ids;
+      var name = ''; 
+      var id = parseUrl($location.absUrl()) * 1;
+      for(var i=0; i < ids.length; i++) {
+        if(ids[i].host_object_id === id) {
+          $scope.dategory = 'Configuration';
+          $scope.division = 'Hosts';
+          $scope.section = ids[i].name;
+          $scope.show();
+          break;
+        }
+      }
+    });
+  }
+  $scope.init();
   $scope.update = function(value) {
     if(value === 'Configuration') {
       $scope.divisions = ['Hosts', 'Host groups', 'Services', 'Contacts', 'Contact groups', 'Time periods', 'Commands'];

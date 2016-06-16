@@ -2,9 +2,8 @@ angular.module('nagifront')
   .directive('hostStatusInformation',['d3','$http','$interval','djangoUrl',function(d3, $http, $interval, djangoUrl) {
   return {
     restrict: 'EA',
-    scope: {
-    },
-    template: '<h3>호스트 상세 정보</h3><div class="charts">'
+    scope: true,
+    template: '<h3>호스트 상세 정보<button class="tosystem" ng-click="tosystem()">시스템 설정 보기</button></h3><div class="charts">'
           +'<div class = "info">'
           +'<div><span class="category">Host </span><span class="name">{{host.alias}}</span></div>'
           +'<div><span class="category">Host Status </span><span class="state {{state[host.current_state]}}">{{state[host.current_state]}}</span> (for {{host.duration}})</div>'
