@@ -4,6 +4,7 @@ app.controller('system', function($scope, $location, $http, djangoUrl){
   $scope.type = 'none';
   $scope.sections = [''];
   $scope.ready = false;
+  $scope.simple = {};
   $scope.isHosts = function() {
     return $scope.type === 'Hosts';
   }
@@ -12,18 +13,6 @@ app.controller('system', function($scope, $location, $http, djangoUrl){
   }
   $scope.isServices = function() {
     return $scope.type === 'Services';
-  }
-  $scope.isContacts = function() {
-    return $scope.type === 'Contacts';
-  }
-  $scope.isContactgroups = function() {
-    return $scope.type === 'Contact groups';
-  }
-  $scope.isTimeperiods = function() {
-    return $scope.type === 'Time periods';
-  }
-  $scope.isCommands = function() {
-    return $scope.type === 'Commands';
   }
   $scope.show = function() {
    $scope.ready = true;
@@ -58,9 +47,17 @@ app.controller('system', function($scope, $location, $http, djangoUrl){
     });
   }
   $scope.init();
+  $scope.isSimple = function(name) {
+    if($scope.simple[name] === undefined) $scope.simple[name]=true;
+    return $scope.simple[name];
+  }
+  $scope.toggleSimple = function(name) {
+    $scope.simple[name] = !$scope.simple[name];
+    console.log($scope.simple[name]);
+  }
   $scope.update = function(value) {
     if(value === 'Configuration') {
-      $scope.divisions = ['Hosts', 'Host groups', 'Services', 'Contacts', 'Contact groups', 'Time periods', 'Commands'];
+      $scope.divisions = ['Hosts', 'Host groups', 'Services'];
       $scope.category = value;
     }
     else if(value === 'Hosts') {

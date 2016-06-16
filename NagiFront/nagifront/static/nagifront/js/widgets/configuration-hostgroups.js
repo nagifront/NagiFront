@@ -3,8 +3,9 @@ angular.module('nagifront')
     return {
       restrict: 'EA',
       scope: true,
-      template: '<h3>호스트 그룹 설정: {{ option }}</h3>'
-                +'<table class="charts">'
+      template: '<div class="block" ng-repeat="group in lists">'
+                +'<h3>호스트 그룹 설정: {{ group.description }}</h3>'
+                +'<table class="simple-charts">'
                 +'<tr class="category">'
                 +'<th>group name</th>'
                 +'<th>description</th>'
@@ -17,7 +18,8 @@ angular.module('nagifront')
                 +'<td>{{group.host_members}}</td>'
                 +'<td>{{group.notes}}</td>'
                 +'</tr>'
-                +'</table>',
+                +'</table>'
+                +'</div>',
       link: function(scope, element, attrs) {
         scope.$watch('option', function(){
           $http.get(djangoUrl.reverse('hosts-groups-configurations')).then(function(response) {
