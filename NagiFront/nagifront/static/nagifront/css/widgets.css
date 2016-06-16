@@ -508,6 +508,7 @@ div[map] .tooltip {
   padding: 10px;
   background-color: #e6ece0;
   border: 1px solid #c7d3bd;
+  z-index: 1;
 }
 div[map] .tooltip h4 {
   margin: 0px;
