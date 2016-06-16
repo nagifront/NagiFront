@@ -960,6 +960,23 @@ def configuration_commands(request):
     else:
         return JsonResponse(dict())
 
+@login_required
+def service_id_trend(request, service_id):
+    if request.method == 'GET':
+        try:
+            service = NagiosServices.objects.get(service_object_id = service_id)
+            history = list(NagiosServicechecks.objects.filter(service_object_id=service_id).values('state', 'end_time').order_by('-end_time'))
+
+            for i in range(len(history) - 2, -1, -1):
+                if history[i]['state'] == history[i+1]['state']:
+                    del history[i];
+
+            return JsonResponse({'trends':history, 'service':service}, encoder=CustomJSONEncoder)
+        except ObjectDoesNotExist:
+            return JsonResponse(dict())
+    else:
+        return JsonResponse(dict())
+
 """ GET API Template
 @login_required
 def some_api_name(request):
