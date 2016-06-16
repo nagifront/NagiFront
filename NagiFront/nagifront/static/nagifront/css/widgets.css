@@ -29,6 +29,7 @@
   font-size: 0.9em;
   color: #6d7d3a;
   text-decoration: underline;
+  outline: none;
 }
 /* start of host-trend-group css */
 div[host-trend-group] > .charts {
