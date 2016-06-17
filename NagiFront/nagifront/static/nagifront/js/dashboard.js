@@ -106,17 +106,25 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
   }
   draw_widgets($scope.user_setting.widget_setting);
   $scope.redraw = function(){
-    draw_widgets($scope.user_setting.widget_setting);
-    $scope.load_widget(true);
+    widget_setting_reformed = [[]];
+    angular.forEach($scope.user_setting.widget_setting, function(row){
+      if (row.length !== 0){
+        if (row.length > 2){
+          row = row.slice(0, 2);
+          $scope.widget_limit_modal_enable();
+        }
+        widget_setting_reformed.push(row);
+        widget_setting_reformed.push([]);
+      }
+    })
+    $scope.user_setting.widget_setting = widget_setting_reformed;
     draw_widgets($scope.user_setting.widget_setting);
   }
   $scope.erase = function(i, j){
     if ($scope.is_modify_setting){
       if (confirm('정말로 삭제할까요?')){
         $scope.user_setting.widget_setting[i].splice(j, 1);
-        draw_widgets($scope.user_setting.widget_setting);
-        $scope.load_widget(true);
-        draw_widgets($scope.user_setting.widget_setting);
+        $scope.redraw()
       }
     }
   }
