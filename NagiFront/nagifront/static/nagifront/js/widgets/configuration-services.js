@@ -5,6 +5,7 @@ angular.module('nagifront')
       scope: true,
       template: '<div class="block" ng-repeat="service in lists">'
                 +'<h3>서비스 설정: {{service.host}} - {{ service.display_name }}</h3>'
+                +'<button class="edit" ng-click="toEdit(service.service_object_id)"></button>'
                 +'<table class="simple-charts">'
                 +'<tr class="category">'
                 +'<th>host</th>'

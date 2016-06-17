@@ -5,6 +5,7 @@ angular.module('nagifront')
       scope: true,
       template: '<div class="block" ng-repeat="host in lists">'
                 +'<h3>호스트 설정: {{ host.alias }}</h3>'
+                +'<button class="edit" ng-click="toEdit(host.host_object_id)"></button>'
                 +'<table class="simple-charts">'
                 +'<tr class="category">'
                 +'<th>host name</th><th>address</th><th>parent hosts</th><th>notes</th><th>check period</th>'
