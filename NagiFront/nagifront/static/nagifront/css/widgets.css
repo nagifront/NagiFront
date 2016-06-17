@@ -31,6 +31,18 @@
   text-decoration: underline;
   outline: none;
 }
+.edit {
+  position: absolute;
+  top: 160px;
+  left: 87%;
+  cursor: pointer;
+  width: 27px;
+  height: 27px;
+  border: none;
+  background-size: 27px;
+  background-color: white;
+  background-image: url('../img/edit.png');
+}
 /* start of host-trend-group css */
 div[host-trend-group] > .charts {
   height: 500px;

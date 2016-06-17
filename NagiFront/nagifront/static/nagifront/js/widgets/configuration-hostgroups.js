@@ -5,6 +5,7 @@ angular.module('nagifront')
       scope: true,
       template: '<div class="block" ng-repeat="group in lists">'
                 +'<h3>호스트 그룹 설정: {{ group.description }}</h3>'
+                +'<button class="edit" ng-click="toEdit(group.hostgroup_object_id)"></button>'
                 +'<table class="simple-charts">'
                 +'<tr class="category">'
                 +'<th>group name</th>'

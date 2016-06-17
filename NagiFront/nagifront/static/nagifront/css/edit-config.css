@@ -7,11 +7,18 @@ section {
   background-color: #ffffff;
   border: 2px solid #c1ceb0;
 }
-
+h3 {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
 section form div {
   margin: 5px 0px;
 }
-
+.detail {
+  margin: 2px 0px 25px 5px;
+  color: #63886a;
+  font-size: 0.9em;
+}
 section form div.necessary {
   color: red;
 }
@@ -34,5 +41,22 @@ section form select {
 }
 section form input[type=button] {
   margin: initial;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  color: #63886a;
+  text-decoration: underline;
+  font-size: 0.9em;
+  font-weight: bold;
+  margin: 15px 0px 5px 0px;
   width: auto;
+}
+button {
+  color: #fff;
+  padding: 5px 15px;
+  font-size: 0.95em;
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid #45694b;
+  background-color: #63886a;
 }
