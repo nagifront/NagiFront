@@ -9,7 +9,18 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
   $scope.save = function(){
     $scope.load_widget(false);
     draw_widgets($scope.user_setting.widget_setting);
-    $scope.is_modify_setting = false;
+    $http.post(djangoUrl.reverse('update-user'), {
+      data: $scope.user_setting,
+    }).then(function(response){
+      if (response.data.result){
+        $scope.is_modify_setting = false;
+        $scope.show_modal = true;
+        $scope.message = '저장되었습니다';
+      } else {
+        $scope.show_modal = true;
+        $scope.message = '저장에 실패했습니다. 다시 시도해주세요';
+      }
+    })
   }
   $scope.cancel = function(){
     $scope.is_modify_setting = false;
@@ -59,96 +70,13 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
   $http.get(djangoUrl.reverse('hosts-groups-ids')).then(function(response) {
     $scope.hostgroup_ids = response.data.ids;
   });
-  $scope.user_setting = {
+  $scope.user_setting = user_setting;
+  /*{
     widget_setting: [
       [
-        {
-          name: 'map',
-          attr: {},
-        },
-        {
-          name: 'trouble-host',
-          attr: {},
-        }, 
       ], // row
-/*      [
-        {
-          name: 'host-state-change',
-          attr: {},
-        },
-        {
-          name: 'host-status',
-          attr: { host_group_id: 189 },
-        },
-      ],
-      [
-        {
-          name: 'host-status',
-          attr: { host_group_id: 185 },
-        },
-      ],
-      /*
-      [
-        {
-          name: 'host-trend-group',
-          attr: { host_group_id: 189 },
-        },
-        {
-          name: 'host-trend-group',
-          attr: { host_group_id: 185 },
-        },
-      ],
-      [
-        {
-          name: 'service-number-by-state',
-          attr: {},
-        },
-        {
-          name: 'service-number-by-state-chart',
-          attr: {},
-        },
-      ],
-      [
-        {
-          name: 'scheduled-downtime',
-          attr: {},
-        },
-      ],
-      [
-        {
-          name: 'check-schedules',
-          attr: {},
-        },
-      ],
-      [
-        {
-          name: 'comments',
-          attr: {},
-        },
-      ],
-      [
-        {
-          name: 'host-list',
-          attr: { host_group_id: 189, },
-        },
-        {
-          name: 'host-list',
-          attr: { host_group_id: 185, },
-        },
-      ],
-      [
-        {
-          name: 'trouble-trend',
-          attr: { host_group_id: 185, 'time-scale': 'week' },
-        },
-        {
-          name: 'trouble-trend',
-          attr: { host_group_id: 189, 'time-scale': 'day' },
-        },
-      ],
-      */
     ],
-  };
+  };*/
 
   function draw_widgets(widget_setting){
     var dashboard = angular.element(document.querySelector( '#dashboard' ))
@@ -212,7 +140,6 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
     { name: 'service-number-by-state', attr: {} },
     { name: 'trouble-trend', attr: {} },
     { name: 'host-trend-group', attr: {} },
-    { name: 'overall-host', attr: {} },
     { name: 'service-number-by-state-chart', attr: {} },
     { name: 'trouble-host', attr: {} },
   ];

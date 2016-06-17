@@ -11,6 +11,8 @@ urlpatterns = [
         url(r'^system$', views.system, name='system'),
         url(r'^hosts$', views.hosts, name="hosts"),
 
+        url(r'^users/update', views.update_user_setting, name='update-user'),
+
         url(r'^hosts/overall$', views.hosts_overall, name='hosts-overall'),
         url(r'^hosts/services$', views.hosts_services, name='hosts-services'),
         url(r'^hosts/services/configurations$', views.hosts_services_configurations, name='hosts-services-configurations'),

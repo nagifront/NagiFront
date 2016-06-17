@@ -23,7 +23,7 @@
     </div>
     <div class="modal-backboard" ng-show="show_modal" ng-cloak>
       <div class="modal">
-        <h1>Fatal!</h1>
+        <h1>Notice</h1>
         <p ng-bind="message"></p>
         <button ng-click="close_modal()">OK</button>
       </div>
@@ -52,6 +52,10 @@
 {% endblock %}
 
 {% block scripts %}
+<script>
+var user_setting = JSON.parse("{{ user_setting|safe }}".replace(/\'/g, '"'));
+user_setting = user_setting['data']
+</script>
 <script src="{% static 'nagifront/js/dashboard.js' %}"></script>
 <script src="{% static 'nagifront/js/search.js' %}"></script>
 {% endblock %}
