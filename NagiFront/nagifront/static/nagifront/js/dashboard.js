@@ -142,6 +142,7 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
     { name: 'host-trend-group', attr: {} },
     { name: 'service-number-by-state-chart', attr: {} },
     { name: 'trouble-host', attr: {} },
+    { name: 'service-trend-host', attr: {} },
   ];
   $scope.widget_name_map = {
     'check-schedules': '체크 스케쥴',
@@ -157,6 +158,7 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
     'overall-host': '호스트 상태',
     'service-number-by-state-chart': '그룹별 서비스 현황 (그래프)',
     'trouble-host': '문제 발생 호스트',
+    'service-trend-host': '서비스 트렌드',
   };
 
   $scope.show_modal = false;
