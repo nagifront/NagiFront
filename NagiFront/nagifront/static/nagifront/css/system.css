@@ -42,6 +42,7 @@
 }
 
 .block {
+  position: relative;
   margin: 34px;
   width: 85%;
   margin-top: 46px;
