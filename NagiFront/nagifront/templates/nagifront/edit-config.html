@@ -50,6 +50,15 @@
         {% endfor %}
         {% endwith %}
         </select>
+        {% elif directive.option_kind == 4 %}
+        {# 서비스그룹 #}
+        <select name="{{ directive.name}}" multiple>
+        {% with value=config_module.config|key:directive.name|split %}
+        {% for servicegroup in servicegroups %}
+          <option value="{{ servicegroup }}"{% if servicegroup in value %} selected{% endif %}>{{ servicegroup }}</option>
+        {% endfor %}
+        {% endwith %}
+        </select>
         {% elif directive.option_kind == 9 %}
         {# 타임피리어드 #}
         <select name="{{ directive.name}}">

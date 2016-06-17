@@ -101,6 +101,8 @@ def add_config(request, objecttype):
         config_module = NagiosServiceConfig()
     elif objecttype == 'hostgroup':
         config_module = NagiosHostgroupConfig()
+    elif objecttype == 'servicegroup':
+        config_module = NagiosServicegroupConfig()
     else:
         return Http404("No object type")
     config_module.read('you can\'t read')
@@ -134,6 +136,7 @@ def add_config(request, objecttype):
     hosts = [''] + list(NagiosObjects.objects.filter(objecttype_id=1, is_active=1).values_list('name1', flat=True))
     hostgroups = [''] + list(NagiosObjects.objects.filter(objecttype_id=3, is_active=1).values_list('name1', flat=True))
     services = NagiosObjects.objects.filter(objecttype_id=2, is_active=1).values_list('name2', 'name1')
+    servicegroups = [''] + list(NagiosObjects.objects.filter(objecttype_id=4, is_active=1).values_list('name1', flat=True))
     timeperiods = NagiosObjects.objects.filter(objecttype_id=9, is_active=1).values_list('name1', flat=True)
     contactgroups = [''] + list(NagiosObjects.objects.filter(objecttype_id=10, is_active=1).values_list('name1', flat=True))
     contacts = [''] + list(NagiosObjects.objects.filter(objecttype_id=11, is_active=1).values_list('name1', flat=True))
@@ -141,6 +144,7 @@ def add_config(request, objecttype):
         'hosts': hosts,
         'hostgroups': hostgroups,
         'services': services,
+        'servicegroups': servicegroups,
         'timeperiods': timeperiods,
         'contactgroups': contactgroups,
         'contacts': contacts,
@@ -168,6 +172,8 @@ def edit_config(request, object_id):
         config_module = NagiosServiceConfig()
     elif nagios_object.objecttype_id == 3:
         config_module = NagiosHostgroupConfig()
+    elif nagios_object.objecttype_id == 4:
+        config_module = NagiosServicegroupConfig()
     config_module.read(filename)
     # read
     if request.method == 'POST':
@@ -200,6 +206,7 @@ def edit_config(request, object_id):
     hosts = [''] + list(NagiosObjects.objects.filter(objecttype_id=1, is_active=1).values_list('name1', flat=True))
     hostgroups = [''] + list(NagiosObjects.objects.filter(objecttype_id=3, is_active=1).values_list('name1', flat=True))
     services = NagiosObjects.objects.filter(objecttype_id=2, is_active=1).values_list('name2', 'name1')
+    servicegroups = [''] + list(NagiosObjects.objects.filter(objecttype_id=4, is_active=1).values_list('name1', flat=True))
     timeperiods = NagiosObjects.objects.filter(objecttype_id=9, is_active=1).values_list('name1', flat=True)
     contactgroups = [''] + list(NagiosObjects.objects.filter(objecttype_id=10, is_active=1).values_list('name1', flat=True))
     contacts = [''] + list(NagiosObjects.objects.filter(objecttype_id=11, is_active=1).values_list('name1', flat=True))
@@ -207,6 +214,7 @@ def edit_config(request, object_id):
         'hosts': hosts,
         'hostgroups': hostgroups,
         'services': services,
+        'servicegroups': servicegroups,
         'timeperiods': timeperiods,
         'contactgroups': contactgroups,
         'contacts': contacts,
