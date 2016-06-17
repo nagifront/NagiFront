@@ -193,7 +193,6 @@ angular.module('nagifront')
           if (is_first){
             var map_wrapper = jQuery(element[0]).find('.map-wrapper');
             // FIXME use angular
-            console.log(element[0])
             map_wrapper.scrollTop = width / 2 - (jQuery(element[0]).find('.map-wrapper').offsetWidth / 2)
             map_wrapper.scrollLeft = height / 2 - (jQuery(element[0]).find('.map-wrapper').offsetHeight /2 )
             is_first = false;
