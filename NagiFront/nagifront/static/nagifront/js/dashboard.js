@@ -9,7 +9,9 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
   $scope.save = function(){
     $scope.load_widget(false);
     draw_widgets($scope.user_setting.widget_setting);
-    $http.post(djangoUrl.reverse('update-user', { $scope.user_setting }).done(function(response){
+    $http.post(djangoUrl.reverse('update-user'), {
+      data: $scope.user_setting,
+    }).then(function(response){
       if (response.data.result){
         $scope.is_modify_setting = false;
         $scope.show_modal = true;
@@ -138,7 +140,6 @@ app.controller('dashboard', function($scope, $http, $compile, djangoUrl){
     { name: 'service-number-by-state', attr: {} },
     { name: 'trouble-trend', attr: {} },
     { name: 'host-trend-group', attr: {} },
-    { name: 'overall-host', attr: {} },
     { name: 'service-number-by-state-chart', attr: {} },
     { name: 'trouble-host', attr: {} },
   ];

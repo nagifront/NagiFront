@@ -26,8 +26,9 @@ from nagifront.config_model.NagiosConfig import *
 
 @login_required
 def index(request):
+    user_setting = request.user.userprofile.get_dashboard_setting()
     return render(request, 'nagifront/dashboard.html', {
-        'user_setting': request.user.userprofile.get_dashboard_setting(),
+        'user_setting': user_setting,
     })
 
 @login_required
