@@ -180,7 +180,7 @@ angular.module('nagifront')
         + '</div>',
       link: function(scope, element, attrs){
         scope.host_id = attrs.hostId * 1;
-        $http.get(djangoUrl.reverse('hosts-services') + '&host_id=' + attrs.hostId).then(function(response){
+        $http.get(djangoUrl.reverse('hosts-services') + '&host_id' + attrs.hostId).then(function(response){
           scope.data = response.data.services;
           scope.members = [];
           for(var i = 0; i < scope.data.length; i++) {

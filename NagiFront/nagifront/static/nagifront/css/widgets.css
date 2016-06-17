@@ -860,3 +860,21 @@ div[configuration-services] tr{
   padding: 15px;
 }
 /* end of configuration-services css */
+
+/* start of service-trend-host css */
+div[service-trend-host] > .charts {
+  height: 500px;
+}
+div[service-trend-host] .axis path {
+  stroke: black;
+  stroke-width: 1;
+  fill: none;
+}
+div[service-trend] {
+  margin: 0px 10px;
+  display: inline-block;
+}
+div[service-trend] .charts {
+  border: 2px solid #e7efde;
+}
+/* end of service-trend-host css */
