@@ -56,10 +56,7 @@ app.controller('system', function($scope, $window, $location, $http, djangoUrl){
     console.log($scope.simple[name]);
   }
   $scope.toEdit = function(id) {
-        $http.get(djangoUrl.reverse('edit-config'),{object_id: id})
-        .then(function success(response) {
-          $window.location.href = 'configuration/edit/'+id;
-        });
+    $window.location.href = djangoUrl.reverse('edit-config', {object_id: id})
   }
   $scope.update = function(value) {
     if(value === 'Configuration') {
