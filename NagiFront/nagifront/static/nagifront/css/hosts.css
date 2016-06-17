@@ -1,0 +1,44 @@
+#host-list-widget {
+  width: 100%;
+  box-sizing: border-box;
+  height: 180px;
+  background-color: #d1dac7;
+  border: 2px solid #c1ceb0; 
+}
+#host-list-widget .name {
+  font-weight: bolder;
+  box-sizing: border-box;
+  padding: 7px 30px;
+  color: #48513e;
+  height: 40px;
+  border-bottom: 2px solid #a5b58e;
+}
+#host-list-widget .group {
+  display: inline-block;
+  margin: 15px 95px 2px 40px;
+}
+#host-list-widget .group-button {
+  font-weight: bold;
+  margin-left: 5px;
+  border: none;
+  background-color: #d1dac7;
+  color: #616b52;
+  border-left: 4px solid #64896a;
+  cursor: pointer;
+}
+#host-list-widget .group-button:focus{
+  outline: none;
+  border-left: 4px solid #474e3c;
+}
+#host-list-widget .group-button:hover{
+  color: white;
+}
+#dashboard {
+  margin: 34px;
+  width: 85%;
+  margin-top: 46px;
+  padding: 36px;
+
+  background-color: #ffffff;
+  border: 2px solid #c1ceb0;
+}

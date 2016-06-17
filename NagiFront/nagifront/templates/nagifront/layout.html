@@ -1,0 +1,55 @@
+{% extends 'nagifront/basic-layout.html' %}
+
+{% block title %}
+  <title>Nagifront</title>
+{% endblock %}
+
+{% load staticfiles %}
+{% block head %}
+  <link rel="stylesheet" text="text/css" href="{% static "nagifront/css/layout.css" %}">
+  <link rel="stylesheet" text="text/css" href="{% static "nagifront/css/modal.css"%}">
+  <link rel="stylesheet" text="text/css" href="{% static "nagifront/css/widgets.css" %}">
+  <link rel="stylesheet" text="text/css" href="{% static "library/nanoscroller.css" %}">
+  {% block stylesheets %}
+  {% endblock %}
+{% endblock %}
+
+{% block body %}
+<body ng-app="nagifront">
+  <header id="header">
+    <h1>NagiFront</h1>
+    <div>
+      <span><a href="/setting"><img src="{% static "nagifront/img/msn-user-profile.jpg" %}" height="30px" alt="Personal Settings"></a></span>
+      <span><a href="/logout"><img src="{% static "nagifront/img/log-out.jpg" %}" height="30px" alt="Logout"></a></span>
+    </div>
+  </header>
+  <aside id="menubar">
+    <nav>
+      <a href="/" class="{% if selected_menu == 'dashboard' %}selected{% endif %}">대쉬보드</a>
+      <a href="/hosts" class="{% if selected_menu == 'showhost' %}selected{% endif %}">호스트보기</a>
+      <a href="/system" class="{% if selected_menu == 'system' %}selected{% endif %}">시스템</a>
+    </nav>
+  </aside>
+  {% block main %}
+  {% endblock %}
+  <footer id="footer">
+    <div id="footer-left"></div>
+    <div id="footer-right"><small>Icons made by <a href="http://www.flaticon.com/authors/elegant-themes" title="Elegant Themes">Elegant Themes</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></small></div>
+  </footer>
+  <script>
+    var host_image_url = '{% static 'nagifront/img/host-image.png' %}';
+  </script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="{% static 'djng/js/django-angular.min.js' %}"></script>
+  <script src="{% static 'library/d3.js' %}"></script>
+  <script src="{% static 'nagifront/js/layout.js' %}"></script>
+  <script src="{% static 'library/jquery.nanoscroller.js' %}"></script>
+  <script src="{% static 'library/scrollable.js' %}"></script>
+  <script src="{% static 'library/angular-dragdrop.min.js' %}"></script>
+  {% include 'nagifront/widgets.html' %}
+  {% block scripts %}
+  {% endblock %}
+</body>
+{% endblock %}

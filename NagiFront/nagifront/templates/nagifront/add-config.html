@@ -1,0 +1,112 @@
+{% extends 'nagifront/layout.html' %}
+
+{% load staticfiles %}
+{% block stylesheets %}
+<link rel="stylesheet" text="text/css" href="{% static "nagifront/css/edit-config.css"%}">
+{% endblock %}
+
+{% load key %}
+{% load split %}
+{% block main %}
+<main ng-controller="edit-config">
+  <section>
+    <h3>{{ objecttype }} 추가</h3>
+    <p>자세한 나기오스 설정은 <a href="https://assets.nagios.com/downloads/nagioscore/docs/nagioscore/3/en/objectdefinitions.html">여기</a>를 참고하세요</p>
+    <p>빨간색은 필수</p>
+    <form ng-class="{ active_advanced: is_active_advanced }" method="POST" action="{% url "add-config" objecttype %}">
+    {% for directive in config_module.directives_list %}
+      <div ng-class="{ advanced: {{ directive.is_advanced|yesno:"true,false,false" }}, necessary: {{ directive.is_necessary|yesno:"true,false,false" }} }"{{ directive.is_advanced|yesno:" ng-cloak,," }}>
+        {% if directive.option_kind != 0 %}
+        <p>{{ directive.description }}</p>
+        {% endif %}
+        <label>{{ directive.name }}</label>
+        {% if directive.option_kind == 1 %}
+        {# 호스트 #}
+        <select name="{{ directive.name}}" multiple>
+        {% with value=config_module.config|key:directive.name|split %}
+        {% for host in hosts %}
+          <option value="{{ host }}"{% if host in value %} selected{% endif %}>{{ host }}</option>
+        {% endfor %}
+        {% endwith %}
+        </select>
+        {% elif directive.option_kind == 2 %}
+        {# 호스트그룹 #}
+        <select name="{{ directive.name}}" multiple>
+        {% with value=config_module.config|key:directive.name|split %}
+        {% for hostgroup in hostgroups %}
+          <option value="{{ hostgroup }}"{% if hostgroup in value %} selected{% endif %}>{{ hostgroup }}</option>
+        {% endfor %}
+        {% endwith %}
+        </select>
+        {% elif directive.option_kind == 3 %}
+        {# 서비스 #}
+        <select name="{{ directive.name}}" multiple>
+        {% with value=config_module.config|key:directive.name|split %}
+        {% for service in services %}
+          <option value="{{ service|key:1 }},{{ service|key:0 }}"{% if service in value %} selected{% endif %}>{{ service }}</option>
+        {% endfor %}
+        {% endwith %}
+        </select>
+        {% elif directive.option_kind == 4 %}
+        {# 서비스그룹 #}
+        <select name="{{ directive.name}}" multiple>
+        {% with value=config_module.config|key:directive.name|split %}
+        {% for servicegroup in servicegroups %}
+          <option value="{{ servicegroup }}"{% if servicegroup in value %} selected{% endif %}>{{ servicegroup }}</option>
+        {% endfor %}
+        {% endwith %}
+        </select>
+        {% elif directive.option_kind == 9 %}
+        {# 타임피리어드 #}
+        <select name="{{ directive.name}}">
+        {% for timeperiod in timeperiods %}
+          <option value="{{ timeperiod }}">{{ timeperiod }}</option>
+        {% endfor %}
+        </select>
+        {% elif directive.option_kind == 10 %}
+        {# 컨택트 #}
+        <select name="{{ directive.name}}" multiple>
+        {% with value=config_module.config|key:directive.name|split %}
+        {% for contact in contacts %}
+          <option value="{{ contact }}"{% if contact in value %} selected{% endif %}>{{ contact }}</option>
+        {% endfor %}
+        {% endwith %}
+        </select>
+        {% elif directive.option_kind == 11 %}
+        {# 컨택트그룹 #}
+        <select name="{{ directive.name}}" multiple>
+        {% with value=config_module.config|key:directive.name|split %}
+        {% for contactgroup in contactgroups %}
+          <option value="{{ contactgroup }}"{% if contactgroup in value %} selected{% endif %}>{{ contactgroup }}</option>
+        {% endfor %}
+        {% endwith %}
+        </select>
+        {% else %}
+        {% with value=config_module.config|key:directive.name %}
+        <input name="{{ directive.name }}" placeholder="{{ directive.description }}" {% if value %}value="{{ value }}"{% endif %}>
+        {% endwith %}
+        {% endif %}
+      </div>
+    {% endfor %}
+      <input type="button" ng-click="active_advanced()" ng-hide="is_active_advanced" value="고급 기능 보이기">
+      <input type="button" ng-click="diactive_advanced()" ng-show="is_active_advanced" ng-cloak value="고급 기능 숨기기">
+      <p>주의) 고급 기능은 나기프론트가 제대로 지원하지 않습니다. 나기오스에 대해서 잘 알고 계신 분만 사용해주시기 바랍니다.</p>
+      <button>저장</button>
+      {% csrf_token %}
+    </form>
+  </section>
+  {% if message %}
+  <div class="modal-backboard" ng-show="show_modal" ng-cloak>
+    <div class="modal">
+      <h1>Notice!</h1>
+      <p>{{ message }}</p>
+      <button ng-click="close_modal()">OK</button>
+    </div>
+  </div>
+  {% endif %}
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'nagifront/js/edit-config.js' %}"></script>
+{% endblock %}

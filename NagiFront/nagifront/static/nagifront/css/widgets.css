@@ -1,0 +1,894 @@
+.widgets h3 {
+  margin: 10px 0px;
+}
+.charts {
+  box-sizing: border-box;
+  padding: 30px 10px 20px 10px;
+  border-top: 1px solid #ccc;
+}
+.simple-charts td {
+  width: 15%;
+}
+.simple-charts {
+  box-sizing: border-box;
+  padding: 30px 10px 20px 10px;
+  border-top: 1px solid #ccc;
+}
+.detailed-charts td {
+  width: 15%;
+}
+.detailed-charts {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 30px 10px 20px 10px;
+}
+.detailed-button {
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9em;
+  color: #6d7d3a;
+  text-decoration: underline;
+  outline: none;
+}
+.edit {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  cursor: pointer;
+  width: 27px;
+  height: 27px;
+  border: none;
+  background-size: 27px;
+  background-color: white;
+  background-image: url('../img/edit.png');
+}
+/* start of host-trend-group css */
+div[host-trend-group] > .charts {
+  height: 500px;
+}
+div[host-trend-group] .axis path {
+  stroke: black;
+  stroke-width: 1;
+  fill: none;
+}
+div[host-trend] {
+  margin: 0px 10px;
+  display: inline-block;
+}
+div[host-trend] .charts {
+  border: 2px solid #e7efde;
+}
+/* end of host-trend-group css */
+
+/* start of service-number-by-state-chart css */
+div[service-number-by-state-chart] .charts {
+  min-width: 550px;
+  height: 400px;
+}
+div[service-number-by-state-chart] .groups {
+  padding: 10px;
+  width: 100%;
+  height: 45px;
+  box-sizing: border-box;
+  border: 2px solid #e6ece0;
+}
+div[service-number-by-state-chart] .groups:nth-child(even){
+  background-color: #e6ece0;
+}
+div[service-number-by-state-chart] .groups .group-name {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 130px;
+  font-weight: bold;
+}
+div[service-number-by-state-chart] .groups .state {
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 10px;
+  width: 90px;
+  height: 25px;
+  vertical-align: top;
+  text-align: center;
+  font-size: 0.95em;
+  color: white;
+}
+div[service-number-by-state-chart] .groups .Ok {
+  background-color: #8dd775;
+  border: 1px #6ca65a solid;
+}
+div[service-number-by-state-chart] .groups .Ok span {
+  font-weight: bold;
+}
+div[service-number-by-state-chart] .groups .Warning {
+  background-color: #e1e26a;
+  border: 1px #cbcf30 solid;
+}
+div[service-number-by-state-chart] .groups .Warning span {
+  font-weight: bold;
+}
+div[service-number-by-state-chart] .groups .Critical {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[service-number-by-state-chart] .groups .Critical span {
+  font-weight: bold;
+}
+/* end of service-number-by-state-chart css */
+
+/* start of troule-trend css*/
+div[trouble-trend] .charts {
+  min-width: 600px;
+}
+/* end of troule-trend css*/
+
+/* start of troule-trend css*/
+div[scheduled-downtime] .charts {
+  min-width: 750px;
+  height: 400px;
+}
+div[scheduled-downtime] .tables {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  font-size: 0.9em;
+  border-spacing: 4px 1px;
+}
+div[scheduled-downtime] .downtimes:nth-child(odd){
+  background-color: #e6ece0;
+}
+div[scheduled-downtime] th {
+  font-weight: bold;
+  border-bottom: 3px #9cab8e solid;
+}
+div[scheduled-downtime] span{
+  font-weight: bold;
+}
+div[scheduled-downtime] tr{
+  text-align: center;
+  padding: 10px;
+}
+/* end of troule-trend css*/
+
+/* start of check-schdules css*/
+div[check-schedules] .charts {
+  min-width: 650px;
+  height: 400px;
+}
+div[check-schedules] .schedule {
+  background-color: #e6ece0;
+  position: relative;
+  border: 1px #c7d3bd solid;
+  padding: 10px;
+  margin: 10px;
+  width: 100%;
+  height: 45px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  font-size : 0.9em;
+}
+div[check-schedules] .nextCheck {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 150px;
+  border-right: 2.5px #a1ae92 solid;
+  padding-right: 15px;
+  font-weight: bold;
+}
+div[check-schedules] .host {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 240px;
+}
+div[check-schedules] .host span{
+  font-weight: bold;
+}
+div[check-schedules] .lastCheck {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+  color: #626d4f;
+  font-size: 0.8em;
+}
+div[check-schedules] .schedule .output {
+  position: absolute;
+  top: -15px;
+  left: 200px;
+  height: calc(15px + 45px);
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 100px;
+  opacity: 0;
+}
+div[check-schedules] .schedule .output span {
+  position: relative;
+  padding: 5px;
+  font-size: 0.75em;
+  white-space: nowrap;
+  background-color: white;
+  border: 1.5px solid #8d9a7b;
+}
+div[check-schedules] .schedule .output:hover {
+  opacity: 1;
+}
+/* end of check-schdules css*/
+
+/* start of comment css*/
+div[comments] .charts {
+  width: 100%;
+  height: 400px;
+}
+div[comments] .comments {
+  box-sizing: border-box;
+  position: relative;
+  background-color: #e6ece0;
+  width: 100%;
+  height: 45px;
+  border: 1px solid #c7d3bd;
+  margin-bottom: 10px;
+}
+div[comments] .host {
+  display: inline-block;
+  font-weight: bold;
+  margin:10px;
+  float: left;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 10%;
+}
+div[comments] .contents {
+  width: 75%;
+  float: left;
+  padding-right: 5px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.9em;
+}
+div[comments] .detail {
+  width: 10%;
+  padding: 5px 5px 5px 20px;
+  vertical-align: middle;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  float: left;
+  color: #626d4f;
+  font-size: 0.75em;
+}
+div[comments] .detail span{
+  font-weight: bold;
+}
+div[comments] .comments .output {
+  position: absolute;
+  top: 40px;
+  width: 70%;
+  left: 13%;
+  box-sizing: border-box;
+  z-index: 1;
+  opacity: 0;
+  padding-left: 10px;
+  border: 1.5px solid #8d9a7b;
+  background-color: white;
+}
+div[comments] .comments .output span {
+  position: relative;
+  padding: 5px;
+  font-size: 0.75em;
+}
+div[comments] .comments .output:hover {
+  opacity: 1;
+}
+/* end of comment css*/
+
+/* start host-state-change widget */
+div[host-state-change] {
+  min-width: 450px;
+  min-height: 300px;
+}
+div[host-state-change] .charts {
+  width: 100%;
+  height: 400px;
+}
+div[host-state-change] .state-change-item {
+  position: relative;
+  width: 100%;
+  height: 45px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: #e6ece0;
+  border: 1px solid #c7d3bd;
+}
+div[host-state-change] .state-change-item:last-child {
+  margin: 0px;
+}
+div[host-state-change] .state-change-item .state {
+  display: inline-block;
+  margin-right: 10px;
+  width: 70px;
+  height: 25px;
+  vertical-align: top;
+  text-align: center;
+  color: white;
+}
+div[host-state-change] .state-change-item .host-name {
+  display: inline-block;
+  overflow: hidden;
+  width: calc(100% - 80px - 130px);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  vertical-align: middle;
+}
+div[host-state-change] .state-change-item time {
+  float: right;
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 0.75em;
+  line-height: 25px;
+  color: #626d4f;
+  vertical-align: middle;
+}
+div[host-state-change] .state-change-item .output {
+  position: absolute;
+  top: -15px;
+  height: calc(15px + 45px);
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 100px;
+  opacity: 0;
+}
+div[host-state-change] .state-change-item .output span {
+  position: relative;
+  padding: 5px;
+  font-size: 0.75em;
+  white-space: nowrap;
+  background-color: white;
+  border: 1.5px solid #8d9a7b;
+}
+div[host-state-change] .state-change-item .output:hover {
+  opacity: 1;
+}
+div[host-state-change] .state-change-item .up {
+  background-color: #8dd775;
+  border: 1px #6ca65a solid;
+}
+div[host-state-change] .state-change-item .down {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[host-state-change] .state-change-item .unreachable {
+  background-color: #f89c59;
+  border: 1px #ce8854 solid;
+  font-size: 0.9em;
+  letter-spacing: -1px;
+}
+div[host-state-change] .state-change-item .indeterminate {
+  background-color: #868686;
+  border: 1px #666666 solid;
+  font-size: 0.8em;
+  letter-spacing: -1px;
+}
+/* end host-state-change widget */
+
+/* start of trouble-host widget */
+div[trouble-host] {
+  min-width: 450px;
+  min-height: 300px;
+}
+div[trouble-host] .charts {
+  width: 100%;
+  height: 500px;
+}
+div[trouble-host] .trouble-item {
+  position: relative;
+  width: 100%;
+  height: 45px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: #e6ece0;
+  border: 1px solid #c7d3bd;
+}
+div[trouble-host] .trouble-item:last-child {
+  margin: 0px;
+}
+div[trouble-host] .trouble-item .state {
+  display: inline-block;
+  margin-right: 10px;
+  width: 40px;
+  height: 25px;
+  vertical-align: top;
+  text-align: center;
+  color: white;
+}
+div[trouble-host] .trouble-item .trouble-name {
+  display: inline-block;
+  overflow: hidden;
+  width: calc(100% - 40px - 140px);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  vertical-align: middle;
+}
+div[trouble-host] .trouble-item time {
+  float: right;
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 0.75em;
+  line-height: 25px;
+  color: #626d4f;
+  vertical-align: middle;
+}
+div[trouble-host] .trouble-item .output {
+  position: absolute;
+  top: -15px;
+  height: calc(15px + 45px);
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 100px;
+  opacity: 0;
+}
+div[trouble-host] .trouble-item .output span {
+  padding: 5px;
+  font-size: 0.75em;
+  white-space: nowrap;
+  background-color: white;
+  border: 1.5px solid #8d9a7b;
+}
+div[trouble-host] .trouble-item .output:hover {
+  opacity: 1;
+}
+div[trouble-host] .trouble-item .ok {
+  background-color: #8dd775;
+  border: 1px #6ca65a solid;
+}
+div[trouble-host] .trouble-item .critical {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[trouble-host] .trouble-item .warning {
+  background-color: #f1f45a;
+  border: 1px #cbcf30 solid;
+}
+div[trouble-host] .trouble-item .unknown {
+  background-color: #868686;
+  border: 1px #666666 solid;
+}
+/* end of trouble-host widget */
+
+/* start of host-list css */
+div[host-list] .charts {
+  min-width: 550px;
+  height: 400px;
+}
+div[host-list] .hosts {
+  padding: 10px;
+  width: 100%;
+  height: 45px;
+  box-sizing: border-box;
+  border: 2px solid #e6ece0;
+}
+div[host-list] .hosts:nth-child(even){
+  background-color: #e6ece0;
+}
+div[host-list] .hosts .host-name {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 130px;
+  font-weight: bold;
+}
+div[host-list] .hosts .state {
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 10px;
+  width: 90px;
+  height: 25px;
+  vertical-align: top;
+  text-align: center;
+  font-size: 0.95 em;
+  color: white;
+}
+div[host-list] .hosts .Ok {
+  background-color: #8dd775;
+  border: 1px #6ca65a solid;
+}
+div[host-list] .hosts .Ok span {
+  font-weight: bold;
+}
+div[host-list] .hosts .Warning {
+  background-color: #e1e26a;
+  border: 1px #cbcf30 solid;
+}
+div[host-list] .hosts .Warning span {
+  font-weight: bold;
+}
+div[host-list] .hosts .Critical {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[host-list] .hosts .Critical span {
+  font-weight: bold;
+}
+/* end of host-list css */
+
+/* start of map widget */
+div[map] {
+  position: relative;
+}
+div[map] .charts {
+  width: 500px;
+}
+div[map] .map-wrapper {
+  overflow: scroll;
+}
+div[map] .tooltip {
+  display: none;
+  position: fixed;
+  padding: 10px;
+  background-color: #e6ece0;
+  border: 1px solid #c7d3bd;
+  z-index: 1;
+}
+div[map] .tooltip h4 {
+  margin: 0px;
+}
+div[map] .tooltip table {
+  font-size: 0.75em;
+}
+div[map] .tooltip th {
+  text-align: left;
+}
+div[map] .tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 40px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #e6ece0 transparent transparent transparent;
+}
+/* end of map widget */
+
+/* start of service status detail widget */
+div[service-status-detail] .charts {
+  width: 100%;
+  font-size: 0.9em;
+  border-spacing: 4px 1px;
+}
+div[service-status-detail] th {
+  font-weight: bold;
+  border-bottom: 3px #9cab8e solid;
+}
+div[service-status-detail] .state span{
+  font-weight: bold;
+}
+div[service-status-detail] tr{
+  text-align: center;
+  padding: 10px;
+}
+div[service-status-detail] .state {
+  width: 200px;
+}
+div[service-status-detail] .ok {
+  background-color: #8dd775;
+}
+div[service-status-detail] .warning {
+  background-color: #e1e26a;
+}
+div[service-status-detail] .critical {
+  background-color: #ef6a6a;
+}
+div[service-status-detail] .last_check {
+  width: 100px;
+}
+div[service-status-detail] .duration {
+  width: 130px;
+}
+div[service-status-detail] .attempt {
+  width: 70px;
+}
+div[service-status-detail] .info {
+}
+/* end of service status detail widget */
+
+/* start of host status information widget */
+div[host-status-information] .tosystem {
+  width: 120px;
+  height: 25px;
+  vertical-align: text-bottom;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border: 1px solid #366b40;
+  background-color: #63886a;
+  margin-left: 20px;
+  font-size: 0.67em;
+}
+div[host-status-information] .charts {
+  width: 100%;
+  font-size: 0.9em;
+  border-spacing: 4px 1px;
+}
+div[host-status-information] .info {
+  display: inline-block;
+  width: 56%;
+  margin: 10px;
+}
+div[host-status-information] .enable_check {
+  display: inline-block;
+  float: right;
+  width: 36%;
+  margin: 15px;
+}
+div [host-status-information] .category {
+  display: inline-block;
+  font-weight: bold;
+  width: 200px;
+  border-right: 2px solid #829786;
+  margin: 5px 10px;
+}
+div [host-status-information] .enable_check .category{
+  width: 150px;
+}
+div[host-status-information] .state {
+  display: inline-block;
+  width: 80px;
+  font-weight: bold;
+  text-align: center;
+}
+div[host-status-information] .name {
+  font-weight: bold;
+}
+div[host-status-information] .check {
+  display: inline-block;
+  width: 80px;
+  font-weight: bold;
+  text-align: center;
+}
+div[host-status-information] .UP {
+  border: 1px #6ca65a solid;
+  background-color: #8dd775;
+}
+div[host-status-information] .DOWN {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[host-status-information] .ENABLED {
+  border: 1px #6ca65a solid;
+  background-color: #8dd775;
+}
+div[host-status-information] .DISABLED {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[host-status-information] .YES {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[host-status-information] .NO {
+  border: 1px #6ca65a solid;
+  background-color: #8dd775;
+}
+/* end of host status information widget */
+
+/* start of host status detail widget */
+div[host-status-detail] .charts {
+  width: 100%;
+  font-size: 0.9em;
+  border-spacing: 4px 1px;
+}
+div[host-status-detail] th {
+  font-weight: bold;
+  border-bottom: 3px #9cab8e solid;
+}
+div[host-status-detail] .state span{
+  font-weight: bold;
+}
+div[host-status-detail] tr{
+  text-align: center;
+  padding: 10px;
+}
+div[host-status-detail] .state {
+  width: 200px;
+}
+div[host-status-detail] .up {
+  background-color: #8dd775;
+}
+div[host-status-detail] .unreachable {
+  background-color: #e1e26a;
+}
+div[host-status-detail] .down {
+  background-color: #ef6a6a;
+}
+div[host-status-detail] .last_check {
+  width: 100px;
+}
+div[host-status-detail] .duration {
+  width: 130px;
+}
+div[host-status-detail] .info {
+}
+/* end of host status detail widget */
+
+/* start of troule-trend css*/
+div[host-status] .charts {
+  min-width: 500px;
+}
+/* end of troule-trend css*/
+
+/* start of overall-host css*/
+div[overall-host] {
+  min-width: 50%;
+  margin-bottom: 30px; 
+}
+/* end of overall-host css*/
+
+/* start of service-number-by-state css*/
+div[service-number-by-state] .charts {
+  width: 500px;
+}
+/* end of service-number-by-state css*/
+
+/* start of host-list-with-click css */
+div[host-list-with-click] h3 {
+  color: #6a7857;
+}
+div[host-list-with-click] .charts {
+  width: 100%;
+  height: 500px;
+  color: #71835b;
+}
+div[host-list-with-click] .hosts {
+  padding: 10px;
+  width: 100%;
+  height: 45px;
+  box-sizing: border-box;
+}
+div[host-list-with-click] .hosts .host-name:focus {
+  outline: none;
+  color: #474e3c;
+}
+div[host-list-with-click] .hosts .host-name:hover {
+  color: #474e3c;
+}
+div[host-list-with-click] .hosts .host-name {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 250px;
+  font-weight: bold;
+  background: white;
+  border: none;
+  color: #72845a;
+  font-size: 0.95em;
+  text-align: inherit;
+}
+div[host-list-with-click] .hosts .host-name span{
+  cursor: pointer;
+}
+div[host-list-with-click] .hosts .state {
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 30px;
+  width: 90px;
+  height: 25px;
+  vertical-align: top;
+  text-align: center;
+  font-size: 0.95em;
+  color: #515f4e;
+}
+div[host-list-with-click] .hosts .Ok {
+  background-color: #8dd775;
+  border: 1px #6ca65a solid;
+}
+div[host-list-with-click] .hosts .Ok span {
+  font-weight: bold;
+}
+div[host-list-with-click] .hosts .Warning {
+  background-color: #e1e26a;
+  border: 1px #cbcf30 solid;
+}
+div[host-list-with-click] .hosts .Warning span {
+  font-weight: bold;
+}
+div[host-list-with-click] .hosts .Critical {
+  background-color: #ef6a6a;
+  border: 1px #c63e40 solid;
+}
+div[host-list-with-click] .hosts .Critical span {
+  font-weight: bold;
+}
+/* end of host-list-with-click css */
+
+/* start of configuration-hosts css */
+div[configuration-hosts] .charts {
+  width: 100%;
+  font-size: 0.9em;
+  border-spacing: 4px 1px;
+}
+div[configuration-hosts] span {
+  font-weight: bold;
+}
+div[configuration-hosts] th {
+  font-weight: bold;
+  border-bottom: 3px #9cab8e solid;
+}
+div[configuration-hosts] tr{
+  text-align: center;
+  padding: 15px;
+}
+/* end of configuration-hosts css */
+
+/* start of configuration-hostgroups css */
+div[configuration-hostgroups] .charts {
+  width: 100%;
+  font-size: 0.9em;
+  border-spacing: 4px 1px;
+}
+div[configuration-hostgroups] th {
+  font-weight: bold;
+  border-bottom: 3px #9cab8e solid;
+}
+div[configuration-hostgroups] span {
+  font-weight: bold;
+}
+div[configuration-hostgroups] tr{
+  text-align: center;
+  padding: 15px;
+}
+/* end of configuration-hostgroups css */
+
+/* start of configuration-services css */
+div[configuration-services] .charts {
+  width: 100%;
+  font-size: 0.9em;
+  border-spacing: 4px 1px;
+}
+div[configuration-services] th {
+  font-weight: bold;
+  border-bottom: 3px #9cab8e solid;
+}
+div[configuration-services] span {
+  font-weight: bold;
+}
+div[configuration-services] tr{
+  text-align: center;
+  padding: 15px;
+}
+/* end of configuration-services css */
+
+/* start of service-trend-host css */
+div[service-trend-host] > .charts {
+  height: 500px;
+}
+div[service-trend-host] .axis path {
+  stroke: black;
+  stroke-width: 1;
+  fill: none;
+}
+div[service-trend] {
+  margin: 0px 10px;
+  display: inline-block;
+}
+div[service-trend] .charts {
+  border: 2px solid #e7efde;
+}
+/* end of service-trend-host css */

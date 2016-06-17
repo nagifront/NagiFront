@@ -1,0 +1,61 @@
+{% extends 'nagifront/layout.html' %}
+
+{% load staticfiles %}
+{% block stylesheets %}
+<link rel="stylesheet" text="text/css" href="{% static "nagifront/css/dashboard.css"%}">
+{% endblock %}
+
+{% block main %}
+<main ng-controller="dashboard">
+  <section id="search-widget" ng-controller="search">
+    <span>상세 검색</span>
+    <select ng-model="type">
+      <option value="host">Host</option>
+      <option value="hostGroup">Host Group</option>
+    </select>
+    <input ng-model="name"><!--
+ --><button ng-click="move()"></button>
+  </section>
+  <section id="dashboard">
+    <span id="dashboard-modify" ng-hide="is_modify_setting" ng-click="modify_enable()">대쉬보드 설정</span>
+    <div class="widgets" overall-host></div>
+    <div id="widgets" ng-class="{ modify: is_modify_setting }">
+    </div>
+    <div class="modal-backboard" ng-show="show_modal" ng-cloak>
+      <div class="modal">
+        <h1>Notice</h1>
+        <p ng-bind="message"></p>
+        <button ng-click="close_modal()">OK</button>
+      </div>
+    </div>
+  </section>
+  <section id="widgets-list-wrapper" ng-cloak ng-show="is_modify_setting">
+    <header>
+      <h3>위젯 설정</h3>
+      <p>드래그해서<br>원하는 위치에 놓으세요</p>
+    </header>
+    <div>
+      <ul>
+        {% verbatim %}
+        <li class="new-widget" ng-repeat="widget in widget_list" data-drag="true" data-jqyoui-options="{helper: 'clone'}" ng-model="widget_list" jqyoui-draggable="{index: {{$index}}, placeholder: 'keep', onStart: 'load_widget'}">
+          {{ widget_name_map[widget.name] }}
+        </li>
+        {% endverbatim %}
+      </ul>
+    </div>
+    <footer>
+      <button ng-click="cancel()">취소</button>
+      <button ng-click="save()">저장</button>
+    </footer>
+  </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+var user_setting = JSON.parse("{{ user_setting|safe }}".replace(/\'/g, '"'));
+user_setting = user_setting['data']
+</script>
+<script src="{% static 'nagifront/js/dashboard.js' %}"></script>
+<script src="{% static 'nagifront/js/search.js' %}"></script>
+{% endblock %}
