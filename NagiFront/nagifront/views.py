@@ -27,6 +27,7 @@ from nagifront.config_model.NagiosConfig import *
 @login_required
 def index(request):
     return render(request, 'nagifront/dashboard.html', {
+        'user_setting': request.user.userprofile.get_dashboard_setting(),
     })
 
 @login_required
@@ -214,6 +215,16 @@ def edit_config(request, object_id):
         'config_module': config_module,
         'message': message,
     })
+
+@login_required
+def update_user_setting(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode())
+        request.user.userprofile.modify_dashboard_setting(data)
+        request.user.save()
+        return JsonResponse({ 'result': True })
+    else:
+        return JsonResponse({})
 
 @login_required
 def hosts_overall(request):

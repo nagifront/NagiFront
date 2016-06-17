@@ -52,6 +52,9 @@
 {% endblock %}
 
 {% block scripts %}
+<script>
+var user_setting = {{ user_setting }}
+</script>
 <script src="{% static 'nagifront/js/dashboard.js' %}"></script>
 <script src="{% static 'nagifront/js/search.js' %}"></script>
 {% endblock %}

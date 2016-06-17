@@ -10,6 +10,9 @@ from .customfields import JSONField
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     dashboard_setting = JSONField()
+    
+    def __init__(self):
+        self.dashboard_setting = { 'widget_setting': [[]] }
 
     def get_dashboard_setting(self):
         return self.dashboard_setting
