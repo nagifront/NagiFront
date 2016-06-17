@@ -15,9 +15,10 @@ app.controller('system', function($scope, $window, $location, $http, djangoUrl){
     return $scope.type === 'Services';
   }
   $scope.show = function() {
-   $scope.ready = true;
-   $scope.type = $scope.division;
-   $scope.option = $scope.section;
+    $scope.ready = true;
+    $scope.type = $scope.division;
+    $scope.option = $scope.section;
+    $scope.objecttype = $scope.division.substring(0, $scope.division.length - 1).toLowerCase().replace(' ', '');
   }
   var parseUrl = function(url) {
     var value = '';

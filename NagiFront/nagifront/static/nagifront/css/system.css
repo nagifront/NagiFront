@@ -51,3 +51,14 @@
   background-color: #ffffff;
   border: 2px solid #c1ceb0;
 }
+
+#add-button {
+  position: absolute;
+  top: 80px;
+  right: 8%;
+  color: #6c795f;
+  font-weight: bold;
+  font-size: 0.9em;
+  font-family: "맑은 고딕";
+  text-decoration: none;
+}
