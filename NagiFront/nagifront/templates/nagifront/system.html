@@ -15,7 +15,8 @@
     <span dynamic-select alias="section" lists="{{ sections }}"></span>
     <button ng-click="show()">Update</button>
   </section>
-  <section ng-if="ready">
+  <section ng-if="ready" ng-cloak>
+    <a href="/configuration/add/{{ objecttype }}" id="add-button">추가하기</a>
     <div ng-if="isHosts()">
     <div class="widgets" configuration-hosts></div>
     </div>
