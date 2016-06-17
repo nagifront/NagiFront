@@ -29,6 +29,7 @@ def index(request):
     user_setting = request.user.userprofile.get_dashboard_setting()
     return render(request, 'nagifront/dashboard.html', {
         'user_setting': user_setting,
+        'selected_menu': 'dashboard',
     })
 
 @login_required
@@ -37,9 +38,9 @@ def search(request) :
         host_id = request.GET.get('id')
         search_type = request.GET.get('type')
         if search_type == "hostGroup":
-            return render(request, 'nagifront/searchHostGroup.html', {'id' : host_id})
+            return render(request, 'nagifront/searchHostGroup.html', {'id' : host_id, 'selected_menu': 'dashboard'})
         elif search_type == "host":
-            return render(request, 'nagifront/searchHost.html', {'id' : host_id})
+            return render(request, 'nagifront/searchHost.html', {'id' : host_id, 'selected_menu': 'dashboard'})
 
 def login(request):
     message = None
@@ -77,14 +78,16 @@ def logout(request):
 def system(request):
     host_id = request.GET.get('id')
     if host_id is not None:
-        return render(request, 'nagifront/system.html', {'id' : host_id})
+        return render(request, 'nagifront/system.html', {'id' : host_id, 'selected_menu': 'system' })
     else:
         return render(request, 'nagifront/system.html', {
+            'selected_menu': 'system',
     })
 
 @login_required
 def hosts(request):
     return render(request, 'nagifront/hosts.html', {
+        'selected_menu': 'showhost',
     })
 
 
