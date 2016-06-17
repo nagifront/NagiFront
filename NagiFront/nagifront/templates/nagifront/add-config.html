@@ -10,7 +10,7 @@
 {% block main %}
 <main ng-controller="edit-config">
   <section>
-    <h3>{{ objecttype }} 설정 추가</h3>
+    <h3>{{ objecttype }} 추가</h3>
     <p>자세한 나기오스 설정은 <a href="https://assets.nagios.com/downloads/nagioscore/docs/nagioscore/3/en/objectdefinitions.html">여기</a>를 참고하세요</p>
     <p>빨간색은 필수</p>
     <form ng-class="{ active_advanced: is_active_advanced }" method="POST" action="{% url "add-config" objecttype %}">
@@ -43,7 +43,16 @@
         <select name="{{ directive.name}}" multiple>
         {% with value=config_module.config|key:directive.name|split %}
         {% for service in services %}
-          <option value="{{ service }}"{% if service in value %} selected{% endif %}>{{ service }}</option>
+          <option value="{{ service|key:1 }},{{ service|key:0 }}"{% if service in value %} selected{% endif %}>{{ service }}</option>
+        {% endfor %}
+        {% endwith %}
+        </select>
+        {% elif directive.option_kind == 4 %}
+        {# 서비스그룹 #}
+        <select name="{{ directive.name}}" multiple>
+        {% with value=config_module.config|key:directive.name|split %}
+        {% for servicegroup in servicegroups %}
+          <option value="{{ servicegroup }}"{% if servicegroup in value %} selected{% endif %}>{{ servicegroup }}</option>
         {% endfor %}
         {% endwith %}
         </select>
