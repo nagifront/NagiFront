@@ -1,4 +1,4 @@
-app.controller('system', function($scope, $location, $http, djangoUrl){
+app.controller('system', function($scope, $window, $location, $http, djangoUrl){
   $scope.categories = ['Configuration'];
   $scope.divisions = [''];
   $scope.type = 'none';
@@ -54,6 +54,12 @@ app.controller('system', function($scope, $location, $http, djangoUrl){
   $scope.toggleSimple = function(name) {
     $scope.simple[name] = !$scope.simple[name];
     console.log($scope.simple[name]);
+  }
+  $scope.toEdit = function(id) {
+        $http.get(djangoUrl.reverse('edit-config'),{object_id: id})
+        .then(function success(response) {
+          $window.location.href = 'configuration/edit/'+id;
+        });
   }
   $scope.update = function(value) {
     if(value === 'Configuration') {
